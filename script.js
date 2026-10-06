@@ -1,5 +1,4 @@
-
-        // --- DATA ---
+ // --- DATA ---
         const ZODIAC_DATA = [
             { id: 'aries', name: 'Aries', dateRange: 'March 21 – April 19', svg: '<path d="M4,14 C4,8 12,4 12,12 C12,4 20,8 20,14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' },
             { id: 'taurus', name: 'Taurus', dateRange: 'April 20 – May 20', svg: '<circle cx="12" cy="14" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M7,9 C7,4 17,4 17,9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' },
