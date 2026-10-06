@@ -115,25 +115,26 @@
 
             <!-- Spreads Section -->
             <div id="section-spreads" class="max-w-5xl mx-auto px-4 mb-24 scroll-mt-20">
-                <div class="text-center mb-10"><h2 class="font-serif text-2xl">Explore Tarot Spreads</h2><div class="w-12 h-px bg-pink-200 mx-auto mt-4"></div></div>
+                <div class="text-center mb-10"><h2 class="font-cute font-bold text-xl uppercase tracking-wider text-pink-500">EXPLORE TAROT SPREADS</h2>><div class="w-12 h-px bg-pink-200 mx-auto mt-4"></div></div>
                 <div id="home-spreads-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"></div>
             </div>
                         <!-- Explore All Cards Section -->
             <div class="max-w-5xl mx-auto px-4 mb-24 scroll-mt-20">
-                <div class="text-center mb-10"><h2 class="font-serif text-2xl">Explore All Cards</h2><div class="w-12 h-px bg-pink-200 mx-auto mt-4"></div></div>
-                <div onclick="navigate('all-cards')" class="bg-pink-50/50 rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between border border-pink-100 hover:border-pink-300 transition-colors cursor-pointer transform hover:-translate-y-1">
-                    <div class="mb-6 md:mb-0 text-center md:text-left">
-                        <h3 class="font-serif text-2xl text-gray-800 mb-2">The Tarot Library</h3>
-                        <p class="text-gray-600 font-light text-sm max-w-md">Jelajahi makna mendalam dari 78 kartu Tarot. Pelajari interpretasi upright/reversed, hubungan astrologi, hingga pesan asmara (relationship).</p>
+                <div class="text-center mb-10"><h2 class="font-cute font-bold text-xl uppercase tracking-wider text-pink-500">EXPLORE ALL CARDS</h2><div class="w-12 h-px bg-pink-200 mx-auto mt-4"></div></div>
+                                <div onclick="navigate('all-cards')" class="bg-pink-50/50 rounded-2xl p-4 sm:p-6 flex flex-col md:flex-row items-center justify-between border border-pink-100 hover:border-pink-300 transition-colors cursor-pointer transform hover:-translate-y-1">
+                    <div class="mb-4 md:mb-0 text-center md:text-left">
+                        <h3 class="font-cute font-bold text-base text-purple-800 mb-1">The Tarot Library</h3>
+                        <p class="font-cute text-xs text-gray-500 max-w-md">Jelajahi makna mendalam dari 78 kartu Tarot dan interpretasinya.</p>
                     </div>
-                    <button class="bg-white px-6 py-3 rounded-full text-pink-500 font-serif border border-pink-200 shadow-sm whitespace-nowrap">View Library</button>
+                    <button class="bg-white px-4 py-2 rounded-full text-pink-500 font-cute font-bold text-xs border border-pink-200 shadow-sm whitespace-nowrap">View Library</button>
                 </div>
+
             </div>
 
 
             <!-- Zodiac Section -->
             <div id="section-zodiac" class="max-w-5xl mx-auto px-4 mb-24 scroll-mt-20">
-                <div class="text-center mb-10"><h2 class="font-serif text-2xl">Zodiac Signs</h2><div class="w-12 h-px bg-pink-200 mx-auto mt-4"></div></div>
+                <div class="text-center mb-10"><h2 class="font-cute font-bold text-xl uppercase tracking-wider text-pink-500">ZODIAC SIGNS </h2><div class="w-12 h-px bg-pink-200 mx-auto mt-4"></div></div>
                 <div id="home-zodiac-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3"></div>
             </div>
 
@@ -349,17 +350,18 @@
         }
 
         // --- UI RENDERING ---
-        function initHome() {
-            checkDailyCard(); // <-- Tambahkan baris ini
+                function initHome() {
+            checkDailyCard(); 
+            
             // Render Spreads
             const spreadsGrid = document.getElementById('home-spreads-grid');
             const drawSpreadsGrid = document.getElementById('draw-spreads-grid');
             let spreadHtml = '';
             SPREADS.forEach((s, i) => {
                 const card = `
-                    <div onclick="selectSpread(${i})" class="p-6 rounded-2xl border border-pink-50 hover:border-pink-200 bg-white hover:bg-pink-50/30 cursor-pointer transition-all h-full transform hover:-translate-y-1">
-                        <h3 class="font-serif text-lg text-gray-800 mb-2">${s.name}</h3>
-                        <p class="text-sm text-gray-500 font-light">${s.desc}</p>
+                    <div onclick="selectSpread(${i})" class="p-4 rounded-xl border border-pink-50 hover:border-pink-200 bg-white hover:bg-pink-50/30 cursor-pointer transition-all h-full transform hover:-translate-y-1">
+                        <h3 class="font-cute font-bold text-sm text-purple-800 mb-1">${s.name}</h3>
+                        <p class="font-cute text-[11px] text-pink-400/90 leading-snug">${s.desc}</p>
                     </div>`;
                 spreadHtml += card;
             });
@@ -371,15 +373,15 @@
             let zodiacHtml = '';
             ZODIAC_DATA.forEach(z => {
                 zodiacHtml += `
-                                        <div onclick="showZodiac('${z.id}')" class="p-5 rounded-2xl border border-gray-100 hover:border-pink-200 text-center transition-all hover:bg-pink-50/30 transform hover:-translate-y-1 flex flex-col items-center cursor-pointer">
-
-                        <div class="text-pink-300 mb-3 w-8 h-8"><svg viewBox="0 0 24 24" class="w-full h-full">${z.svg}</svg></div>
-                        <div class="font-serif text-gray-800 text-sm mb-1">${z.name}</div>
-                        <div class="text-[10px] text-gray-400">${z.dateRange}</div>
+                    <div onclick="showZodiac('${z.id}')" class="p-3.5 rounded-xl border border-gray-100 hover:border-pink-200 text-center transition-all hover:bg-pink-50/30 transform hover:-translate-y-1 flex flex-col items-center cursor-pointer">
+                        <div class="text-pink-300 mb-2 w-6 h-6"><svg viewBox="0 0 24 24" class="w-full h-full">${z.svg}</svg></div>
+                        <div class="font-cute font-bold text-xs text-purple-700 mb-0.5">${z.name}</div>
+                        <div class="font-cute text-[9px] text-pink-400">${z.dateRange}</div>
                     </div>`;
             });
             zodiacGrid.innerHTML = zodiacHtml;
         }
+
 
                 function getTodayDateString() {
             const now = new Date();
