@@ -633,7 +633,69 @@ function renderGenericPage(title) {
     const content = document.getElementById('generic-content');
     
     if (title === 'About Tarot') {
-        content.innerHTML = `<p>Tarot is a deck of 78 cards used for reflection, introspection, and storytelling. It consists of the Major Arcana representing significant life themes, and the Minor Arcana representing daily situations.</p>`;
+        content.innerHTML = `
+            <div class="space-y-8 text-left">
+                <!-- Intro Box -->
+                <div class="bg-pink-50/40 p-6 sm:p-8 rounded-3xl border border-pink-100 shadow-sm">
+                    <h3 class="font-cute font-bold text-2xl text-purple-800 mb-3">Mengenal Lebih Dekat Dunia Tarot</h3>
+                    <p class="text-gray-600 font-cute text-sm leading-relaxed">
+                        Tarot bukanlah sekadar alat untuk meramal masa depan yang kaku, melainkan sebuah cermin jiwa yang merefleksikan kedalaman pikiran bawah sadar, emosi, dan potensi batin manusia. Melalui simbol-simbol visual yang kaya, tarot membantu kita menavigasi pertanyaan hidup dengan kebijaksanaan yang tenang.
+                    </p>
+                </div>
+
+                <!-- Section 1: Sejarah -->
+                <div class="space-y-3">
+                    <h3 class="font-cute font-bold text-xl text-purple-800 flex items-center">
+                        <span class="w-2 h-2 rounded-full bg-pink-300 mr-3"></span> Sejarah dan Akar Perjalanan Tarot
+                    </h3>
+                    <p class="text-gray-600 font-cute text-sm leading-relaxed">
+                        Akar sejarah tarot bermula di Italia bagian utara pada abad ke-15 (sekitar tahun 1430-an). Awalnya, kartu ini digunakan para bangsawan Eropa untuk permainan kartu konvensional bernama <em>Tarocchi</em>. Baru pada abad ke-18 dan ke-19, para sejarawan dan okultis mulai menyadari adanya muatan simbolisme esoteris yang mendalam di balik gambar-gambar kartu tersebut.
+                    </p>
+                    <p class="text-gray-600 font-cute text-sm leading-relaxed">
+                        Puncak evolusi modern tarot terjadi pada tahun 1909 ketika Arthur Edward Waite, seorang mistikus terkemuka, berkolaborasi dengan seniman brilian Pamela Colman Smith—keduanya merupakan anggota ordo hermetik <em>Golden Dawn</em>—menerbitkan dek Rider-Waite-Smith. Dek legendaris inilah yang kemudian mendefinisikan estetika dan standar emas dunia tarot modern hingga saat ini.
+                    </p>
+                </div>
+
+                <!-- Section 2: Struktur Penting -->
+                <div class="space-y-3">
+                    <h3 class="font-cute font-bold text-xl text-purple-800 flex items-center">
+                        <span class="w-2 h-2 rounded-full bg-purple-400 mr-3"></span> Struktur Penting: Major dan Minor Arcana
+                    </h3>
+                    <p class="text-gray-600 font-cute text-sm leading-relaxed">
+                        Satu dek tarot standar terdiri dari 78 kartu yang terbagi secara harmonis menjadi dua kelompok besar dengan fungsi naratif yang berbeda:
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                        <div class="bg-white p-5 rounded-2xl border border-pink-100 shadow-sm">
+                            <h4 class="font-cute font-bold text-base text-purple-800 mb-2">Major Arcana (22 Kartu)</h4>
+                            <p class="text-xs text-gray-600 leading-relaxed font-cute">
+                                Merepresentasikan "The Fool's Journey" (Perjalanan Si Bodoh)—sebuah alegori siklus kehidupan manusia dari kepolosan hingga pencerahan spiritual. Kartu-kartu ini menandai peristiwa besar, pelajaran hidup mendalam, dan tema besar takdir.
+                            </p>
+                        </div>
+                        <div class="bg-white p-5 rounded-2xl border border-pink-100 shadow-sm">
+                            <h4 class="font-cute font-bold text-base text-purple-800 mb-2">Minor Arcana (56 Kartu)</h4>
+                            <p class="text-xs text-gray-600 leading-relaxed font-cute">
+                                Merepresentasikan dinamika kehidupan sehari-hari, tantangan praktis, dan emosi sesaat. Dibagi menjadi 4 elemen utama: <strong>Wands</strong> (Api/Gairah), <strong>Cups</strong> (Air/Emosi), <strong>Swords</strong> (Udara/Pikiran), dan <strong>Pentacles</strong> (Tanah/Materi).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 3: Peran Tarot -->
+                <div class="space-y-3">
+                    <h3 class="font-cute font-bold text-xl text-purple-800 flex items-center">
+                        <span class="w-2 h-2 rounded-full bg-pink-300 mr-3"></span> Peran dan Fungsi Esoteris Tarot
+                    </h3>
+                    <p class="text-gray-600 font-cute text-sm leading-relaxed">
+                        Banyak praktisi modern, termasuk psikiater ternama Carl Jung, melihat tarot melalui lensa <em>sinkronisitas</em> dan arketipe universal. Tarot berperan sebagai alat meditatif yang kuat untuk:
+                    </p>
+                    <ul class="space-y-2 text-gray-600 font-cute text-sm pl-4 border-l-2 border-pink-200">
+                        <li><strong>Refleksi Diri:</strong> Membuka sudut pandang baru terhadap masalah yang sedang dihadapi secara objektif tanpa bias.</li>
+                        <li><strong>Pengambilan Keputusan:</strong> Menimbang berbagai kemungkinan tindakan berdasarkan pola energi yang sedang berlangsung.</li>
+                        <li><strong>Pemberdayaan Mental:</strong> Memberikan ruang henti yang aman bagi seseorang untuk mendengar suara hati dan intuisi terdalamnya.</li>
+                    </ul>
+                </div>
+            </div>
+        `;
     } else if (title === 'Personal Reading') {
         content.innerHTML = `
             <div class="text-center mb-8"><div class="w-20 h-20 bg-pink-100 rounded-full mx-auto mb-4 border-2 border-pink-200"></div><h2 class="font-cute font-bold text-2xl text-purple-800">Hi, I'm Mai</h2><p class="text-sm text-pink-500 font-['Caveat'] mt-1">Creator of CuTarot</p></div>
@@ -648,6 +710,7 @@ function renderGenericPage(title) {
         content.innerHTML = `<p>CuTarot by Mai Collection is provided for personal reflection and entertainment purposes.</p>`;
     }
 }
+
 
 // Init App
 window.onload = initHome;
