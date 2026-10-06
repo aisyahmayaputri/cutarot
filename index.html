@@ -344,13 +344,26 @@
             window.scrollTo(0,0);
         }
 
-        function selectSpread(index) {
+                function selectSpread(index) {
             currentSpread = SPREADS[index];
             deckCount = currentSpread.count;
-            document.getElementById('config-spread-name').innerText = currentSpread.name;
-            renderConfigNumbers();
-            setDrawPhase('config');
+            
+            // Pastikan halaman berpindah ke area Tarot (jika di-klik dari Home)
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById('view-draw').classList.add('active');
+            
+            // Jika yang dipilih adalah "Free Spread", izinkan memilih angka 1-13
+            if (currentSpread.id === 'free') {
+                document.getElementById('config-spread-name').innerText = currentSpread.name;
+                renderConfigNumbers();
+                setDrawPhase('config');
+            } 
+            // Jika spread lain, LANGSUNG TEBAR KARTU! (Lewati phase config)
+            else {
+                startDraw(); 
+            }
         }
+
 
         function renderConfigNumbers() {
             const grid = document.getElementById('config-numbers-grid');
@@ -491,6 +504,27 @@
             } else {
                 content.innerHTML = `<p>CuTarot by Mai Collection is provided for personal reflection and entertainment purposes.</p>`;
             }
+        }
+        function showZodiac(id) {
+            const z = ZODIAC_DATA.find(item => item.id === id);
+            if (!z) return;
+            
+            document.getElementById('zodiac-detail-content').innerHTML = `
+                <div class="text-center mb-10">
+                    <div class="text-pink-300 mb-4 w-16 h-16 mx-auto"><svg viewBox="0 0 24 24" class="w-full h-full">${z.svg}</svg></div>
+                    <h1 class="font-serif text-4xl text-gray-800 mb-2">${z.name}</h1>
+                    <p class="text-sm text-pink-400 tracking-wider">${z.dateRange}</p>
+                </div>
+                <div class="bg-pink-50/30 p-8 rounded-3xl border border-pink-100 text-gray-600 font-light leading-relaxed">
+                    <p>Selamat datang di profil energi <strong>${z.name}</strong>.</p>
+                    <p class="mt-4">Zodiak ini dikenal dengan elemen dan karakter utamanya yang khas. Anda bisa menambahkan teks deskripsi astrologi harian, kecocokan (compatibility), maupun karakteristik mendalam Mai Collection di bagian ini ke depannya.</p>
+                </div>
+            `;
+            
+            // Pindah halaman
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById('view-zodiac').classList.add('active');
+            window.scrollTo(0, 0);
         }
 
         // Init App
