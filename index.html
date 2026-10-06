@@ -59,7 +59,8 @@
 
     <!-- DRAWER / MENU DASHBOARD -->
     <div id="drawer-overlay" class="fixed inset-0 bg-black/20 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300" onclick="toggleMenu()"></div>
-    <div id="drawer-menu" class="fixed inset-y-0 left-0 bg-white/95 backdrop-blur-md w-64 z-50 transform -translate-x-full transition-transform duration-300 flex flex-col shadow-2xl border-r border-pink-50">
+        <div id="drawer-menu" class="fixed inset-y-0 left-0 bg-white/95 backdrop-blur-md w-64 z-50 transform -translate-x-full transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] flex flex-col shadow-2xl border-r border-pink-50">
+
         <div class="flex-1 overflow-y-auto pt-20 px-6 space-y-2">
             <!-- Sinkronisasi Urutan Sesuai Home -->
             <button onclick="navigate('home')" class="block w-full text-left py-2.5 text-base text-gray-700 hover:text-pink-500 transition-all font-medium">Home</button>
@@ -121,8 +122,9 @@
                 <div id="home-zodiac-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3"></div>
             </div>
 
-            <!-- About Section (Compact) -->
-            <div class="max-w-3xl mx-auto px-4 mb-8">
+                        <!-- About Section (Compact) -->
+            <div id="section-about" class="max-w-3xl mx-auto px-4 mb-8 scroll-mt-20">
+
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
                     <div onclick="navigate('generic', 'About Tarot')" class="flex-1 p-4 rounded-xl bg-gray-50 hover:bg-pink-50/50 cursor-pointer text-center">
                         <h3 class="font-serif text-sm text-gray-700 mb-1">About Tarot</h3>
@@ -217,12 +219,16 @@
 
 
 
-        <!-- VIEW: GENERIC TEXT PAGES -->
+                <!-- VIEW: GENERIC TEXT PAGES -->
         <section id="view-generic" class="view-section flex-1 pt-12 pb-24 px-4 max-w-3xl mx-auto w-full">
-            <button onclick="navigate('home')" class="text-sm text-gray-400 mb-8 hover:text-pink-500 transition-colors">← Back to Home</button>
-            <h1 id="generic-title" class="font-serif text-3xl text-gray-800 mb-8 border-b border-pink-50 pb-4 text-center"></h1>
-            <div id="generic-content" class="text-gray-600 font-light leading-relaxed space-y-6"></div>
+            <div class="animate-fade-in-up w-full">
+                <!-- Tombol back diarahkan spesifik ke section-about -->
+                <button onclick="navigate('home', 'section-about')" class="text-sm text-gray-400 mb-8 hover:text-pink-500 transition-colors">← Back to Home</button>
+                <h1 id="generic-title" class="font-serif text-3xl text-gray-800 mb-8 border-b border-pink-50 pb-4 text-center"></h1>
+                <div id="generic-content" class="text-gray-600 font-light leading-relaxed space-y-6"></div>
+            </div>
         </section>
+
 
         <!-- FOOTER GLOBAL -->
         <footer class="bg-white border-t border-pink-50 py-12 mt-auto">
