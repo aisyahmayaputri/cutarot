@@ -1624,9 +1624,17 @@ function ensureBirthCalculatorMenu() {
     const menuLink = document.createElement('a');
     menuLink.id = 'menu-birth-calc';
     menuLink.href = '#';
-    // Class menyesuaikan styling standar sidebar CuTarot agar estetis
-    menuLink.className = 'block px-4 py-3 text-gray-700 font-cute font-bold hover:bg-pink-50 hover:text-purple-700 rounded-xl transition-colors text-left mt-1';
-    menuLink.innerHTML = `<span class="inline-block w-1.5 h-1.5 rounded-full bg-pink-300 mr-2 mb-0.5"></span> Birth Calculator`;
+    // Class diperbarui: menggunakan flex, warna text-pink-500, dan perataan yang presisi dengan menu lain
+    menuLink.className = 'flex items-center px-4 py-3 text-pink-500 font-cute font-bold hover:bg-pink-50 hover:text-pink-600 rounded-xl transition-colors text-left mt-1 mb-1';
+    
+    // SVG Ikon Bintang (Melambangkan Astrologi/Birth) yang senada dengan desain garis (outline) menu lainnya
+    menuLink.innerHTML = `
+        <svg class="w-5 h-5 mr-3 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        </svg>
+        Birth Calculator
+    `;
+    
     menuLink.onclick = (e) => {
         e.preventDefault();
         initBirthCalculatorPage(); // Render halaman
@@ -1640,6 +1648,7 @@ function ensureBirthCalculatorMenu() {
         nav.appendChild(menuLink);
     }
 }
+
 
 // Inisialisasi HTML halaman Calculator penuh
 function initBirthCalculatorPage() {
