@@ -1,4 +1,4 @@
-<style>
+
         body { font-family: 'Inter', sans-serif; background-color: #fff7fc; overflow-x: hidden; }
         .font-cute { font-family: 'Quicksand', sans-serif; letter-spacing: 0.02em; }
         
@@ -24,4 +24,4 @@
         /* SPA View Management */
         .view-section { display: none; min-height: 100vh; flex-direction: column; }
         .view-section.active { display: flex; }
-    </style>
+
