@@ -745,6 +745,7 @@ function checkDailyCard() {
 
 // --- UI RENDERING ---
 function initHome() {
+    ensureDashboardSearch(); // <--- Pastikan baris ini ada di paling atas initHome!
     checkDailyCard(); 
     
     const spreadsGrid = document.getElementById('home-spreads-grid');
@@ -773,6 +774,86 @@ function initHome() {
     });
     zodiacGrid.innerHTML = zodiacHtml;
 }
+// --- FUNGSI PENCARIAN GLOBAL DASHBOARD ---
+function ensureDashboardSearch() {
+    const homeView = document.getElementById('view-home');
+    if (!homeView) return;
+    let container = document.getElementById('dashboard-search-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'dashboard-search-container';
+        container.className = 'w-full max-w-lg mx-auto mb-8 px-4 pt-4';
+        container.innerHTML = `
+            <div class="relative">
+                <input type="text" id="dashboard-search-input" 
+                    placeholder="Explore CuTarot" 
+                    oninput="handleDashboardSearch(this.value)"
+                    class="w-full px-5 py-3.5 rounded-2xl border-2 border-purple-300 focus:border-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-100 font-cute text-sm text-gray-700 bg-white shadow-sm transition-all text-center"
+                />
+                <div id="dashboard-search-results" class="absolute left-0 right-0 mt-2 bg-white rounded-2xl shadow-xl border border-pink-100 max-h-60 overflow-y-auto hidden z-50 p-2 space-y-1 font-cute text-xs text-left"></div>
+            </div>
+        `;
+        homeView.insertBefore(container, homeView.firstChild);
+    }
+}
+
+function handleDashboardSearch(query) {
+    const resultsEl = document.getElementById('dashboard-search-results');
+    if (!query || query.trim() === '') {
+        resultsEl.classList.add('hidden');
+        resultsEl.innerHTML = '';
+        return;
+    }
+    
+    const q = query.toLowerCase();
+    let matches = [];
+    
+    // Pencarian Spreads
+    SPREADS.forEach(s => {
+        if (s.name.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q)) {
+            matches.push({ type: 'Spread', title: s.name, desc: s.desc, actionType: 'spread' });
+        }
+    });
+    
+    // Pencarian Zodiak
+    ZODIAC_DATA.forEach(z => {
+        if (z.name.toLowerCase().includes(q) || z.element.toLowerCase().includes(q)) {
+            matches.push({ type: 'Zodiac', title: z.name, desc: z.dateRange, id: z.id, actionType: 'zodiac' });
+        }
+    });
+    
+    // Pencarian Kartu Tarot
+    TAROT_DECK.forEach((c, idx) => {
+        if (c.name.toLowerCase().includes(q) || c.arcana.toLowerCase().includes(q)) {
+            matches.push({ type: 'Tarot Card', title: c.name, desc: c.arcana, index: idx, actionType: 'card' });
+        }
+    });
+    
+    if (matches.length === 0) {
+        resultsEl.innerHTML = `<div class="p-3 text-center text-pink-400">No results found for "${query}"</div>`;
+    } else {
+        let html = '';
+        matches.slice(0, 8).forEach(m => {
+            let clickAttr = '';
+            if (m.actionType === 'card') clickAttr = `showCardDetail(${m.index})`;
+            else if (m.actionType === 'zodiac') clickAttr = `showZodiac('${m.id}')`;
+            else if (m.actionType === 'spread') clickAttr = `navigate('draw')`;
+
+            html += `
+                <div onclick="${clickAttr}; document.getElementById('dashboard-search-results').classList.add('hidden');" class="p-2.5 hover:bg-pink-50 rounded-xl cursor-pointer transition-colors flex justify-between items-center">
+                    <div>
+                        <div class="font-bold text-purple-800">${m.title}</div>
+                        <div class="text-[10px] text-gray-500">${m.desc}</div>
+                    </div>
+                    <span class="px-2 py-0.5 bg-pink-100 text-purple-700 text-[9px] rounded-full font-bold">${m.type}</span>
+                </div>
+            `;
+        });
+        resultsEl.innerHTML = html;
+    }
+    resultsEl.classList.remove('hidden');
+}
+
 
 // --- DRAW SYSTEM FLOW ---
 function setDrawPhase(phase) {
