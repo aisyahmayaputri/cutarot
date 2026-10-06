@@ -221,6 +221,17 @@ let deckCount = 3;
 let activeDeck = [];
 let drawnCards = [];
 
+// --- FREE SPREAD CONFIG OPTIONS ---
+let optMajorOnly = false;
+let optAutoOpen = false;
+let optShowDesc = false;
+
+function toggleOption(opt, val) {
+    if (opt === 'majorOnly') optMajorOnly = val;
+    if (opt === 'autoOpen') optAutoOpen = val;
+    if (opt === 'showDesc') optShowDesc = val;
+}
+
 // --- CORE FUNCTIONS ---
 function toggleMenu() {
     const menu = document.getElementById('drawer-menu');
@@ -398,12 +409,42 @@ function selectSpread(index) {
 function renderConfigNumbers() {
     const grid = document.getElementById('config-numbers-grid');
     let html = '';
-    for(let i=1; i<=13; i++) {
+    // Max cards: if major only, limit to 22, else 13
+    const maxCards = optMajorOnly ? 22 : 13;
+    if (deckCount > maxCards) deckCount = maxCards;
+
+    for(let i=1; i<=maxCards; i++) {
         const isActive = deckCount === i;
         const cls = isActive ? 'bg-pink-300 text-white shadow-md transform scale-110' : 'bg-white text-gray-600 border border-pink-100 hover:border-pink-300 hover:bg-pink-50';
         html += `<button onclick="updateDeckCount(${i})" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-cute font-bold text-sm transition-all duration-300 ${cls}">${i}</button>`;
     }
     grid.innerHTML = html;
+
+    // Inject Options Container dynamically for Free Spread config
+    let optionsContainer = document.getElementById('config-options-container');
+    if (!optionsContainer) {
+        const configBox = grid.parentElement;
+        optionsContainer = document.createElement('div');
+        optionsContainer.id = 'config-options-container';
+        optionsContainer.className = 'mt-6 space-y-2.5 text-left font-cute pt-4 border-t border-pink-100';
+        configBox.insertBefore(optionsContainer, configBox.querySelector('button[onclick="startDraw()"]'));
+    }
+
+    optionsContainer.innerHTML = `
+        <div class="text-xs font-bold text-purple-800 mb-2 uppercase tracking-wider text-center">Free Spread Options & Filters</div>
+        <label class="flex items-center space-x-3 cursor-pointer p-2.5 bg-white rounded-xl border border-pink-100 hover:border-pink-300 transition-colors">
+            <input type="checkbox" ${optMajorOnly ? 'checked' : ''} onchange="toggleOption('majorOnly', this.checked); renderConfigNumbers();" class="w-4 h-4 text-pink-500 rounded border-pink-300 focus:ring-pink-400">
+            <span class="text-xs font-bold text-gray-700">Major Arcana Only <span class="font-normal text-pink-400">(Hanya 22 kartu utama)</span></span>
+        </label>
+        <label class="flex items-center space-x-3 cursor-pointer p-2.5 bg-white rounded-xl border border-pink-100 hover:border-pink-300 transition-colors">
+            <input type="checkbox" ${optAutoOpen ? 'checked' : ''} onchange="toggleOption('autoOpen', this.checked)" class="w-4 h-4 text-pink-500 rounded border-pink-300 focus:ring-pink-400">
+            <span class="text-xs font-bold text-gray-700">Open the Cards Automatically <span class="font-normal text-pink-400">(Langsung buka hasil)</span></span>
+        </label>
+        <label class="flex items-center space-x-3 cursor-pointer p-2.5 bg-white rounded-xl border border-pink-100 hover:border-pink-300 transition-colors">
+            <input type="checkbox" ${optShowDesc ? 'checked' : ''} onchange="toggleOption('showDesc', this.checked)" class="w-4 h-4 text-pink-500 rounded border-pink-300 focus:ring-pink-400">
+            <span class="text-xs font-bold text-gray-700">Show the Description <span class="font-normal text-pink-400">(Tampilkan ringkasan makna kartu)</span></span>
+        </label>
+    `;
 }
 
 function updateDeckCount(num) {
@@ -412,7 +453,10 @@ function updateDeckCount(num) {
 }
 
 function startDraw() {
-    let shuffled = [...TAROT_DECK];
+    let pool = optMajorOnly ? TAROT_DECK.filter(c => c.arcana === 'Major Arcana') : [...TAROT_DECK];
+    if (deckCount > pool.length) deckCount = pool.length;
+
+    let shuffled = [...pool];
     for (let i = shuffled.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
@@ -458,7 +502,11 @@ function pickCard(idx, el) {
     
     updateDrawUI();
     if (drawnCards.length === deckCount) {
-        document.getElementById('btn-reveal').classList.remove('hidden');
+        if (optAutoOpen) {
+            setDrawPhase('result');
+        } else {
+            document.getElementById('btn-reveal').classList.remove('hidden');
+        }
     }
 }
 
@@ -484,6 +532,11 @@ function renderResult() {
     const grid = document.getElementById('result-grid');
     let html = '';
     drawnCards.forEach((card, idx) => {
+        const orientationText = card.isReversed ? 'Reversed (Terbalik)' : 'Upright (Tegak)';
+        const descText = card.isReversed 
+            ? `Energi terhambat, perlunya introspeksi mendalam, atau hambatan sementara terkait aspek ${card.name}.` 
+            : `Potensi penuh, kejelasan pikiran, dan aliran energi positif dari kartu ${card.name}.`;
+
         html += `
         <div class="flex flex-col items-center w-full" style="animation-delay: ${idx * 100}ms">
             <div class="w-full max-w-[120px] aspect-[2/3.3] bg-white border border-pink-100 rounded-xl flex flex-col items-center justify-center p-2 text-center shadow-md">
@@ -492,8 +545,13 @@ function renderResult() {
                  <div class="mt-2 text-pink-200 text-[10px] font-cute">${card.number}</div>
             </div>
             <span class="text-xs sm:text-sm font-cute text-gray-700 mt-3 text-center leading-tight">
-                ${card.name} <br> <span class="text-[10px] text-pink-400 italic">${card.isReversed ? '(Reversed)' : ''}</span>
+                ${card.name} <br> <span class="text-[10px] text-pink-400 italic">${orientationText}</span>
             </span>
+            ${optShowDesc ? `
+            <div class="mt-3 bg-pink-50/60 border border-pink-100 p-3 rounded-2xl text-left w-full font-cute shadow-sm">
+                <div class="text-[10px] font-bold text-purple-800 uppercase tracking-wider mb-1 flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-pink-400 mr-2"></span> Ringkasan Arti</div>
+                <p class="text-[11px] text-gray-600 leading-snug">${descText}</p>
+            </div>` : ''}
         </div>`;
     });
     grid.innerHTML = html;
@@ -635,7 +693,6 @@ function renderGenericPage(title) {
     if (title === 'About Tarot') {
         content.innerHTML = `
             <div class="space-y-8 text-left">
-                <!-- Intro Box -->
                 <div class="bg-pink-50/40 p-6 sm:p-8 rounded-3xl border border-pink-100 shadow-sm">
                     <h3 class="font-cute font-bold text-2xl text-purple-800 mb-3">Mengenal Lebih Dekat Dunia Tarot</h3>
                     <p class="text-gray-600 font-cute text-sm leading-relaxed">
@@ -643,7 +700,6 @@ function renderGenericPage(title) {
                     </p>
                 </div>
 
-                <!-- Section 1: Sejarah -->
                 <div class="space-y-3">
                     <h3 class="font-cute font-bold text-xl text-purple-800 flex items-center">
                         <span class="w-2 h-2 rounded-full bg-pink-300 mr-3"></span> Sejarah dan Akar Perjalanan Tarot
@@ -656,7 +712,6 @@ function renderGenericPage(title) {
                     </p>
                 </div>
 
-                <!-- Section 2: Struktur Penting -->
                 <div class="space-y-3">
                     <h3 class="font-cute font-bold text-xl text-purple-800 flex items-center">
                         <span class="w-2 h-2 rounded-full bg-purple-400 mr-3"></span> Struktur Penting: Major dan Minor Arcana
@@ -680,7 +735,6 @@ function renderGenericPage(title) {
                     </div>
                 </div>
 
-                <!-- Section 3: Peran Tarot -->
                 <div class="space-y-3">
                     <h3 class="font-cute font-bold text-xl text-purple-800 flex items-center">
                         <span class="w-2 h-2 rounded-full bg-pink-300 mr-3"></span> Peran dan Fungsi Esoteris Tarot
@@ -710,7 +764,6 @@ function renderGenericPage(title) {
         content.innerHTML = `<p>CuTarot by Mai Collection is provided for personal reflection and entertainment purposes.</p>`;
     }
 }
-
 
 // Init App
 window.onload = initHome;
