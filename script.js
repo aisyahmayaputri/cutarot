@@ -1136,16 +1136,66 @@ function renderGenericPage(title) {
                 </div>
             </div>
         `;
-    } else if (title === 'Personal Reading') {
+        } else if (title === 'Personal Reading') {
         content.innerHTML = `
-            <div class="text-center mb-8"><div class="w-20 h-20 bg-pink-100 rounded-full mx-auto mb-4 border-2 border-pink-200"></div><h2 class="font-cute font-bold text-2xl text-purple-800">Hi, I'm Mai</h2><p class="text-sm text-pink-500 font-['Caveat'] mt-1">Creator of CuTarot</p></div>
-            <p class="text-center font-cute">CuTarot was created to bring a soft, elegant, and safe space for reflection.</p>
+            <div class="space-y-8 text-left">
+                <!-- Creator Header -->
+                <div class="text-center mb-8">
+                    <div class="w-20 h-20 bg-pink-100 rounded-full mx-auto mb-4 border-2 border-pink-200 flex items-center justify-center text-purple-800 font-cute font-bold text-xl">M</div>
+                    <h2 class="font-cute font-bold text-3xl text-purple-800">Hi, I'm Mai</h2>
+                    <p class="text-sm text-pink-500 font-['Caveat'] mt-1 tracking-wide">Creator of the CuTarot</p>
+                    
+                    <!-- WhatsApp Note with Pink Icon -->
+                    <div class="mt-4 inline-flex items-center space-x-2 bg-pink-50/80 px-4 py-2 rounded-full border border-pink-100 shadow-sm">
+                        <svg class="w-4 h-4 text-pink-500" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.148-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                        <a href="#" class="text-xs font-cute font-bold text-pink-500 hover:text-pink-600 transition-colors">Find me for a free reading here</a>
+                    </div>
+                </div>
+
+                <!-- Paragraphs Block 1 -->
+                <div class="space-y-4 text-gray-600 font-cute text-sm leading-relaxed">
+                    <p>CuTarot was initially made for better understanding about what the cards try to speak to me. Rider Waite Smith cards are full of symbolism in every small details. I simply couldn't understand all of them.</p>
+                    <p>So, that, CuTarot was created. I didn't simplify the image nor the message every card try to convey. I just turned every card into something I could understand. Something that if I look at it in my spreads, I could tell directly the story and the message without having to remember the keywords all along.</p>
+                    <p>Alongside the creation of CuTarot, I could finally feel the bond with my own deck. I made it cute, yes, but the understanding ran deeper than reading basic RWS imagery.</p>
+                </div>
+
+                <div class="w-full h-px bg-pink-100 my-6"></div>
+
+                <!-- Paragraphs Block 2 -->
+                <div class="space-y-4 text-gray-600 font-cute text-sm leading-relaxed">
+                    <p>I realized that tarot could be a way to understand our life and its path along the way. It is never a sentence that things will eventually turn out just like what the card said. It is like a guidance, like a small lantern in the middle of the dark.</p>
+                    <p>The analogy is simple. Tarot acts like the lantern—it gives you reassurance, a little certain vision about what's in front of you, a 'there is something ahead and or behind you' type of message. It tells you what you don't know, what you deny, what will happen to some part of your life, what you better do, what you should prepare, what you should be careful of, and so many more.</p>
+                    <p>But it never decides where your real path takes you. Tarot could tell you, "You're going to A, here's 15 lists of stuff you should blah blah blah." Whether you make it there in the end, it's on you.</p>
+                    <p>Tarot is guidance, a teacher, a warning sign, a comfort. But only you can eventually decide how your life's going. Your step is the one who turns the wheel of your life. Tarot makes it clear for you to read the roadmap ahead and what had passed.</p>
+                    <p>And to think about Tarot this way, it sounds less like 'Tarot is a life verdict cards and certainly will change your whole life'. It's more like 'Tarot is the company your mind and soul needs to seek more clarity in every step of your life'. That is the difference. Tarot is a friend, not a verdict.</p>
+                </div>
+
+                <div class="w-full h-px bg-pink-100 my-6"></div>
+
+                <!-- Paragraphs Block 3 -->
+                <div class="space-y-4 text-gray-600 font-cute text-sm leading-relaxed">
+                    <p>I manage to create CuTarot as my company, a little guide for my road. And I hope, the deck could help you, too, to find answer for what your soul and mind is asking right now.</p>
+                    <p>You can bring this deck home and to wherever you are—physically and digitally. An exclusive, cute designed RWS for better understanding, yet still hold the answer for your question.</p>
+                </div>
+
+                <div class="w-full h-px bg-pink-100 my-6"></div>
+
+                <!-- Pricing & Purchase Box -->
+                <div class="bg-pink-50/50 p-6 sm:p-8 rounded-3xl border border-pink-100 text-center space-y-4 shadow-sm">
+                    <p class="font-cute text-sm text-gray-700 leading-relaxed font-bold">
+                        Buy this deck for only $50 USD / Rp. 759.000 (tax and shipping fee isn't included).<br>
+                        Printed only for you.<br>
+                        It will come with a guide book, far more complete than this website, and is written by me—result of deep research everywhere.
+                    </p>
+                    <div class="pt-2">
+                        <a href="#" class="inline-block bg-purple-700 hover:bg-purple-800 text-white px-8 py-3.5 rounded-2xl font-cute font-bold text-sm shadow-md transition-all transform hover:-translate-y-0.5">
+                            Click me here to buy this deck and bond with the cards
+                        </a>
+                    </div>
+                </div>
+            </div>
         `;
-    } else if (title === 'Buy Deck') {
-        content.innerHTML = `
-            <div class="flex flex-col md:flex-row gap-8 items-center"><div class="flex-1 w-full aspect-[3/4] bg-pink-50 rounded-2xl border border-pink-100 flex items-center justify-center"><div class="text-pink-300 font-cute font-bold text-sm">[ Deck Mockup ]</div></div>
-            <div class="flex-1"><h2 class="font-cute font-bold text-3xl mb-2 text-purple-800">CuTarot First Edition</h2><p class="text-pink-500 font-cute font-bold mb-6">$45.00</p><p class="text-sm mb-8 font-cute">A beautifully crafted 78-card deck featuring elegant, feminine aesthetics.</p><button class="w-full bg-purple-700 text-white py-4 rounded-xl font-cute font-bold">Purchase via WhatsApp</button></div></div>
-        `;
+
     } else {
         content.innerHTML = `<p>CuTarot by Mai Collection is provided for personal reflection and entertainment purposes.</p>`;
     }
