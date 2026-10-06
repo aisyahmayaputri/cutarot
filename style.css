@@ -1,26 +1,25 @@
- body { font-family: 'Inter', sans-serif; background-color: #fff7fc; overflow-x: hidden; }
-        .font-cute { font-family: 'Quicksand', sans-serif; letter-spacing: 0.02em; }
-        
-        /* Custom Scrollbar for Deck */
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .custom-scroll::-webkit-scrollbar { height: 6px; }
-        .custom-scroll::-webkit-scrollbar-track { background: #fdf2f8; border-radius: 10px; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: #fbcfe8; border-radius: 10px; }
-        
-        /* Animations - Enhanced Bouncy */
-        @keyframes fadeInUpBouncy { 
-            0% { opacity: 0; transform: translateY(30px); } 
-            65% { opacity: 1; transform: translateY(-8px); } 
-            100% { opacity: 1; transform: translateY(0); } 
-        }
-        .animate-fade-in-up { animation: fadeInUpBouncy 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
-        
-        .deck-container { scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
-        .tarot-card-item { transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
-        .tarot-card-item:hover, .tarot-card-item:active { transform: translateY(-15px) scale(1.05) !important; z-index: 50; }
-        
-        /* SPA View Management */
-        .view-section { display: none; min-height: 100vh; flex-direction: column; }
-        .view-section.active { display: flex; }
+body { font-family: 'Inter', sans-serif; background-color: #fff7fc; overflow-x: hidden; }
+.font-cute { font-family: 'Quicksand', sans-serif; letter-spacing: 0.02em; }
 
+/* Custom Scrollbar for Deck */
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.custom-scroll::-webkit-scrollbar { height: 6px; }
+.custom-scroll::-webkit-scrollbar-track { background: #fdf2f8; border-radius: 10px; }
+.custom-scroll::-webkit-scrollbar-thumb { background: #fbcfe8; border-radius: 10px; }
+
+/* Animations - Enhanced Bouncy */
+@keyframes fadeInUpBouncy { 
+    0% { opacity: 0; transform: translateY(30px); } 
+    65% { opacity: 1; transform: translateY(-8px); } 
+    100% { opacity: 1; transform: translateY(0); } 
+}
+.animate-fade-in-up { animation: fadeInUpBouncy 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+
+.deck-container { scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
+.tarot-card-item { transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+.tarot-card-item:hover, .tarot-card-item:active { transform: translateY(-15px) scale(1.05) !important; z-index: 50; }
+
+/* SPA View Management */
+.view-section { display: none; min-height: 100vh; flex-direction: column; }
+.view-section.active { display: flex; }
