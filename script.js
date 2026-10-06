@@ -141,6 +141,7 @@ const TAROT_DECK = [
     },
     {
         name: 'The High Priestess', arcana: 'Major Arcana', number: 2, yesNo: 'Yes (Intuitive)', astrology: 'Moon',
+        img: 'the-high-priestes.png'
         upright: 'Deep intuition, mystery, the subconscious mind, hidden wisdom, and honoring your inner voice.',
         reversed: 'Secrets exposed, ignoring gut feelings, gossip, inner anxiety, or emotional detachment.',
         love: 'A potent, mysterious spiritual bond. A relationship rooted in silent mutual understanding.'
