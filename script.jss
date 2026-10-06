@@ -86,4 +86,138 @@
                 filterLibrary('All');
             }
         }
+function getTodayDateString() {
+            const now = new Date();
+            return now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
+        }
 
+        function renderDailyCardHTML(card, isReversed) {
+            const cardEl = document.getElementById('inline-daily-card');
+            cardEl.innerHTML = `
+                <div class="w-[120px] mb-6">
+                    <div class="w-full aspect-[2/3.3] bg-white border border-pink-100 rounded-xl flex flex-col items-center justify-center p-2 shadow-md">
+                        <div class="text-[9px] text-pink-400 font-cute font-bold mb-1 uppercase">${card.arcana}</div>
+                        <div class="text-sm font-cute font-bold text-gray-800 leading-tight">${card.name}</div>
+                        <div class="mt-2 text-pink-200 text-xs font-cute">${card.number}</div>
+                    </div>
+                </div>
+                <h3 class="font-cute font-bold text-2xl text-purple-800 mb-1">${card.name}</h3>
+                <p class="text-xs text-pink-500 italic mb-4 font-cute">${isReversed ? 'Reversed' : 'Upright'}</p>
+                <div class="w-full h-px bg-pink-200/50 mb-4 max-w-[150px]"></div>
+                <p class="text-[10px] uppercase tracking-widest text-pink-400 mb-2 font-bold font-cute">Today's Energy</p>
+                <p class="text-sm text-gray-600 mb-5 font-cute">Embrace the essence of the ${card.name}. It calls you to focus on your inner feelings today.</p>
+                <p class="text-[10px] uppercase tracking-widest text-pink-400 mb-2 font-bold font-cute">Card Message</p>
+                <p class="text-sm text-gray-600 italic font-cute">"Trust the journey, breathe, and allow the flow of the universe to guide your steps."</p>
+            `;
+            cardEl.classList.remove('hidden');
+            cardEl.classList.add('flex');
+        }
+
+        function toggleDailyCard() {
+            const btnEl = document.getElementById('btn-daily-card');
+            const todayStr = getTodayDateString();
+            let savedData = localStorage.getItem('cutarot_daily');
+            let dailyData = null;
+
+            if (savedData) {
+                const parsed = JSON.parse(savedData);
+                if (parsed.date === todayStr) { dailyData = parsed; }
+            }
+
+            if (!dailyData) {
+                const randomCard = TAROT_DECK[Math.floor(Math.random() * 78)];
+                dailyData = { date: todayStr, card: randomCard, isReversed: Math.random() > 0.8 };
+                localStorage.setItem('cutarot_daily', JSON.stringify(dailyData));
+            }
+
+            renderDailyCardHTML(dailyData.card, dailyData.isReversed);
+            
+            if (btnEl) {
+                btnEl.innerText = "Card Drawn for Today";
+                btnEl.classList.add('opacity-50', 'bg-pink-50');
+                btnEl.classList.remove('hover:-translate-y-0.5');
+                btnEl.onclick = null;
+            }
+        }
+
+        function checkDailyCard() {
+            const todayStr = getTodayDateString();
+            let savedData = localStorage.getItem('cutarot_daily');
+            if (savedData) {
+                const parsed = JSON.parse(savedData);
+                if (parsed.date === todayStr) {
+                    renderDailyCardHTML(parsed.card, parsed.isReversed);
+                    const btnEl = document.getElementById('btn-daily-card');
+                    if (btnEl) {
+                        btnEl.innerText = "Card Drawn for Today";
+                        btnEl.classList.add('opacity-50', 'bg-pink-50');
+                        btnEl.classList.remove('hover:-translate-y-0.5');
+                        btnEl.onclick = null;
+                    }
+                }
+            }
+        }
+
+        // --- UI RENDERING ---
+        function initHome() {
+            checkDailyCard(); 
+            
+            // Render Spreads
+            const spreadsGrid = document.getElementById('home-spreads-grid');
+            const drawSpreadsGrid = document.getElementById('draw-spreads-grid');
+            let spreadHtml = '';
+            SPREADS.forEach((s, i) => {
+                const card = `
+                    <div onclick="selectSpread(${i})" class="p-4 rounded-xl border border-pink-50 hover:border-pink-200 bg-white hover:bg-pink-50/30 cursor-pointer transition-all h-full transform hover:-translate-y-1">
+                        <h3 class="font-cute font-bold text-sm text-purple-800 mb-1">${s.name}</h3>
+                        <p class="font-cute text-[11px] text-pink-400/90 leading-snug">${s.desc}</p>
+                    </div>`;
+                spreadHtml += card;
+            });
+            spreadsGrid.innerHTML = spreadHtml;
+            drawSpreadsGrid.innerHTML = spreadHtml;
+
+            // Render Zodiacs
+            const zodiacGrid = document.getElementById('home-zodiac-grid');
+            let zodiacHtml = '';
+            ZODIAC_DATA.forEach(z => {
+                zodiacHtml += `
+                    <div onclick="showZodiac('${z.id}')" class="p-3.5 rounded-xl border border-gray-100 hover:border-pink-200 text-center transition-all hover:bg-pink-50/30 transform hover:-translate-y-1 flex flex-col items-center cursor-pointer">
+                        <div class="text-purple-700 mb-2 w-6 h-6"><svg viewBox="0 0 24 24" class="w-full h-full">${z.svg}</svg></div>
+                        <div class="font-cute font-bold text-xs text-purple-700 mb-0.5">${z.name}</div>
+                        <div class="font-cute text-[9px] text-pink-400">${z.dateRange}</div>
+                    </div>`;
+            });
+            zodiacGrid.innerHTML = zodiacHtml;
+        }
+
+        // --- DRAW SYSTEM FLOW ---
+        function setDrawPhase(phase) {
+            ['phase-spread', 'phase-config', 'phase-draw', 'phase-result'].forEach(p => {
+                document.getElementById(p).classList.add('hidden');
+                document.getElementById(p).classList.remove('flex');
+            });
+            
+            const target = document.getElementById('phase-' + phase);
+            target.classList.remove('hidden');
+            if(phase === 'draw') target.classList.add('flex');
+            window.scrollTo(0,0);
+            
+            if (phase === 'result') renderResult();
+        }
+
+        function selectSpread(index) {
+            currentSpread = SPREADS[index];
+            deckCount = currentSpread.count;
+            
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById('view-draw').classList.add('active');
+            
+            if (currentSpread.id === 'free') {
+                document.getElementById('config-spread-name').innerText = currentSpread.name;
+                renderConfigNumbers();
+                setDrawPhase('config');
+            } else {
+                startDraw(); 
+            }
+        }
