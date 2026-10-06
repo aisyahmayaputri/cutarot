@@ -447,3 +447,28 @@ function renderConfigNumbers() {
             document.getElementById('view-zodiac').classList.add('active');
             window.scrollTo(0, 0);
         }
+// --- GENERIC PAGES ---
+        function renderGenericPage(title) {
+            document.getElementById('generic-title').innerText = title;
+            const content = document.getElementById('generic-content');
+            
+            if (title === 'About Tarot') {
+                content.innerHTML = `<p>Tarot is a deck of 78 cards used for reflection, introspection, and storytelling. It consists of the Major Arcana representing significant life themes, and the Minor Arcana representing daily situations.</p>`;
+            } else if (title === 'Personal Reading') {
+                content.innerHTML = `
+                    <div class="text-center mb-8"><div class="w-20 h-20 bg-pink-100 rounded-full mx-auto mb-4 border-2 border-pink-200"></div><h2 class="font-cute font-bold text-2xl text-purple-800">Hi, I'm Mai</h2><p class="text-sm text-pink-500 font-['Caveat'] mt-1">Creator of CuTarot</p></div>
+                    <p class="text-center font-cute">CuTarot was created to bring a soft, elegant, and safe space for reflection.</p>
+                `;
+            } else if (title === 'Buy Deck') {
+                content.innerHTML = `
+                    <div class="flex flex-col md:flex-row gap-8 items-center"><div class="flex-1 w-full aspect-[3/4] bg-pink-50 rounded-2xl border border-pink-100 flex items-center justify-center"><div class="text-pink-300 font-cute font-bold text-sm">[ Deck Mockup ]</div></div>
+                    <div class="flex-1"><h2 class="font-cute font-bold text-3xl mb-2 text-purple-800">CuTarot First Edition</h2><p class="text-pink-500 font-cute font-bold mb-6">$45.00</p><p class="text-sm mb-8 font-cute">A beautifully crafted 78-card deck featuring elegant, feminine aesthetics.</p><button class="w-full bg-purple-700 text-white py-4 rounded-xl font-cute font-bold">Purchase via WhatsApp</button></div></div>
+                `;
+            } else {
+                content.innerHTML = `<p>CuTarot by Mai Collection is provided for personal reflection and entertainment purposes.</p>`;
+            }
+        }
+
+        // Init App
+        window.onload = initHome;
+    </script>
