@@ -6,7 +6,7 @@ const ZODIAC_DATA = [
         dateRange: 'March 21 – April 19', 
         element: 'Fire Element',
         tarotMatch: 'The Emperor',
-        desc: 'Aries adalah percikan api pertama di roda zodiak—sebuah simbol energi murni yang selalu antusias menyambut permulaan baru. Dikenal dengan keberanian yang sering kali mendahului rasa takut, zodiak ini hidup dalam gerak cepat, inisiatif tinggi, dan keyakinan bahwa jalan hidup harus dirintis sendiri, bukan sekadar diikuti.<br><br>Dalam pembacaan tarot, Aries sangat beresonansi dengan kartu <strong>The Emperor</strong>, yang mencerminkan otoritas, ketegasan, dan jiwa pelindung yang kuat. Tantangan terbesar bagi seorang Aries adalah meredam ego dan belajar bahwa kesabaran bukanlah kelemahan, melainkan strategi terbaik untuk memenangkan pertempuran jangka panjang.',
+        desc: 'Aries is the first spark in the zodiac wheel—a symbol of pure energy that eagerly welcomes new beginnings. Known for a boldness that often precedes fear, this sign lives in fast motion, high initiative, and the belief that the path of life must be forged rather than merely followed.<br><br>In tarot readings, Aries deeply resonates with <strong>The Emperor</strong>, reflecting authority, assertiveness, and a strong protective spirit. The greatest challenge for an Aries is to tame the ego and learn that patience is not a weakness, but the ultimate strategy to win long-term battles.',
         svg: '<path d="M4,14 C4,8 12,4 12,12 C12,4 20,8 20,14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' 
     },
     { 
@@ -15,7 +15,7 @@ const ZODIAC_DATA = [
         dateRange: 'April 20 – May 20', 
         element: 'Earth Element',
         tarotMatch: 'The Hierophant',
-        desc: 'Taurus adalah wujud nyata dari ketenangan bumi yang kokoh. Mereka memiliki apresiasi yang sangat tinggi terhadap keindahan estetika, kenyamanan indrawi, serta stabilitas hidup yang terencana. Di balik pembawaannya yang tenang, tersimpan tekad yang hampir mustahil untuk digoyahkan.<br><br>Energi Taurus merefleksikan kartu <strong>The Hierophant</strong>—melambangkan nilai-nilai tradisional yang dijaga ketat, pencarian makna spiritual yang membumi, serta kesetiaan tanpa syarat dalam hubungan. Bagi Taurus, rumah bukan sekadar tempat, melainkan sebuah rasa aman yang mereka bangun dengan penuh kesabaran.',
+        desc: 'Taurus is the physical embodiment of grounded, steady earth. They possess a deep appreciation for aesthetic beauty, sensory comfort, and well-planned life stability. Beneath their calm demeanor lies a determination that is nearly impossible to shake.<br><br>Taurus energy reflects <strong>The Hierophant</strong>—symbolizing guarded traditional values, down-to-earth spiritual searching, and unwavering loyalty in relationships. For Taurus, home is not just a place, but a sanctuary built with immense patience.',
         svg: '<circle cx="12" cy="14" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M7,9 C7,4 17,4 17,9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' 
     },
     { 
@@ -24,7 +24,7 @@ const ZODIAC_DATA = [
         dateRange: 'May 21 – June 20', 
         element: 'Air Element',
         tarotMatch: 'The Lovers',
-        desc: 'Gemini adalah angin musim semi yang bergerak lincah, membawa rasa ingin tahu tanpa batas dan kecerdasan yang memikat. Mereka adalah penjelajah ide, mampu melihat suatu masalah dari berbagai sudut pandang berbeda, dan memiliki pesona komunikasi yang hidup.<br><br>Karakter dinamis mereka diwakili oleh kartu <strong>The Lovers</strong>, yang tidak hanya menyimbolkan hubungan asmara, tetapi juga dilema pilihan hidup dan penyatuan sisi-sisi dualitas dalam diri. Tantangan terbesar Gemini adalah menemukan fokus di tengah badai informasi yang mereka serap setiap hari.',
+        desc: 'Gemini is the nimble spring breeze, carrying boundless curiosity and captivating intellect. They are explorers of ideas, capable of viewing a single problem from multiple perspectives with a lively, charming communication style.<br><br>Their dynamic character is represented by <strong>The Lovers</strong>, symbolizing not only romance but also life-altering choices and the integration of dualities within the self. Gemini\'s greatest challenge is finding focus amidst the storm of information they absorb daily.',
         svg: '<path d="M7,5 L17,5 M7,19 L17,19 M9,5 L9,19 M15,5 L15,19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' 
     },
     { 
@@ -33,7 +33,7 @@ const ZODIAC_DATA = [
         dateRange: 'June 21 – July 22', 
         element: 'Water Element',
         tarotMatch: 'The Chariot',
-        desc: 'Cancer adalah samudra emosi yang menyimpan kedalaman luar biasa di balik cangkang pelindungnya. Dipimpin oleh energi bulan, mereka memiliki intuisi yang sangat tajam—sering kali bisa merasakan perubahan energi di suatu ruangan bahkan sebelum orang lain menyadarinya.<br><br>Zodiak ini merepresentasikan kartu <strong>The Chariot</strong>, melambangkan perjalanan emosional yang intens di mana mereka harus belajar mengendalikan pasang surut perasaan agar tidak hanyut. Cancer adalah tempat berlindung yang paling aman bagi orang-orang yang mereka kasihi.',
+        desc: 'Cancer is an ocean of emotion holding extraordinary depths behind protective shells. Ruled by lunar energies, they possess razor-sharp intuition—often sensing shifts in a room\'s energy long before anyone else notices.<br><br>This sign represents <strong>The Chariot</strong>, symbolizing an intense emotional journey where they must learn to navigate powerful tides without losing themselves. Cancer is the safest harbor for those they hold dear.',
         svg: '<circle cx="8" cy="10" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M11,10 C16,7 20,10 18,14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="16" cy="14" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M13,14 C8,17 4,14 6,10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' 
     },
     { 
@@ -42,7 +42,7 @@ const ZODIAC_DATA = [
         dateRange: 'July 23 – August 22', 
         element: 'Fire Element',
         tarotMatch: 'Strength',
-        desc: 'Leo memancarkan kehangatan matahari yang menghidupkan segalanya di dekat mereka. Kreativitas tanpa batas, jiwa yang dermawan, dan karisma alami membuat seorang Leo selalu menonjol secara natural tanpa harus berusaha terlalu keras.<br><br>Energi mereka selaras dengan kartu <strong>Strength</strong>—bukan kekuatan fisik yang kasar, melainkan keberanian hati yang lembut, ketulusan, dan kemampuan menjinakkan ketakutan terbesar melalui rasa percaya diri. Di balik sorot lampu yang mereka dapatkan, Leo memiliki hati yang sangat loyal.',
+        desc: 'Leo radiates the solar warmth that brings life to everything around them. Boundless creativity, a generous spirit, and natural charisma ensure a Leo always stands out effortlessly without trying too hard.<br><br>Their energy aligns with <strong>Strength</strong>—not raw physical force, but gentle courage, sincerity, and the ability to tame deep-seated fears through supreme self-confidence. Beneath the spotlight, Leo holds a fiercely loyal heart.',
         svg: '<circle cx="7" cy="17" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10,17 C13,17 18,14 15,9 C12,4 6,8 9,13 C12,18 19,16 19,16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' 
     },
     { 
@@ -51,7 +51,7 @@ const ZODIAC_DATA = [
         dateRange: 'Aug 23 – Sep 22', 
         element: 'Earth Element',
         tarotMatch: 'The Hermit',
-        desc: 'Virgo adalah arsitek ketelitian yang melihat keindahan dalam detail-detail kecil yang sering diabaikan orang lain. Mereka adalah sosok yang analitis, berdedikasi tinggi, dan memiliki dorongan tulus untuk memperbaiki serta merawat lingkungan sekitarnya.<br><br>Karakter reflektif mereka tercermin dalam kartu <strong>The Hermit</strong>—pencarian kebenaran hakiki, kebutuhan untuk menyendiri demi mengisi ulang energi mental, dan kebijaksanaan yang lahir dari pengamatan mendalam. Virgo adalah bentuk cinta dalam wujud tindakan nyata dan perhatian sekecil apa pun.',
+        desc: 'Virgo is the architect of precision, finding beauty in minute details that others overlook. They are analytical, deeply dedicated, and driven by a sincere impulse to mend and nurture their environment.<br><br>Their reflective character mirrors <strong>The Hermit</strong>—the quest for ultimate truth, the need for solitude to recharge mental clarity, and wisdom born from deep observation. Virgo is love manifested through tangible acts of service.',
         svg: '<path d="M5,17 L7,7 L11,17 L14,9 C14,9 15,19 18,17 C21,15 19,10 19,10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' 
     },
     { 
@@ -60,7 +60,7 @@ const ZODIAC_DATA = [
         dateRange: 'Sep 23 – Oct 22', 
         element: 'Air Element',
         tarotMatch: 'Justice',
-        desc: 'Libra adalah penari anggun di atas garis keseimbangan. Di bawah naungan planet estetika, mereka memiliki selera seni yang tinggi, kebencian mendalam pada konflik yang tidak perlu, serta kemampuan alami untuk merajut kedamaian di antara dua kubu yang bersitegang.<br><br>Zodiak ini beresonansi kuat dengan kartu <strong>Justice</strong>, yang melambangkan objektivitas, pencarian keadilan sejati, dan pentingnya menimbang segala keputusan dengan kepala dingin. Libra mengajarkan kita bahwa harmoni adalah sebuah karya seni yang harus dijaga setiap hari.',
+        desc: 'Libra is a graceful dancer along the line of equilibrium. Under the banner of aesthetic planets, they possess refined artistic taste, a deep aversion to unnecessary conflict, and a natural gift for weaving peace between opposing forces.<br><br>This sign resonates strongly with <strong>Justice</strong>, symbolizing objectivity, the pursuit of true fairness, and weighing choices with a cool head. Libra teaches us that harmony is an art form requiring daily maintenance.',
         svg: '<path d="M4,15 L20,15 M4,18 L20,18 M12,15 C12,10 8,11 6,15 M12,15 C12,10 16,11 18,15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' 
     },
     { 
@@ -69,7 +69,7 @@ const ZODIAC_DATA = [
         dateRange: 'Oct 23 – Nov 21', 
         element: 'Water Element',
         tarotMatch: 'Death',
-        desc: 'Scorpio adalah misteri yang hidup dalam intensitas emosi yang paling dalam. Mereka tidak mengenal kata "setengah-setengah"; bagi seorang Scorpio, hubungan, impian, dan perasaan harus dijalani dengan totalitas mutlak atau ditinggalkan sama sekali.<br><br>Energi mereka sangat lekat dengan kartu <strong>Death</strong>—bukan akhir yang menakutkan, melainkan proses transformasi radikal, pelepasan masa lalu yang sudah usang, dan kemampuan bangkit kembali seperti burung Phoenix dari abu kepedihan. Scorpio adalah simbol regenerasi jiwa yang paling tangguh.',
+        desc: 'Scorpio is a mystery living in intense emotional depths. They do not understand half-measures; for a Scorpio, relationships, ambitions, and feelings must be pursued with absolute totality or left behind entirely.<br><br>Their energy is closely tied to <strong>Death</strong>—not a terrifying end, but radical transformation, shedding obsolete pasts, and rising like a phoenix from the ashes of adversity. Scorpio is the ultimate symbol of spiritual rebirth.',
         svg: '<path d="M5,14 L7,6 L11,14 L14,7 C14,7 16,14 18,13 C20,12 20,8 20,8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M20,8 L22,10 M20,8 L18,10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' 
     },
     { 
@@ -78,7 +78,7 @@ const ZODIAC_DATA = [
         dateRange: 'Nov 22 – Dec 21', 
         element: 'Fire Element',
         tarotMatch: 'Temperance',
-        desc: 'Sagittarius adalah pemanah bebas yang memandang cakrawala luas sebagai rumahnya. Jiwa petualang mereka selalu haus akan pengalaman baru, filosofi hidup, dan kebebasan mutlak untuk terbang ke mana pun angin membawanya.<br><br>Karakter mereka terhubung erat dengan kartu <strong>Temperance</strong>—melambangkan penyatuan berbagai pengalaman hidup menjadi kebijaksanaan, keselarasan spiritual, dan kemampuan menjaga aliran optimisme tetap stabil. Sagittarius adalah pengingat bahwa hidup adalah sebuah perjalanan suci yang harus dinikmati setiap detiknya.',
+        desc: 'Sagittarius is the free archer viewing the vast horizon as home. Their adventurous spirit hungers for new experiences, life philosophies, and absolute freedom to fly wherever the wind takes them.<br><br>Their character links directly to <strong>Temperance</strong>—symbolizing the synthesis of life experiences into wisdom, spiritual alignment, and maintaining steady optimism. Sagittarius reminds us that life is a sacred journey meant to be savored every step of the way.',
         svg: '<path d="M6,18 L18,6 M12,6 L18,6 L18,12 M4,14 L10,20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' 
     },
     { 
@@ -87,7 +87,7 @@ const ZODIAC_DATA = [
         dateRange: 'Dec 22 – Jan 19', 
         element: 'Earth Element',
         tarotMatch: 'The Devil',
-        desc: 'Capricorn adalah pendaki gunung yang sabar, disiplin, dan tidak pernah gentar melihat seberapa tinggi puncak yang harus mereka capai. Mereka memiliki ketahanan mental yang luar biasa, etos kerja tinggi, dan visi jangka panjang yang matang.<br><br>Dalam dimensi spiritual, mereka merefleksikan pelajaran dari kartu <strong>The Devil</strong>—tentang bagaimana mengenali keterikatan duniawi, menguasai ambisi diri sendiri, dan membebaskan potensi terdalam dari rasa takut gagal. Capricorn membuktikan bahwa kesuksesan sejati dibangun dari konsistensi hari demi hari.',
+        desc: 'Capricorn is the patient mountain climber, disciplined and unfazed by how steep the peak ahead may be. They possess incredible mental resilience, a strong work ethic, and mature long-term vision.<br><br>In spiritual dimensions, they reflect lessons from <strong>The Devil</strong>—recognizing worldly attachments, mastering personal ambitions, and freeing one’s deepest potential from the fear of failure. Capricorn proves true success is built through daily consistency.',
         svg: '<path d="M5,7 L8,17 L12,9 C12,9 18,6 18,11 C18,16 14,20 9,19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' 
     },
     { 
@@ -96,7 +96,7 @@ const ZODIAC_DATA = [
         dateRange: 'Jan 20 – Feb 18', 
         element: 'Air Element',
         tarotMatch: 'The Star',
-        desc: 'Aquarius adalah pemimpi masa depan yang berdiri di luar kotak konvensional. Pikiran mereka selalu berkelana melampaui zamannya, membawa inovasi, idealisme tinggi, dan kepedulian yang besar terhadap kesejahteraan umat manusia secara kolektif.<br><br>Energi mereka berpendar terang melalui kartu <strong>The Star</strong>—membawa inspirasi murni, harapan setelah melewati masa-masa gelap, dan keyakinan spiritual bahwa alam semesta selalu membimbing langkah mereka. Aquarius adalah percikan cahaya pembaruan bagi dunia.',
+        desc: 'Aquarius is the future dreamer standing outside conventional boxes. Their minds wander far ahead of their time, bringing innovation, strong idealism, and profound care for collective human well-being.<br><br>Their energy shines brightly through <strong>The Star</strong>—bringing pure inspiration, hope after dark times, and spiritual conviction that the universe guides their steps. Aquarius is a spark of renewal for the world.',
         svg: '<path d="M3,9 L7,5 L11,9 L15,5 L19,9 M3,15 L7,11 L11,15 L15,11 L19,15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' 
     },
     { 
@@ -105,7 +105,7 @@ const ZODIAC_DATA = [
         dateRange: 'Feb 19 – Mar 20', 
         element: 'Water Element',
         tarotMatch: 'The Moon',
-        desc: 'Pisces adalah penyair terakhir di roda zodiak, hidup di antara batas dunia nyata dan dunia mimpi yang magis. Mereka memiliki tingkat empati yang tanpa batas, kepekaan artistik yang tinggi, serta kedalaman batin yang terhubung langsung dengan dimensi spiritual.<br><br>Zodiak ini berpadu erat dengan kartu <strong>The Moon</strong>—menyelami misteri alam bawah sadar, intuisi yang tidak pernah salah, dan menghadapi ilusi dengan keanggunan jiwa. Pisces adalah pelabuhan terakhir di mana seni, cinta, dan keajaiban melebur menjadi satu.',
+        desc: 'Pisces is the final poet of the zodiac, living between tangible reality and magical dreamscapes. They possess limitless empathy, high artistic sensitivity, and deep inner ties to spiritual dimensions.<br><br>This sign merges closely with <strong>The Moon</strong>—exploring subconscious mysteries, unerring intuition, and facing illusions with graceful soulfulness. Pisces is the sanctuary where art, love, and wonder melt into one.',
         svg: '<path d="M8,4 C5,10 5,14 8,20 M16,4 C19,10 19,14 16,20 M6,12 L18,12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' 
     }
 ];
@@ -124,95 +124,490 @@ const SPREADS = [
     { id: 'career', name: 'Career Path', desc: 'Gain clarity on your professional journey and upcoming opportunities.', count: 5 }
 ];
 
-// --- TAROT DECK LENGKAP 78 KARTU TRADISIONAL ---
+// --- COMPLETE 78 TRADITIONAL TAROT DECK (FULL ENGLISH) ---
 const TAROT_DECK = [
     // Major Arcana (0 - 21)
-    { name: 'The Fool', arcana: 'Major Arcana', number: 0 },
-    { name: 'The Magician', arcana: 'Major Arcana', number: 1 },
-    { name: 'The High Priestess', arcana: 'Major Arcana', number: 2 },
-    { name: 'The Empress', arcana: 'Major Arcana', number: 3 },
-    { name: 'The Emperor', arcana: 'Major Arcana', number: 4 },
-    { name: 'The Hierophant', arcana: 'Major Arcana', number: 5 },
-    { name: 'The Lovers', arcana: 'Major Arcana', number: 6 },
-    { name: 'The Chariot', arcana: 'Major Arcana', number: 7 },
-    { name: 'Strength', arcana: 'Major Arcana', number: 8 },
-    { name: 'The Hermit', arcana: 'Major Arcana', number: 9 },
-    { name: 'Wheel of Fortune', arcana: 'Major Arcana', number: 10 },
-    { name: 'Justice', arcana: 'Major Arcana', number: 11 },
-    { name: 'The Hanged Man', arcana: 'Major Arcana', number: 12 },
-    { name: 'Death', arcana: 'Major Arcana', number: 13 },
-    { name: 'Temperance', arcana: 'Major Arcana', number: 14 },
-    { name: 'The Devil', arcana: 'Major Arcana', number: 15 },
-    { name: 'The Tower', arcana: 'Major Arcana', number: 16 },
-    { name: 'The Star', arcana: 'Major Arcana', number: 17 },
-    { name: 'The Moon', arcana: 'Major Arcana', number: 18 },
-    { name: 'The Sun', arcana: 'Major Arcana', number: 19 },
-    { name: 'Judgement', arcana: 'Major Arcana', number: 20 },
-    { name: 'The World', arcana: 'Major Arcana', number: 21 },
+    {
+        name: 'The Fool', arcana: 'Major Arcana', number: 0, yesNo: 'Yes', astrology: 'Uranus',
+        upright: 'New beginnings, innocence, spontaneity, a leap of faith into the unknown, and taking a bold first step on a grand adventure.',
+        reversed: 'Recklessness, risk-taking without foresight, hesitation, folly, or holding back out of unwarranted fear.',
+        love: 'A fresh, exciting romance filled with spontaneity. For singles, expect unexpected new romantic potentials.'
+    },
+    {
+        name: 'The Magician', arcana: 'Major Arcana', number: 1, yesNo: 'Yes', astrology: 'Mercury',
+        upright: 'Manifestation, willpower, skill, razor-sharp focus, and the ability to turn resources into reality.',
+        reversed: 'Manipulation, trickery, squandered potential, lack of focus, or hidden ill intentions.',
+        love: 'Magnetic communication in relationships. Time to take concrete actions to draw your crush closer.'
+    },
+    {
+        name: 'The High Priestess', arcana: 'Major Arcana', number: 2, yesNo: 'Yes (Intuitive)', astrology: 'Moon',
+        upright: 'Deep intuition, mystery, the subconscious mind, hidden wisdom, and honoring your inner voice.',
+        reversed: 'Secrets exposed, ignoring gut feelings, gossip, inner anxiety, or emotional detachment.',
+        love: 'A potent, mysterious spiritual bond. A relationship rooted in silent mutual understanding.'
+    },
+    {
+        name: 'The Empress', arcana: 'Major Arcana', number: 3, yesNo: 'Yes', astrology: 'Venus',
+        upright: 'Abundance, fertility, aesthetic beauty, nurturing care, boundless creativity, and life comfort.',
+        reversed: 'Codependency, creative blocks, neglecting self-care, or over-protective tendencies.',
+        love: 'An exceptionally harmonious, caring, and warm relationship leaning toward long-term commitment.'
+    },
+    {
+        name: 'The Emperor', arcana: 'Major Arcana', number: 4, yesNo: 'Yes', astrology: 'Aries',
+        upright: 'Authority, structure, firm leadership, stability, self-control, and building solid foundations.',
+        reversed: 'Abuse of power, tyranny, rigid thinking, stubbornness, or lack of discipline.',
+        love: 'A dependable, protective partner. Avoid letting controlling or overly dominant behaviors seep in.'
+    },
+    {
+        name: 'The Hierophant', arcana: 'Major Arcana', number: 5, yesNo: 'Yes', astrology: 'Taurus',
+        upright: 'Tradition, spiritual guidance, established value systems, formal learning, and adherence to rules.',
+        reversed: 'Rebellion against traditions, rigid dogmatism, breaking moral codes, or taking shortcuts.',
+        love: 'A conventional relationship approved by social circles. Strong commitments like engagement or marriage.'
+    },
+    {
+        name: 'The Lovers', arcana: 'Major Arcana', number: 6, yesNo: 'Yes', astrology: 'Gemini',
+        upright: 'Crucial life choices, aligned values, true love, deep soul connection, and harmonious commitment.',
+        reversed: 'Misaligned values, relationship friction, poor major decisions, or internal conflict.',
+        love: 'The quintessential card of true love and emotional purity. A major choice regarding romantic futures.'
+    },
+    {
+        name: 'The Chariot', arcana: 'Major Arcana', number: 7, yesNo: 'Yes', astrology: 'Cancer',
+        upright: 'Victory through discipline, iron will, absolute steering of life direction, and overcoming hurdles.',
+        reversed: 'Loss of control, excessive aggression, chaotic direction, or surrender halfway.',
+        love: 'Battling through relationship obstacles together. Uniting two differing egos for mutual goals.'
+    },
+    {
+        name: 'Strength', arcana: 'Major Arcana', number: 8, yesNo: 'Yes', astrology: 'Leo',
+        upright: 'Inner strength, gentle courage, immense patience, compassion, and mastering negative emotions.',
+        reversed: 'Self-doubt, mental weakness, emotional volatility, or feeling helpless against trials.',
+        love: 'Patience and gentleness are key to melting your partner’s heart. Supporting each other through hard times.'
+    },
+    {
+        name: 'The Hermit', arcana: 'Major Arcana', number: 9, yesNo: 'No', astrology: 'Virgo',
+        upright: 'Soul-searching, deep introspection, mindful retreat, inner wisdom, and spiritual enlightenment.',
+        reversed: 'Acute loneliness, social isolation, rejecting wise counsel, or getting lost in rumination.',
+        love: 'Time to pause and evaluate yourself before entering deeper commitments. Singles should relish solitude.'
+    },
+    {
+        name: 'Wheel of Fortune', arcana: 'Major Arcana', number: 10, yesNo: 'Yes', astrology: 'Jupiter',
+        upright: 'Good luck, turning life cycles, favorable destiny, golden opportunities, and positive shifts.',
+        reversed: 'Temporary bad luck, external hurdles, resisting change, or looping in past cycles.',
+        love: 'Fateful shifts in romance. An unexpected meeting with someone changing your life trajectory.'
+    },
+    {
+        name: 'Justice', arcana: 'Major Arcana', number: 11, yesNo: 'Neutral / Yes', astrology: 'Libra',
+        upright: 'Fairness, objective truth, cause and effect, balanced decisions, and moral integrity.',
+        reversed: 'Injustice, dishonesty, evading accountability for mistakes, or skewed perspectives.',
+        love: 'Equilibrium in giving and receiving. A fair, honest bond free from exploitation.'
+    },
+    {
+        name: 'The Hanged Man', arcana: 'Major Arcana', number: 12, yesNo: 'No', astrology: 'Neptune',
+        upright: 'New perspectives via surrender, temporary sacrifice, letting go of control, and seeing things anew.',
+        reversed: 'Futile sacrifice, feeling stuck in limbo, refusing to see truth, or playing the victim.',
+        love: 'Extra patience and shifting viewpoints are required to understand your partner’s mindset.'
+    },
+    {
+        name: 'Death', arcana: 'Major Arcana', number: 13, yesNo: 'No', astrology: 'Scorpio',
+        upright: 'Total transformation, closing a life chapter, releasing the past, and a rebirth into better beginnings.',
+        reversed: 'Fear of change, clinging to worn-out pasts, stagnation, or resisting necessary endings.',
+        love: 'The end of a toxic chapter to make space for a far healthier, more meaningful romance.'
+    },
+    {
+        name: 'Temperance', arcana: 'Major Arcana', number: 14, yesNo: 'Yes', astrology: 'Sagittarius',
+        upright: 'Balance, moderation, inner harmony, patience, and peaceful synthesis of life elements.',
+        reversed: 'Life imbalance, extremes, internal conflicts, or rushing actions recklessly.',
+        love: 'A peaceful, understanding relationship marked by graceful mutual compromise.'
+    },
+    {
+        name: 'The Devil', arcana: 'Major Arcana', number: 15, yesNo: 'No', astrology: 'Capricorn',
+        upright: 'Materialistic attachments, toxic bonds, addictions, feeling trapped by ego or fears.',
+        reversed: 'Breaking toxic chains, newfound freedom, self-awareness, and escaping manipulation.',
+        love: 'Unhealthy relationship dynamics, excessive obsession, or possessiveness restricting freedom.'
+    },
+    {
+        name: 'The Tower', arcana: 'Major Arcana', number: 16, yesNo: 'No', astrology: 'Mars',
+        upright: 'Sudden shocking upheaval, collapse of false illusions or foundations, lightning-fast awakening.',
+        reversed: 'Narrowly avoiding disaster, denial of harsh truths, or delayed trauma.',
+        love: 'Major romantic earthquakes. Secrets exposed or fierce arguments changing everything instantly.'
+    },
+    {
+        name: 'The Star', arcana: 'Major Arcana', number: 17, yesNo: 'Yes', astrology: 'Aquarius',
+        upright: 'Renewed hope, pure inspiration, inner peace, emotional healing, and faith in the future.',
+        reversed: 'Loss of hope, despair, self-doubt, or feeling disconnected from dreams.',
+        love: 'An emotional healing phase in romance. High optimism and inner serenity with your partner.'
+    },
+    {
+        name: 'The Moon', arcana: 'Major Arcana', number: 18, yesNo: 'No', astrology: 'Pisces',
+        upright: 'Illusions, subconscious anxieties, intuition battling fear, confusion, and hidden matters.',
+        reversed: 'Truths emerging from deception, fading anxieties, and clearing confusion.',
+        love: 'Doubts, misunderstandings, or unexpressed secrets lurking beneath the surface.'
+    },
+    {
+        name: 'The Sun', arcana: 'Major Arcana', number: 19, yesNo: 'Yes', astrology: 'Sun',
+        upright: 'Pure happiness, brilliant success, high vitality, absolute clarity, and joyful living.',
+        reversed: 'Delayed happiness, dimming self-confidence, or overly idealized expectations.',
+        love: 'Warm, bright, sincere love bringing immense joy to everyday life.'
+    },
+    {
+        name: 'Judgement', arcana: 'Major Arcana', number: 20, yesNo: 'Yes', astrology: 'Pluto',
+        upright: 'Life calling, honest self-evaluation, forgiveness, spiritual awakening, and final verdicts.',
+        reversed: 'Acute self-doubt, avoiding self-reflection, excessive guilt, or harsh judgment of others.',
+        love: 'Re-evaluating past choices in romance. Time for forgiveness and starting clean.'
+    },
+    {
+        name: 'The World', arcana: 'Major Arcana', number: 21, yesNo: 'Yes', astrology: 'Saturn',
+        upright: 'Completion of a life cycle, ultimate achievement, perfect fulfillment, and wholeness.',
+        reversed: 'Close to the finish line but delayed, lack of fulfillment, or loose ends remaining.',
+        love: 'A relationship reaching peak happiness and complete emotional wholeness.'
+    },
 
     // Suit of Wands
-    { name: 'Ace of Wands', arcana: 'Minor Arcana', number: 1 },
-    { name: 'Two of Wands', arcana: 'Minor Arcana', number: 2 },
-    { name: 'Three of Wands', arcana: 'Minor Arcana', number: 3 },
-    { name: 'Four of Wands', arcana: 'Minor Arcana', number: 4 },
-    { name: 'Five of Wands', arcana: 'Minor Arcana', number: 5 },
-    { name: 'Six of Wands', arcana: 'Minor Arcana', number: 6 },
-    { name: 'Seven of Wands', arcana: 'Minor Arcana', number: 7 },
-    { name: 'Eight of Wands', arcana: 'Minor Arcana', number: 8 },
-    { name: 'Nine of Wands', arcana: 'Minor Arcana', number: 9 },
-    { name: 'Ten of Wands', arcana: 'Minor Arcana', number: 10 },
-    { name: 'Page of Wands', arcana: 'Minor Arcana', number: 11 },
-    { name: 'Knight of Wands', arcana: 'Minor Arcana', number: 12 },
-    { name: 'Queen of Wands', arcana: 'Minor Arcana', number: 13 },
-    { name: 'King of Wands', arcana: 'Minor Arcana', number: 14 },
+    {
+        name: 'Ace of Wands', arcana: 'Minor Arcana', number: 1, yesNo: 'Yes', astrology: 'Fire Signs (Aries, Leo, Sag)',
+        upright: 'Inspirational spark, burning creative potential, surging enthusiasm, and golden opportunities.',
+        reversed: 'Losing momentum, project delays, lack of motivation, or early hesitation.',
+        love: 'Explosive romantic passion at the start. Intense physical and emotional attraction.'
+    },
+    {
+        name: 'Two of Wands', arcana: 'Minor Arcana', number: 2, yesNo: 'Yes', astrology: 'Mars in Aries',
+        upright: 'Future planning, major choices, crafting expansion strategies, and taking control.',
+        reversed: 'Fear of stepping out of comfort zones, flawed planning, or hesitation.',
+        love: 'Planning a shared future with a partner or facing pivotal choices regarding relationship direction.'
+    },
+    {
+        name: 'Three of Wands', arcana: 'Minor Arcana', number: 3, yesNo: 'Yes', astrology: 'Sun in Aries',
+        upright: 'Waiting for planted efforts to yield results, expansion, broadening horizons, and optimism.',
+        reversed: 'Disappointment over delayed results, travel hurdles, or inflated expectations.',
+        love: 'Waiting for commitment or remaining optimistic about long-distance dynamics.'
+    },
+    {
+        name: 'Four of Wands', arcana: 'Minor Arcana', number: 4, yesNo: 'Yes', astrology: 'Venus in Aries',
+        upright: 'Joyful celebrations, household harmony, weddings, community, and security.',
+        reversed: 'Domestic friction, delayed celebrations, or a sense of instability at home.',
+        love: 'Weddings, engagements, or joyful celebrations shared with loved ones.'
+    },
+    {
+        name: 'Five of Wands', arcana: 'Minor Arcana', number: 5, yesNo: 'No', astrology: 'Saturn in Leo',
+        upupright: 'Fierce competition, clashing egos, differing opinions, and minor group friction.',
+        upright: 'Fierce competition, clashing egos, differing opinions, and minor group friction.',
+        reversed: 'Avoiding conflict, reaching a truce, or calming unhealthy rivalries.',
+        love: 'Minor arguments fueled by stubborn egos. Open dialogue is required to ease tension.'
+    },
+    {
+        name: 'Six of Wands', arcana: 'Minor Arcana', number: 6, yesNo: 'Yes', astrology: 'Jupiter in Leo',
+        upright: 'Triumphant victory, public recognition, appreciated achievements, and strong confidence.',
+        reversed: 'Loss of face, excessive arrogance, empty praise, or delayed recognition.',
+        love: 'Feeling proud of your partner or enjoying a romance celebrated by those around you.'
+    },
+    {
+        name: 'Seven of Wands', arcana: 'Minor Arcana', number: 7, yesNo: 'Yes', astrology: 'Mars in Leo',
+        upright: 'Defending personal principles, holding ground under pressure, and protecting rights.',
+        reversed: 'Yielding under pressure, feeling intimidated, or overwhelmed by piling issues.',
+        love: 'Guarding your relationship against outside interference or external criticisms.'
+    },
+    {
+        name: 'Eight of Wands', arcana: 'Minor Arcana', number: 8, yesNo: 'Yes', astrology: 'Mercury in Sagittarius',
+        upright: 'Lightning-fast momentum, delightful sudden news, efficiency, and swift travel.',
+        reversed: 'Chaos from rushing, miscommunications, schedule delays, or scattered energy.',
+        love: 'Unexpected loving messages or relationship developments moving at breakneck speed.'
+    },
+    {
+        name: 'Nine of Wands', arcana: 'Minor Arcana', number: 9, yesNo: 'Neutral', astrology: 'Moon in Sagittarius',
+        upright: 'Mental resilience at exhaustion\'s edge, vigilance, self-protection, and final reserves.',
+        reversed: 'Extreme exhaustion, excessive paranoia, hyper-defensiveness, or burning out.',
+        love: 'Feeling emotionally weary due to past relationship scars continuing to haunt you.'
+    },
+    {
+        name: 'Ten of Wands', arcana: 'Minor Arcana', number: 10, yesNo: 'No', astrology: 'Saturn in Sagittarius',
+        upright: 'Heavy burdens, carrying excessive responsibilities alone, and exhaustion.',
+        reversed: 'Successfully delegating tasks, dropping heavy loads, or learning to say "no".',
+        love: 'Carrying the weight of relationship issues entirely on your shoulders without fair sharing.'
+    },
+    {
+        name: 'Page of Wands', arcana: 'Minor Arcana', number: 11, yesNo: 'Yes', astrology: 'Earth in Fire (Wands)',
+        upright: 'Youthful explorer, exploration enthusiasm, fresh creative ideas, and good news.',
+        reversed: 'Aimlessness, half-baked ideas, childishness, or quick boredom.',
+        love: 'Playful flirting, renewed spark in courting, or cheerful news from your crush.'
+    },
+    {
+        name: 'Knight of Wands', arcana: 'Minor Arcana', number: 12, yesNo: 'Yes', astrology: 'Fire in Fire (Wands)',
+        upright: 'Swift action, fierce passion, risk-taking courage, adventure, and high charisma.',
+        reversed: 'Impulsivity, recklessness, hot temper, emotional volatility, and unstable commitments.',
+        love: 'A passionate romance driven by intense physical attraction, sometimes lacking long-term planning.'
+    },
+    {
+        name: 'Queen of Wands', arcana: 'Minor Arcana', number: 13, yesNo: 'Yes', astrology: 'Water in Fire (Wands)',
+        upright: 'Independence, high self-confidence, magnetism, warmth, friendliness, and zest for life.',
+        reversed: 'Demanding traits, blind jealousy, selfishness, or fading charm from stress.',
+        love: 'A warm, confident, loyal partner who effortlessly commands positive attention.'
+    },
+    {
+        name: 'King of Wands', arcana: 'Minor Arcana', number: 14, yesNo: 'Yes', astrology: 'Fire in Fire (Wands)',
+        upright: 'Visionary leadership, successful entrepreneur, master inspirer, bold decision-maker.',
+        reversed: 'Dictatorial, authoritarian, impulsive in personal/business decisions, arrogant.',
+        love: 'A mature, deeply protective partner with very strong standards and opinions.'
+    },
 
     // Suit of Cups
-    { name: 'Ace of Cups', arcana: 'Minor Arcana', number: 1 },
-    { name: 'Two of Cups', arcana: 'Minor Arcana', number: 2 },
-    { name: 'Three of Cups', arcana: 'Minor Arcana', number: 3 },
-    { name: 'Four of Cups', arcana: 'Minor Arcana', number: 4 },
-    { name: 'Five of Cups', arcana: 'Minor Arcana', number: 5 },
-    { name: 'Six of Cups', arcana: 'Minor Arcana', number: 6 },
-    { name: 'Seven of Cups', arcana: 'Minor Arcana', number: 7 },
-    { name: 'Eight of Cups', arcana: 'Minor Arcana', number: 8 },
-    { name: 'Nine of Cups', arcana: 'Minor Arcana', number: 9 },
-    { name: 'Ten of Cups', arcana: 'Minor Arcana', number: 10 },
-    { name: 'Page of Cups', arcana: 'Minor Arcana', number: 11 },
-    { name: 'Knight of Cups', arcana: 'Minor Arcana', number: 12 },
-    { name: 'Queen of Cups', arcana: 'Minor Arcana', number: 13 },
-    { name: 'King of Cups', arcana: 'Minor Arcana', number: 14 },
+    {
+        name: 'Ace of Cups', arcana: 'Minor Arcana', number: 1, yesNo: 'Yes', astrology: 'Water Signs (Cancer, Scorpio, Pisces)',
+        upright: 'Overflowing affection, clear emotional intuition, and blessed new romantic beginnings.',
+        reversed: 'Emotional blockages, emptiness, unrequited love, or inner wounds.',
+        love: 'Peak emotional fulfillment. Deep falling in love or healing past heartbreaks.'
+    },
+    {
+        name: 'Two of Cups', arcana: 'Minor Arcana', number: 2, yesNo: 'Yes', astrology: 'Venus in Cancer',
+        upright: 'Harmonious soul connection, balanced partnership, mutual respect, and love bonds.',
+        reversed: 'Relationship imbalance, misunderstandings, communication breakdowns, or ego clashes.',
+        love: 'A deeply romantic mutual bond. Heartfelt agreements between two loving individuals.'
+    },
+    {
+        name: 'Three of Cups', arcana: 'Minor Arcana', number: 3, yesNo: 'Yes', astrology: 'Mercury in Cancer',
+        upright: 'Celebrations with friends, social joy, harmonious collaboration, and gatherings.',
+        reversed: 'Toxic gossip, excessive exclusivity, too much partying, or social drama.',
+        love: 'Receiving wholehearted support from your friend circle regarding your romance.'
+    },
+    {
+        name: 'Four of Cups', arcana: 'Minor Arcana', number: 4, yesNo: 'No', astrology: 'Moon in Cancer',
+        upright: 'Apathy, routine boredom, excessive rumination, and rejecting favorable offers.',
+        reversed: 'Breaking out of stagnation, accepting reality, and appreciating small surroundings.',
+        love: 'Feeling jaded with relationship routines. Overlooking attentive gestures from a partner.'
+    },
+    {
+        name: 'Five of Cups', arcana: 'Minor Arcana', number: 5, yesNo: 'No', astrology: 'Mars in Scorpio',
+        upupright: 'Deep remorse, grief over loss, dwelling on negative outcomes.',
+        upright: 'Deep remorse, grief over loss, dwelling on negative outcomes.',
+        reversed: 'Healing past disappointments, forgiving oneself, and spotting glimmers of hope.',
+        love: 'Disappointed by romantic expectations. Learning to release painful past baggage.'
+    },
+    {
+        name: 'Six of Cups', arcana: 'Minor Arcana', number: 6, yesNo: 'Yes', astrology: 'Sun in Scorpio',
+        upright: 'Sweet nostalgia, childhood memories, innocence, and echoes from past connections.',
+        reversed: 'Trapped in the past, resisting adulthood, or rosy illusions fading.',
+        love: 'Reconnecting with an ex or rediscovering the warmth of pure, sincere love.'
+    },
+    {
+        name: 'Seven of Cups', arcana: 'Minor Arcana', number: 7, yesNo: 'No', astrology: 'Venus in Scorpio',
+        upright: 'Illusory choices, daydreams, confusion over priorities, and wishful thinking.',
+        reversed: 'Gaining clear perspective, breaking illusions, and picking a realistic focus.',
+        love: 'Getting lost in fantasies of a "perfect" partner instead of seeing reality.'
+    },
+    {
+        name: 'Eight of Cups', arcana: 'Minor Arcana', number: 8, yesNo: 'Neutral', astrology: 'Saturn in Pisces',
+        upright: 'Walking away from unfulfilling situations toward higher spiritual or emotional quests.',
+        reversed: 'Fear of stepping away, staying in toxic spaces due to loneliness, hesitation.',
+        love: 'Difficult choices to leave a hollow relationship and pursue inner peace.'
+    },
+    {
+        name: 'Nine of Cups', arcana: 'Minor Arcana', number: 9, yesNo: 'Yes', astrology: 'Jupiter in Pisces',
+        upright: 'Emotional satisfaction, "The Wish Card", fulfilled dreams, gratitude, and joy.',
+        reversed: 'Arrogance over achievements, superficial satisfaction, ingratitude, or materialism.',
+        love: 'All romantic dreams manifest in reality. Total emotional fulfillment and contentment.'
+    },
+    {
+        name: 'Ten of Cups', arcana: 'Minor Arcana', number: 10, yesNo: 'Yes', astrology: 'Mars in Pisces',
+        upright: 'Perfect domestic bliss, lasting peace, true love, and harmony.',
+        reversed: 'Family conflicts, fracturing marital harmony, or illusions of happy homes.',
+        love: 'Peak happiness in long-term commitments, dream weddings, and warm family bonds.'
+    },
+    {
+        name: 'Page of Cups', arcana: 'Minor Arcana', number: 11, yesNo: 'Yes', astrology: 'Earth in Water (Cups)',
+        upright: 'Sweet love messages, subtle intuition, artistic sensitivity, and sincere emotional offers.',
+        reversed: 'Emotional anxiety, childishness, over-sensitivity, or unstable moods.',
+        love: 'Sweet, romantic declarations filled with sincerity from someone caring.'
+    },
+    {
+        name: 'Knight of Cups', arcana: 'Minor Arcana', number: 12, yesNo: 'Yes', astrology: 'Fire in Water (Cups)',
+        upright: 'The romantic suitor, proposals from the heart, grace, and gentle diplomacy.',
+        reversed: 'Moody, empty sweet promises, unrealistic romance, emotional deceit.',
+        love: 'Moments of extraordinary romance. A deeply attentive partner skilled in love language.'
+    },
+    {
+        name: 'Queen of Cups', arcana: 'Minor Arcana', number: 13, yesNo: 'Yes', astrology: 'Water in Water (Cups)',
+        upright: 'Deep empathy, gentle heart, strong intuition, emotional healer, and loyal listener.',
+        reversed: 'Emotional dependency, over-sensitivity, being taken advantage of, or inner drama.',
+        love: 'A deeply compassionate, intuitive partner who listens to your heart sincerely.'
+    },
+    {
+        name: 'King of Cups', arcana: 'Minor Arcana', number: 14, yesNo: 'Yes', astrology: 'Air in Water (Cups)',
+        upright: 'High emotional intelligence, inner calm amid storms, wisdom, and fairness.',
+        reversed: 'Emotional manipulation, inner coldness, suppressed feelings, or hidden rage.',
+        love: 'A mature, emotionally balanced partner capable of calming your storms with wisdom.'
+    },
 
     // Suit of Swords
-    { name: 'Ace of Swords', arcana: 'Minor Arcana', number: 1 },
-    { name: 'Two of Swords', arcana: 'Minor Arcana', number: 2 },
-    { name: 'Three of Swords', arcana: 'Minor Arcana', number: 3 },
-    { name: 'Four of Swords', arcana: 'Minor Arcana', number: 4 },
-    { name: 'Five of Swords', arcana: 'Minor Arcana', number: 5 },
-    { name: 'Six of Swords', arcana: 'Minor Arcana', number: 6 },
-    { name: 'Seven of Swords', arcana: 'Minor Arcana', number: 7 },
-    { name: 'Eight of Swords', arcana: 'Minor Arcana', number: 8 },
-    { name: 'Nine of Swords', arcana: 'Minor Arcana', number: 9 },
-    { name: 'Ten of Swords', arcana: 'Minor Arcana', number: 10 },
-    { name: 'Page of Swords', arcana: 'Minor Arcana', number: 11 },
-    { name: 'Knight of Swords', arcana: 'Minor Arcana', number: 12 },
-    { name: 'Queen of Swords', arcana: 'Minor Arcana', number: 13 },
-    { name: 'King of Swords', arcana: 'Minor Arcana', number: 14 },
+    {
+        name: 'Ace of Swords', arcana: 'Minor Arcana', number: 1, yesNo: 'Yes', astrology: 'Air Signs (Gemini, Libra, Aquarius)',
+        upright: 'Sharp mental clarity, intellectual breakthroughs, truth revealed, and brilliant ideas.',
+        reversed: 'Mental fog, fatal misunderstandings, misguided ideas, or illogical choices.',
+        love: 'Honest, transparent communication free from secrets. Resolving issues logically.'
+    },
+    {
+        name: 'Two of Swords', arcana: 'Minor Arcana', number: 2, yesNo: 'No', astrology: 'Moon in Libra',
+        upright: 'Stalemate, major dilemmas, refusing to face facts, silence, and delayed decisions.',
+        reversed: 'Forced removal of blindfolds, difficult choices finally made, truths uncovered.',
+        love: 'Hesitation in choosing partners or avoiding vital confrontations to maintain fake peace.'
+    },
+    {
+        name: 'Three of Swords', arcana: 'Minor Arcana', number: 3, yesNo: 'No', astrology: 'Saturn in Libra',
+        upright: 'Heartbreak, deep sorrow, betrayal, and sharp, hurtful words.',
+        reversed: 'Healing wounds, beginning to forgive, easing pain post-breakup.',
+        love: 'Heartbreak caused by betrayal, infidelity, or harsh words from loved ones.'
+    },
+    {
+        name: 'Four of Swords', arcana: 'Minor Arcana', number: 4, yesNo: 'Neutral', astrology: 'Jupiter in Libra',
+        upright: 'Deep rest, mental recovery, meditation, stepping back from crowds to heal.',
+        reversed: 'Chronic exhaustion from over-pushing, piled-up stress, mental burnout.',
+        love: 'Needing cooling-down time away from exhausting relationship dynamics.'
+    },
+    {
+        name: 'Five of Swords', arcana: 'Minor Arcana', number: 5, yesNo: 'No', astrology: 'Venus in Aquarius',
+        upright: 'Hollow selfish victories, destructive conflict, feeling defeated, unhealthy friction.',
+        reversed: 'Making peace post-conflict, owning mistakes, repairing broken bonds.',
+        love: 'Arguments where both sides fight to win rather than care for each other’s feelings.'
+    },
+    {
+        name: 'Six of Swords', arcana: 'Minor Arcana', number: 6, yesNo: 'Yes', astrology: 'Mercury in Aquarius',
+        upright: 'Transitioning to calmer shores, leaving hard times behind, recovery journeys.',
+        reversed: 'Past issues chasing you, reluctance to leave toxic spaces, delayed travels.',
+        love: 'Walking together past crisis points toward a far more stable, peaceful romance.'
+    },
+    {
+        name: 'Seven of Swords', arcana: 'Minor Arcana', number: 7, yesNo: 'No', astrology: 'Moon in Aquarius',
+        upupright: 'Hidden strategies, cunning, stealing opportunities, deceit, or exposed secrets.',
+        upright: 'Hidden strategies, cunning, stealing opportunities, deceit, or exposed secrets.',
+        reversed: 'Truths uncovered, haunting guilt, failed sly tactics.',
+        love: 'Dishonesty, hiding things from partners, or suspicions over sketchy behavior.'
+    },
+    {
+        name: 'Eight of Swords', arcana: 'Minor Arcana', number: 8, yesNo: 'No', astrology: 'Jupiter in Gemini',
+        upright: 'Feeling trapped by one’s own thoughts, victim mentality, perceived lack of choices.',
+        reversed: 'Mental liberation, breaking self-imposed limits, empowerment.',
+        love: 'Feeling constrained in a relationship yet lacking courage to break free.'
+    },
+    {
+        name: 'Nine of Swords', arcana: 'Minor Arcana', number: 9, yesNo: 'No', astrology: 'Mars in Gemini',
+        upright: 'Acute anxiety, insomnia from overthinking, guilt, nightmares, and dread.',
+        reversed: 'Anxiety lifting, sharing burdens with others eases mental weight.',
+        love: 'Excessive overthinking regarding relationship futures or fear of loss.'
+    },
+    {
+        name: 'Ten of Swords', arcana: 'Minor Arcana', number: 10, yesNo: 'No', astrology: 'Sun in Gemini',
+        upright: 'Rock bottom, painful endings, outright betrayal, feeling totally ruined.',
+        reversed: 'Rising from ruins, post-crisis recovery, new hopes after major storms.',
+        love: 'The end of a deeply painful relationship. Absolute betrayal closing past chapters.'
+    },
+    {
+        name: 'Page of Swords', arcana: 'Minor Arcana', number: 11, yesNo: 'Yes', astrology: 'Earth in Swords',
+        upright: 'Critical thinking, high curiosity, information-gathering, alertness, and blunt honesty.',
+        reversed: 'Cheap gossip, baseless rumors, spreading fake news, rashness.',
+        love: 'Investigative texts from partners or deep curiosity regarding your crush’s life.'
+    },
+    {
+        name: 'Knight of Swords', arcana: 'Minor Arcana', number: 12, yesNo: 'Yes', astrology: 'Fire in Swords',
+        upright: 'Logic-driven swift action, soaring ambition, blunt speech, high speed.',
+        reversed: 'Recklessness, verbal aggression, hurting feelings through harsh words.',
+        love: 'Blunt, direct confrontations. Overly sharp communication hurting feelings.'
+    },
+    {
+        name: 'Queen of Swords', arcana: 'Minor Arcana', number: 13, yesNo: 'Yes', astrology: 'Water in Swords',
+        upright: 'Independent woman, objective, sharp, setting firm boundaries, truthful.',
+        reversed: 'Emotionally cold, cynical, overly critical, vindictive, closed off to affection.',
+        love: 'An independent, logical partner firm on setting healthy boundaries.'
+    },
+    {
+        name: 'King of Swords', arcana: 'Minor Arcana', number: 14, yesNo: 'Yes', astrology: 'Air in Swords',
+        upright: 'Intellectual integrity, law-based fairness, strategic thinker, strong mental authority.',
+        reversed: 'Abuse of intellect, manipulative logic, coldness, ruthless decisions.',
+        love: 'A partner valuing absolute rationality and intellectual honesty above all.'
+    },
 
     // Suit of Pentacles
-    { name: 'Ace of Pentacles', arcana: 'Minor Arcana', number: 1 },
-    { name: 'Two of Pentacles', arcana: 'Minor Arcana', number: 2 },
-    { name: 'Three of Pentacles', arcana: 'Minor Arcana', number: 3 },
-    { name: 'Four of Pentacles', arcana: 'Minor Arcana', number: 4 },
-    { name: 'Five of Pentacles', arcana: 'Minor Arcana', number: 5 },
-    { name: 'Six of Pentacles', arcana: 'Minor Arcana', number: 6 },
-    { name: 'Seven of Pentacles', arcana: 'Minor Arcana', number: 7 },
-    { name: 'Eight of Pentacles', arcana: 'Minor Arcana', number: 8 },
-    { name: 'Nine of Pentacles', arcana: 'Minor Arcana', number: 9 },
-    { name: 'Ten of Pentacles', arcana: 'Minor Arcana', number: 10 },
-    { name: 'Page of Pentacles', arcana: 'Minor Arcana', number: 11 },
-    { name: 'Knight of Pentacles', arcana: 'Minor Arcana', number: 12 },
-    { name: 'Queen of Pentacles', arcana: 'Minor Arcana', number: 13 },
-    { name: 'King of Pentacles', arcana: 'Minor Arcana', number: 14 }
+    {
+        name: 'Ace of Pentacles', arcana: 'Minor Arcana', number: 1, yesNo: 'Yes', astrology: 'Earth Signs (Taurus, Virgo, Cap)',
+        upright: 'New financial ventures, material stability, profitable investments, early prosperity.',
+        reversed: 'Missed opportunities, initial financial losses, poor planning, lavish spending.',
+        love: 'Stability in tangible reality. Romance grounded in both emotional and material readiness.'
+    },
+    {
+        name: 'Two of Pentacles', arcana: 'Minor Arcana', number: 2, yesNo: 'Neutral', astrology: 'Jupiter in Capricorn',
+        upright: 'Juggling life priorities, financial management, adaptability to changes.',
+        reversed: 'Overwhelmed by time/money splits, financial stress, losing life balance.',
+        love: 'Balancing romance, career, and personal life to avoid dropping the ball.'
+    },
+    {
+        name: 'Three of Pentacles', arcana: 'Minor Arcana', number: 3, yesNo: 'Yes', astrology: 'Mars in Capricorn',
+        upright: 'Solid teamwork, successful collaboration, recognized skills, building foundations.',
+        reversed: 'Poor team coordination, unappreciated work, group ego clashes.',
+        love: 'Great cooperation between you and your partner in building a shared future.'
+    },
+    {
+        name: 'Four of Pentacles', arcana: 'Minor Arcana', number: 4, yesNo: 'No', astrology: 'Sun in Capricorn',
+        upright: 'Financial stability, thriftiness, stinginess, fear of losing wealth or control.',
+        reversed: 'Overspending, letting go of financial control, generosity, bad investments.',
+        love: 'Excessive possessiveness, struggling to open up emotionally due to fear of hurt.'
+    },
+    {
+        name: 'Five of Pentacles', arcana: 'Minor Arcana', number: 5, yesNo: 'No', astrology: 'Mercury in Taurus',
+        upupright: 'Financial hardship, poverty mindset, isolation, cold difficult times.',
+        upright: 'Financial hardship, poverty mindset, isolation, cold difficult times.',
+        reversed: 'Emerging from economic crisis, receiving moral/material aid, recovery.',
+        love: 'Feeling neglected, lonely within relationships, or economic stress triggering tension.'
+    },
+    {
+        name: 'Six of Pentacles', arcana: 'Minor Arcana', number: 6, yesNo: 'Yes', astrology: 'Moon in Taurus',
+        upright: 'Generosity, sharing wealth, giving and receiving balance, acts of charity.',
+        reversed: 'Strings attached to giving, problematic debts, financial unfairness.',
+        love: 'Reciprocal balance in relationships. Supporting each other emotionally and materially.'
+    },
+    {
+        name: 'Seven of Pentacles', arcana: 'Minor Arcana', number: 7, yesNo: 'Yes', astrology: 'Saturn in Taurus',
+        upright: 'Assessing long-term investments, patient harvest waiting, evaluating hard work.',
+        reversed: 'Disappointing yields, frustration over wasted effort, impatience.',
+        love: 'Reflecting on how far the relationship has grown and whether emotional investments paid off.'
+    },
+    {
+        name: 'Eight of Pentacles', arcana: 'Minor Arcana', number: 8, yesNo: 'Yes', astrology: 'Sun in Virgo',
+        upright: 'High dedication, diligent hard work, mastering specific skills, detail focus.',
+        reversed: 'Endless fruitless perfectionism, working without real output, losing interest.',
+        love: 'Committing to consistently nurture and refine relationship quality through effort.'
+    },
+    {
+        name: 'Nine of Pentacles', arcana: 'Minor Arcana', number: 9, yesNo: 'Yes', astrology: 'Venus in Virgo',
+        upright: 'Self-made prosperity, enjoying fruits of labor, personal luxury, life comfort.',
+        reversed: 'Financial dependency on others, overspending to flex social status.',
+        love: 'Enjoying an independent single life flourishing both financially and emotionally.'
+    },
+    {
+        name: 'Ten of Pentacles', arcana: 'Minor Arcana', number: 10, yesNo: 'Yes', astrology: 'Mercury in Virgo',
+        upright: 'Generational wealth, inheritances, long-term security, financial establishment.',
+        reversed: 'Family disputes over inheritances, collapsing financial security.',
+        love: 'Relationships blessed by family approval and fully secured materially for futures.'
+    },
+    {
+        name: 'Page of Pentacles', arcana: 'Minor Arcana', number: 11, yesNo: 'Yes', astrology: 'Earth in Pentacles',
+        upright: 'Learning new skills, promising career beginnings, diligence, good financial news.',
+        reversed: 'Lack of study focus, procrastination, failing to seize golden chances.',
+        love: 'Sincere small commitments to start serious steps in romance.'
+    },
+    {
+        name: 'Knight of Pentacles', arcana: 'Minor Arcana', number: 12, yesNo: 'Yes', astrology: 'Fire in Pentacles',
+        upupright: 'Deeply dependable, consistent, true hard worker, patient, slow and steady.',
+        upright: 'Deeply dependable, consistent, true hard worker, patient, slow and steady.',
+        reversed: 'Overly rigid, trapped in boring routines, lazy, stubbornly resisting change.',
+        love: 'A fiercely loyal, dependable partner, though occasionally lacking romance and monotonous.'
+    },
+    {
+        name: 'Queen of Pentacles', arcana: 'Minor Arcana', number: 13, yesNo: 'Yes', astrology: 'Water in Pentacles',
+        upright: 'Nurturing generosity, skilled financial manager, cozy home, practical, caring.',
+        reversed: 'Overly materialistic, sacrificing inner needs for wealth, social vanity.',
+        love: 'A deeply maternal partner curating cozy home comfort and wise with material management.'
+    },
+    {
+        name: 'King of Pentacles', arcana: 'Minor Arcana', number: 14, yesNo: 'Yes', astrology: 'Air in Pentacles',
+        upright: 'Successful entrepreneur, absolute financial establishment, generous family protector.',
+        reversed: 'Greedy, extreme materialism, using wealth to control others.',
+        love: 'A financially secure, stable partner capable of providing total life security.'
+    }
 ];
 
 // --- STATE ---
@@ -279,6 +674,8 @@ function getTodayDateString() {
 
 function renderDailyCardHTML(card, isReversed) {
     const cardEl = document.getElementById('inline-daily-card');
+    const descText = isReversed ? card.reversed : card.upright;
+    
     cardEl.innerHTML = `
         <div class="w-[120px] mb-6">
             <div class="w-full aspect-[2/3.3] bg-white border border-pink-100 rounded-xl flex flex-col items-center justify-center p-2 shadow-md">
@@ -291,9 +688,9 @@ function renderDailyCardHTML(card, isReversed) {
         <p class="text-xs text-pink-500 italic mb-4 font-cute">${isReversed ? 'Reversed' : 'Upright'}</p>
         <div class="w-full h-px bg-pink-200/50 mb-4 max-w-[150px]"></div>
         <p class="text-[10px] uppercase tracking-widest text-pink-400 mb-2 font-bold font-cute">Today's Energy</p>
-        <p class="text-sm text-gray-600 mb-5 font-cute">Embrace the essence of the ${card.name}. It calls you to focus on your inner feelings today.</p>
-        <p class="text-[10px] uppercase tracking-widest text-pink-400 mb-2 font-bold font-cute">Card Message</p>
-        <p class="text-sm text-gray-600 italic font-cute">"Trust the journey, breathe, and allow the flow of the universe to guide your steps."</p>
+        <p class="text-sm text-gray-600 mb-5 font-cute">${descText}</p>
+        <p class="text-[10px] uppercase tracking-widest text-pink-400 mb-2 font-bold font-cute">Love & Relationship</p>
+        <p class="text-sm text-gray-600 italic font-cute">"${card.love}"</p>
     `;
     cardEl.classList.remove('hidden');
     cardEl.classList.add('flex');
@@ -409,7 +806,6 @@ function selectSpread(index) {
 function renderConfigNumbers() {
     const grid = document.getElementById('config-numbers-grid');
     let html = '';
-    // Max cards: if major only, limit to 22, else 13
     const maxCards = optMajorOnly ? 22 : 13;
     if (deckCount > maxCards) deckCount = maxCards;
 
@@ -420,7 +816,6 @@ function renderConfigNumbers() {
     }
     grid.innerHTML = html;
 
-    // Inject Options Container dynamically for Free Spread config
     let optionsContainer = document.getElementById('config-options-container');
     if (!optionsContainer) {
         const configBox = grid.parentElement;
@@ -434,15 +829,15 @@ function renderConfigNumbers() {
         <div class="text-xs font-bold text-purple-800 mb-2 uppercase tracking-wider text-center">Free Spread Options & Filters</div>
         <label class="flex items-center space-x-3 cursor-pointer p-2.5 bg-white rounded-xl border border-pink-100 hover:border-pink-300 transition-colors">
             <input type="checkbox" ${optMajorOnly ? 'checked' : ''} onchange="toggleOption('majorOnly', this.checked); renderConfigNumbers();" class="w-4 h-4 text-pink-500 rounded border-pink-300 focus:ring-pink-400">
-            <span class="text-xs font-bold text-gray-700">Major Arcana Only <span class="font-normal text-pink-400">(Hanya 22 kartu utama)</span></span>
+            <span class="text-xs font-bold text-gray-700">Major Arcana Only <span class="font-normal text-pink-400">(22 main cards only)</span></span>
         </label>
         <label class="flex items-center space-x-3 cursor-pointer p-2.5 bg-white rounded-xl border border-pink-100 hover:border-pink-300 transition-colors">
             <input type="checkbox" ${optAutoOpen ? 'checked' : ''} onchange="toggleOption('autoOpen', this.checked)" class="w-4 h-4 text-pink-500 rounded border-pink-300 focus:ring-pink-400">
-            <span class="text-xs font-bold text-gray-700">Open the Cards Automatically <span class="font-normal text-pink-400">(Langsung buka hasil)</span></span>
+            <span class="text-xs font-bold text-gray-700">Open Cards Automatically <span class="font-normal text-pink-400">(Reveal instantly upon selection)</span></span>
         </label>
         <label class="flex items-center space-x-3 cursor-pointer p-2.5 bg-white rounded-xl border border-pink-100 hover:border-pink-300 transition-colors">
             <input type="checkbox" ${optShowDesc ? 'checked' : ''} onchange="toggleOption('showDesc', this.checked)" class="w-4 h-4 text-pink-500 rounded border-pink-300 focus:ring-pink-400">
-            <span class="text-xs font-bold text-gray-700">Show the Description <span class="font-normal text-pink-400">(Tampilkan ringkasan makna kartu)</span></span>
+            <span class="text-xs font-bold text-gray-700">Show the Description <span class="font-normal text-pink-400">(Display card meaning summaries)</span></span>
         </label>
     `;
 }
@@ -532,10 +927,8 @@ function renderResult() {
     const grid = document.getElementById('result-grid');
     let html = '';
     drawnCards.forEach((card, idx) => {
-        const orientationText = card.isReversed ? 'Reversed (Terbalik)' : 'Upright (Tegak)';
-        const descText = card.isReversed 
-            ? `Energi terhambat, perlunya introspeksi mendalam, atau hambatan sementara terkait aspek ${card.name}.` 
-            : `Potensi penuh, kejelasan pikiran, dan aliran energi positif dari kartu ${card.name}.`;
+        const orientationText = card.isReversed ? 'Reversed' : 'Upright';
+        const descText = card.isReversed ? card.reversed : card.upright;
 
         html += `
         <div class="flex flex-col items-center w-full" style="animation-delay: ${idx * 100}ms">
@@ -549,7 +942,7 @@ function renderResult() {
             </span>
             ${optShowDesc ? `
             <div class="mt-3 bg-pink-50/60 border border-pink-100 p-3 rounded-2xl text-left w-full font-cute shadow-sm">
-                <div class="text-[10px] font-bold text-purple-800 uppercase tracking-wider mb-1 flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-pink-400 mr-2"></span> Ringkasan Arti</div>
+                <div class="text-[10px] font-bold text-purple-800 uppercase tracking-wider mb-1 flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-pink-400 mr-2"></span> Summary Meaning</div>
                 <p class="text-[11px] text-gray-600 leading-snug">${descText}</p>
             </div>` : ''}
         </div>`;
@@ -599,15 +992,8 @@ function filterLibrary(filter) {
 function showCardDetail(index) {
     const card = TAROT_DECK[index];
     const isMajor = card.arcana === 'Major Arcana';
-    const suit = isMajor ? null : card.name.split(' of ')[1];
     
-    let astrology = isMajor ? 'Cosmic / Planetary Rulership' : 
-        (suit === 'Wands' ? 'Fire Signs (Aries, Leo, Sag)' : 
-        suit === 'Cups' ? 'Water Signs (Cancer, Scorpio, Pisces)' : 
-        suit === 'Swords' ? 'Air Signs (Gemini, Libra, Aquarius)' : 
-        'Earth Signs (Taurus, Virgo, Capricorn)');
-        
-    const yesNo = (index % 2 === 0) ? '<span class="text-green-500 font-medium">Yes</span>' : '<span class="text-orange-400 font-medium">No / Caution</span>';
+    let yesNoClass = card.yesNo === 'Yes' ? 'text-green-600' : (card.yesNo === 'No' ? 'text-red-500' : 'text-orange-400');
 
     document.getElementById('card-detail-content').innerHTML = `
         <div class="flex flex-col md:flex-row gap-8 lg:gap-12">
@@ -628,26 +1014,26 @@ function showCardDetail(index) {
                 <div class="grid grid-cols-2 gap-4">
                     <div class="bg-white p-4 rounded-xl border border-pink-100 shadow-sm">
                         <h4 class="text-[10px] font-bold text-pink-400 uppercase tracking-wider mb-1 font-cute">Yes / No Reading</h4>
-                        <p class="font-cute font-bold text-lg text-gray-700">${yesNo}</p>
+                        <p class="font-cute font-bold text-lg ${yesNoClass}">${card.yesNo}</p>
                     </div>
                     <div class="bg-pink-50/50 p-4 rounded-xl border border-pink-100 shadow-sm">
                         <h4 class="text-[10px] font-bold text-pink-400 uppercase tracking-wider mb-1 font-cute">Astrology / Element</h4>
-                        <p class="font-cute text-sm text-gray-700">${astrology}</p>
+                        <p class="font-cute text-sm text-gray-700">${card.astrology}</p>
                     </div>
                 </div>
 
                 <div class="space-y-5 pt-4">
                     <div>
-                        <h3 class="font-cute font-bold text-xl text-purple-800 mb-2 flex items-center"><span class="w-2 h-2 rounded-full bg-pink-300 mr-3"></span> Upright (Tegak)</h3>
-                        <p class="text-gray-600 font-cute text-sm leading-relaxed text-justify">Secara upright, <strong>${card.name}</strong> membawa energi murni dan potensial penuh dari sifat dasarnya. Ini adalah masa di mana Anda disarankan untuk merangkul kejelasan pikiran, mengambil langkah maju, dan percaya pada proses yang sedang berlangsung.</p>
+                        <h3 class="font-cute font-bold text-xl text-purple-800 mb-2 flex items-center"><span class="w-2 h-2 rounded-full bg-pink-300 mr-3"></span> Upright Meaning</h3>
+                        <p class="text-gray-600 font-cute text-sm leading-relaxed text-justify">${card.upright}</p>
                     </div>
                     <div>
-                        <h3 class="font-cute font-bold text-xl text-purple-800 mb-2 flex items-center"><span class="w-2 h-2 rounded-full bg-gray-400 mr-3"></span> Reversed (Terbalik)</h3>
-                        <p class="text-gray-600 font-cute text-sm leading-relaxed text-justify">Ketika muncul terbalik, energi kartu ini mungkin terhambat, tertunda, atau menuntut Anda untuk melihat ke dalam (introspeksi). Jangan paksakan keadaan; cobalah cari perspektif lain untuk mengurai masalah.</p>
+                        <h3 class="font-cute font-bold text-xl text-purple-800 mb-2 flex items-center"><span class="w-2 h-2 rounded-full bg-gray-400 mr-3"></span> Reversed Meaning</h3>
+                        <p class="text-gray-600 font-cute text-sm leading-relaxed text-justify">${card.reversed}</p>
                     </div>
                     <div class="bg-pink-50/30 p-5 rounded-2xl border border-pink-50">
                         <h3 class="font-cute font-bold text-xl text-purple-800 mb-2 flex items-center"><span class="text-pink-400 mr-3 text-lg">♥</span> Relationship & Love</h3>
-                        <p class="text-gray-600 font-cute text-sm leading-relaxed">Dalam konteks asmara, kartu ini menyiratkan dinamika emosional yang sedang tumbuh. Jika Anda lajang, ini menunjukkan fokus pada penyembuhan diri. Jika memiliki pasangan, komunikasikan perasaan secara lembut namun transparan.</p>
+                        <p class="text-gray-600 font-cute text-sm leading-relaxed">${card.love}</p>
                     </div>
                 </div>
             </div>
@@ -674,9 +1060,9 @@ function showZodiac(id) {
             </div>
         </div>
         <div class="bg-pink-50/30 p-6 sm:p-8 rounded-3xl border border-pink-100 text-gray-600 font-cute leading-relaxed text-left space-y-4 shadow-sm">
-            <p class="text-base">Selamat datang di profil energi <strong>${z.name}</strong>.</p>
+            <p class="text-base">Welcome to the energy profile of <strong>${z.name}</strong>.</p>
             <p class="text-sm font-light leading-relaxed">${z.desc}</p>
-            <p class="text-xs text-pink-400 italic pt-2">“Gunakan energi zodiak ini sebagai panduan refleksi harian dalam pembacaan tarot Anda bersama Mai Collection.”</p>
+            <p class="text-xs text-pink-400 italic pt-2">“Use this zodiac energy as a daily reflective guide in your tarot readings with Mai Collection.”</p>
         </div>
     `;
     
@@ -694,42 +1080,42 @@ function renderGenericPage(title) {
         content.innerHTML = `
             <div class="space-y-8 text-left">
                 <div class="bg-pink-50/40 p-6 sm:p-8 rounded-3xl border border-pink-100 shadow-sm">
-                    <h3 class="font-cute font-bold text-2xl text-purple-800 mb-3">Mengenal Lebih Dekat Dunia Tarot</h3>
+                    <h3 class="font-cute font-bold text-2xl text-purple-800 mb-3">Discovering the World of Tarot</h3>
                     <p class="text-gray-600 font-cute text-sm leading-relaxed">
-                        Tarot bukanlah sekadar alat untuk meramal masa depan yang kaku, melainkan sebuah cermin jiwa yang merefleksikan kedalaman pikiran bawah sadar, emosi, dan potensi batin manusia. Melalui simbol-simbol visual yang kaya, tarot membantu kita menavigasi pertanyaan hidup dengan kebijaksanaan yang tenang.
+                        Tarot is not merely a tool for rigid future-telling, but a mirror of the soul reflecting the depths of the subconscious mind, emotions, and human potential. Through rich visual symbolism, tarot helps us navigate life's questions with serene wisdom.
                     </p>
                 </div>
 
                 <div class="space-y-3">
                     <h3 class="font-cute font-bold text-xl text-purple-800 flex items-center">
-                        <span class="w-2 h-2 rounded-full bg-pink-300 mr-3"></span> Sejarah dan Akar Perjalanan Tarot
+                        <span class="w-2 h-2 rounded-full bg-pink-300 mr-3"></span> History and Roots of Tarot
                     </h3>
                     <p class="text-gray-600 font-cute text-sm leading-relaxed">
-                        Akar sejarah tarot bermula di Italia bagian utara pada abad ke-15 (sekitar tahun 1430-an). Awalnya, kartu ini digunakan para bangsawan Eropa untuk permainan kartu konvensional bernama <em>Tarocchi</em>. Baru pada abad ke-18 dan ke-19, para sejarawan dan okultis mulai menyadari adanya muatan simbolisme esoteris yang mendalam di balik gambar-gambar kartu tersebut.
+                        The historical roots of tarot trace back to northern Italy in the 15th century (around the 1430s). Initially, European nobility used these cards for a conventional parlor game called <em>Tarocchi</em>. It was not until the 18th and 19th centuries that historians and occultists recognized the profound esoteric symbolism hidden behind the card imagery.
                     </p>
                     <p class="text-gray-600 font-cute text-sm leading-relaxed">
-                        Puncak evolusi modern tarot terjadi pada tahun 1909 ketika Arthur Edward Waite, seorang mistikus terkemuka, berkolaborasi dengan seniman brilian Pamela Colman Smith—keduanya merupakan anggota ordo hermetik <em>Golden Dawn</em>—menerbitkan dek Rider-Waite-Smith. Dek legendaris inilah yang kemudian mendefinisikan estetika dan standar emas dunia tarot modern hingga saat ini.
+                        The peak of modern tarot evolution occurred in 1909 when Arthur Edward Waite, a prominent mystic, collaborated with brilliant artist Pamela Colman Smith—both members of the Hermetic Order of the Golden Dawn—to publish the Rider-Waite-Smith deck. This legendary deck defined the aesthetic and golden standard of modern tarot today.
                     </p>
                 </div>
 
                 <div class="space-y-3">
                     <h3 class="font-cute font-bold text-xl text-purple-800 flex items-center">
-                        <span class="w-2 h-2 rounded-full bg-purple-400 mr-3"></span> Struktur Penting: Major dan Minor Arcana
+                        <span class="w-2 h-2 rounded-full bg-purple-400 mr-3"></span> Core Structure: Major and Minor Arcana
                     </h3>
                     <p class="text-gray-600 font-cute text-sm leading-relaxed">
-                        Satu dek tarot standar terdiri dari 78 kartu yang terbagi secara harmonis menjadi dua kelompok besar dengan fungsi naratif yang berbeda:
+                        A standard tarot deck consists of 78 cards harmoniously divided into two major groups with distinct narrative functions:
                     </p>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                         <div class="bg-white p-5 rounded-2xl border border-pink-100 shadow-sm">
-                            <h4 class="font-cute font-bold text-base text-purple-800 mb-2">Major Arcana (22 Kartu)</h4>
+                            <h4 class="font-cute font-bold text-base text-purple-800 mb-2">Major Arcana (22 Cards)</h4>
                             <p class="text-xs text-gray-600 leading-relaxed font-cute">
-                                Merepresentasikan "The Fool's Journey" (Perjalanan Si Bodoh)—sebuah alegori siklus kehidupan manusia dari kepolosan hingga pencerahan spiritual. Kartu-kartu ini menandai peristiwa besar, pelajaran hidup mendalam, dan tema besar takdir.
+                                Represents "The Fool's Journey"—an allegory of the human life cycle from innocence to spiritual enlightenment. These cards highlight major life events, profound lessons, and overarching themes of destiny.
                             </p>
                         </div>
                         <div class="bg-white p-5 rounded-2xl border border-pink-100 shadow-sm">
-                            <h4 class="font-cute font-bold text-base text-purple-800 mb-2">Minor Arcana (56 Kartu)</h4>
+                            <h4 class="font-cute font-bold text-base text-purple-800 mb-2">Minor Arcana (56 Cards)</h4>
                             <p class="text-xs text-gray-600 leading-relaxed font-cute">
-                                Merepresentasikan dinamika kehidupan sehari-hari, tantangan praktis, dan emosi sesaat. Dibagi menjadi 4 elemen utama: <strong>Wands</strong> (Api/Gairah), <strong>Cups</strong> (Air/Emosi), <strong>Swords</strong> (Udara/Pikiran), dan <strong>Pentacles</strong> (Tanah/Materi).
+                                Represents everyday life dynamics, practical challenges, and transient emotions. Divided into 4 primary suits/elements: <strong>Wands</strong> (Fire/Passion), <strong>Cups</strong> (Water/Emotion), <strong>Swords</strong> (Air/Mind), and <strong>Pentacles</strong> (Earth/Matter).
                             </p>
                         </div>
                     </div>
@@ -737,15 +1123,15 @@ function renderGenericPage(title) {
 
                 <div class="space-y-3">
                     <h3 class="font-cute font-bold text-xl text-purple-800 flex items-center">
-                        <span class="w-2 h-2 rounded-full bg-pink-300 mr-3"></span> Peran dan Fungsi Esoteris Tarot
+                        <span class="w-2 h-2 rounded-full bg-pink-300 mr-3"></span> The Role and Esoteric Function of Tarot
                     </h3>
                     <p class="text-gray-600 font-cute text-sm leading-relaxed">
-                        Banyak praktisi modern, termasuk psikiater ternama Carl Jung, melihat tarot melalui lensa <em>sinkronisitas</em> dan arketipe universal. Tarot berperan sebagai alat meditatif yang kuat untuk:
+                        Many modern practitioners, including renowned psychiatrist Carl Jung, view tarot through the lens of <em>synchronicity</em> and universal archetypes. Tarot functions as a powerful meditative tool for:
                     </p>
                     <ul class="space-y-2 text-gray-600 font-cute text-sm pl-4 border-l-2 border-pink-200">
-                        <li><strong>Refleksi Diri:</strong> Membuka sudut pandang baru terhadap masalah yang sedang dihadapi secara objektif tanpa bias.</li>
-                        <li><strong>Pengambilan Keputusan:</strong> Menimbang berbagai kemungkinan tindakan berdasarkan pola energi yang sedang berlangsung.</li>
-                        <li><strong>Pemberdayaan Mental:</strong> Memberikan ruang henti yang aman bagi seseorang untuk mendengar suara hati dan intuisi terdalamnya.</li>
+                        <li><strong>Self-Reflection:</strong> Opening fresh perspectives on problems objectively without personal bias.</li>
+                        <li><strong>Decision Making:</strong> Weighing possible actions based on ongoing patterns of energy.</li>
+                        <li><strong>Mental Empowerment:</strong> Providing a safe pause for individuals to tune into their inner voice and intuition.</li>
                     </ul>
                 </div>
             </div>
