@@ -221,3 +221,229 @@ function getTodayDateString() {
                 startDraw(); 
             }
         }
+function renderConfigNumbers() {
+            const grid = document.getElementById('config-numbers-grid');
+            let html = '';
+            for(let i=1; i<=13; i++) {
+                const isActive = deckCount === i;
+                const cls = isActive ? 'bg-pink-300 text-white shadow-md transform scale-110' : 'bg-white text-gray-600 border border-pink-100 hover:border-pink-300 hover:bg-pink-50';
+                html += `<button onclick="updateDeckCount(${i})" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-cute font-bold text-sm transition-all duration-300 ${cls}">${i}</button>`;
+            }
+            grid.innerHTML = html;
+        }
+
+        function updateDeckCount(num) {
+            deckCount = num;
+            renderConfigNumbers();
+        }
+
+        function startDraw() {
+            let shuffled = [...TAROT_DECK];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            activeDeck = shuffled.map(c => ({...c, isReversed: Math.random() > 0.5, drawn: false}));
+            drawnCards = [];
+            
+            const container = document.getElementById('deck-scroll-area');
+            container.innerHTML = '';
+            container.style.width = `${Math.max(800, activeDeck.length * 16 + 100)}px`;
+            
+            activeDeck.forEach((card, idx) => {
+                const distCenter = idx - (activeDeck.length / 2);
+                const arcY = Math.pow(distCenter * 0.15, 2);
+                const rot = distCenter * 0.3;
+                
+                const cardEl = document.createElement('div');
+                cardEl.className = 'tarot-card-item absolute top-0 cursor-pointer';
+                cardEl.style.left = `${idx * 16}px`;
+                cardEl.style.transform = `translateY(${arcY}px) rotate(${rot}deg)`;
+                cardEl.onclick = () => pickCard(idx, cardEl);
+                
+                cardEl.innerHTML = `
+                    <div class="w-[80px] h-[135px] bg-pink-100 border border-pink-200 rounded-xl shadow-sm flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-1 border border-pink-200/60 rounded-lg"></div>
+                        <div class="w-6 h-6 rounded-full border border-pink-300 opacity-50"></div>
+                    </div>`;
+                container.appendChild(cardEl);
+            });
+            
+            updateDrawUI();
+            setDrawPhase('draw');
+        }
+
+        function pickCard(idx, el) {
+            if (drawnCards.length >= deckCount) return;
+            if (activeDeck[idx].drawn) return;
+            
+            activeDeck[idx].drawn = true;
+            drawnCards.push(activeDeck[idx]);
+            el.style.opacity = '0';
+            el.style.pointerEvents = 'none';
+            
+            updateDrawUI();
+            if (drawnCards.length === deckCount) {
+                document.getElementById('btn-reveal').classList.remove('hidden');
+            }
+        }
+
+        function updateDrawUI() {
+            document.getElementById('draw-counter').innerText = `${drawnCards.length} / ${deckCount} selected`;
+            const slots = document.getElementById('draw-slots');
+            let html = '';
+            for(let i=0; i<deckCount; i++) {
+                if (drawnCards[i]) {
+                    html += `
+                    <div class="w-[45px] h-[75px] rounded-md bg-white border border-pink-100 flex flex-col items-center justify-center p-1 text-center shadow-sm">
+                        <div class="text-[6px] text-pink-400 font-cute font-bold uppercase">${drawnCards[i].arcana}</div>
+                        <div class="text-[8px] font-cute font-bold leading-none mt-1">${drawnCards[i].name}</div>
+                    </div>`;
+                } else {
+                    html += `<div class="w-[45px] h-[75px] border-2 border-dashed border-pink-100 rounded-md"></div>`;
+                }
+            }
+            slots.innerHTML = html;
+        }
+
+        function renderResult() {
+            const grid = document.getElementById('result-grid');
+            let html = '';
+            drawnCards.forEach((card, idx) => {
+                html += `
+                <div class="flex flex-col items-center w-full" style="animation-delay: ${idx * 100}ms">
+                    <div class="w-full max-w-[120px] aspect-[2/3.3] bg-white border border-pink-100 rounded-xl flex flex-col items-center justify-center p-2 text-center shadow-md">
+                         <div class="text-[9px] text-pink-400 font-cute font-bold mb-1 uppercase tracking-widest">${card.arcana}</div>
+                         <div class="text-xs sm:text-sm font-cute font-bold text-gray-800 leading-tight">${card.name}</div>
+                         <div class="mt-2 text-pink-200 text-[10px] font-cute">${card.number}</div>
+                    </div>
+                    <span class="text-xs sm:text-sm font-cute text-gray-700 mt-3 text-center leading-tight">
+                        ${card.name} <br> <span class="text-[10px] text-pink-400 italic">${card.isReversed ? '(Reversed)' : ''}</span>
+                    </span>
+                </div>`;
+            });
+            grid.innerHTML = html;
+        }
+
+        // --- TAROT LIBRARY SYSTEM ---
+        function renderLibrary(filter = 'All') {
+            const grid = document.getElementById('library-grid');
+            let html = '';
+            TAROT_DECK.forEach((card, index) => {
+                const isMajor = card.arcana === 'Major Arcana';
+                const suit = isMajor ? null : card.name.split(' of ')[1];
+                
+                let isMatch = (filter === 'All') || 
+                              (filter === 'Major Arcana' && isMajor) || 
+                              (filter === suit);
+                
+                if (isMatch) {
+                    html += `
+                        <div onclick="showCardDetail(${index})" class="cursor-pointer transform transition-transform hover:-translate-y-2">
+                            <div class="w-full aspect-[2/3.3] bg-white border border-pink-100 rounded-xl flex flex-col items-center justify-center p-2 text-center shadow-sm hover:shadow-md transition-shadow">
+                                <div class="text-[9px] text-pink-400 font-cute font-bold mb-1 uppercase tracking-widest">${isMajor ? 'Major' : suit}</div>
+                                <div class="text-xs sm:text-sm font-cute font-bold text-gray-800 leading-tight">${card.name}</div>
+                                <div class="mt-2 text-pink-200 text-[10px] font-cute">${card.number}</div>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+            grid.innerHTML = html;
+        }
+
+        function filterLibrary(filter) {
+            const buttons = document.getElementById('card-filters').children;
+            for (let btn of buttons) {
+                if (btn.innerText.includes(filter) || (filter === 'Major Arcana' && btn.innerText === 'Major')) {
+                    btn.className = "px-4 py-2 rounded-full border border-pink-200 text-sm font-cute font-bold transition-colors bg-pink-300 text-white shadow-sm";
+                } else {
+                    btn.className = "px-4 py-2 rounded-full border border-pink-200 text-sm font-cute font-bold transition-colors bg-white hover:bg-pink-50 text-gray-600";
+                }
+            }
+            renderLibrary(filter);
+        }
+
+        function showCardDetail(index) {
+            const card = TAROT_DECK[index];
+            const isMajor = card.arcana === 'Major Arcana';
+            const suit = isMajor ? null : card.name.split(' of ')[1];
+            
+            let astrology = isMajor ? 'Cosmic / Planetary Rulership' : 
+                (suit === 'Wands' ? 'Fire Signs (Aries, Leo, Sag)' : 
+                suit === 'Cups' ? 'Water Signs (Cancer, Scorpio, Pisces)' : 
+                suit === 'Swords' ? 'Air Signs (Gemini, Libra, Aquarius)' : 
+                'Earth Signs (Taurus, Virgo, Capricorn)');
+                
+            const yesNo = (index % 2 === 0) ? '<span class="text-green-500 font-medium">Yes</span>' : '<span class="text-orange-400 font-medium">No / Caution</span>';
+
+            document.getElementById('card-detail-content').innerHTML = `
+                <div class="flex flex-col md:flex-row gap-8 lg:gap-12">
+                    <div class="w-full md:w-1/3 flex justify-center">
+                        <div class="w-64 md:w-full aspect-[2/3.3] bg-gradient-to-b from-pink-50 to-white border-2 border-pink-100 rounded-2xl flex flex-col items-center justify-center p-6 shadow-xl relative overflow-hidden group">
+                            <div class="absolute inset-2 border border-pink-200/60 rounded-xl"></div>
+                            <h2 class="font-cute font-bold text-3xl text-center text-purple-800 z-10 leading-tight">${card.name}</h2>
+                            <p class="text-xs text-pink-400 font-cute font-bold uppercase tracking-widest mt-4 z-10">${card.arcana}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="w-full md:w-2/3 space-y-6">
+                        <div>
+                            <h1 class="font-cute font-bold text-4xl md:text-5xl text-purple-800 mb-2">${card.name}</h1>
+                            <p class="text-sm text-pink-500 font-medium tracking-widest uppercase font-cute">${card.arcana}</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-white p-4 rounded-xl border border-pink-100 shadow-sm">
+                                <h4 class="text-[10px] font-bold text-pink-400 uppercase tracking-wider mb-1 font-cute">Yes / No Reading</h4>
+                                <p class="font-cute font-bold text-lg text-gray-700">${yesNo}</p>
+                            </div>
+                            <div class="bg-pink-50/50 p-4 rounded-xl border border-pink-100 shadow-sm">
+                                <h4 class="text-[10px] font-bold text-pink-400 uppercase tracking-wider mb-1 font-cute">Astrology / Element</h4>
+                                <p class="font-cute text-sm text-gray-700">${astrology}</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-5 pt-4">
+                            <div>
+                                <h3 class="font-cute font-bold text-xl text-purple-800 mb-2 flex items-center"><span class="w-2 h-2 rounded-full bg-pink-300 mr-3"></span> Upright (Tegak)</h3>
+                                <p class="text-gray-600 font-cute text-sm leading-relaxed text-justify">Secara upright, <strong>${card.name}</strong> membawa energi murni dan potensial penuh dari sifat dasarnya. Ini adalah masa di mana Anda disarankan untuk merangkul kejelasan pikiran, mengambil langkah maju, dan percaya pada proses yang sedang berlangsung.</p>
+                            </div>
+                            <div>
+                                <h3 class="font-cute font-bold text-xl text-purple-800 mb-2 flex items-center"><span class="w-2 h-2 rounded-full bg-gray-400 mr-3"></span> Reversed (Terbalik)</h3>
+                                <p class="text-gray-600 font-cute text-sm leading-relaxed text-justify">Ketika muncul terbalik, energi kartu ini mungkin terhambat, tertunda, atau menuntut Anda untuk melihat ke dalam (introspeksi). Jangan paksakan keadaan; cobalah cari perspektif lain untuk mengurai masalah.</p>
+                            </div>
+                            <div class="bg-pink-50/30 p-5 rounded-2xl border border-pink-50">
+                                <h3 class="font-cute font-bold text-xl text-purple-800 mb-2 flex items-center"><span class="text-pink-400 mr-3 text-lg">♥</span> Relationship & Love</h3>
+                                <p class="text-gray-600 font-cute text-sm leading-relaxed">Dalam konteks asmara, kartu ini menyiratkan dinamika emosional yang sedang tumbuh. Jika Anda lajang, ini menunjukkan fokus pada penyembuhan diri. Jika memiliki pasangan, komunikasikan perasaan secara lembut namun transparan.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById('view-card-detail').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function showZodiac(id) {
+            const z = ZODIAC_DATA.find(item => item.id === id);
+            if (!z) return;
+            
+            document.getElementById('zodiac-detail-content').innerHTML = `
+                <div class="text-center mb-10">
+                    <div class="text-pink-400 mb-4 w-16 h-16 mx-auto"><svg viewBox="0 0 24 24" class="w-full h-full">${z.svg}</svg></div>
+                    <h1 class="font-cute font-bold text-4xl text-purple-800 mb-2">${z.name}</h1>
+                    <p class="text-sm text-pink-400 tracking-wider font-cute">${z.dateRange}</p>
+                </div>
+                <div class="bg-pink-50/30 p-8 rounded-3xl border border-pink-100 text-gray-600 font-cute leading-relaxed text-left">
+                    <p>Selamat datang di profil energi <strong>${z.name}</strong>.</p>
+                    <p class="mt-4">Zodiak ini dikenal dengan elemen dan karakter utamanya yang khas. Anda bisa menambahkan teks deskripsi astrologi harian, kecocokan (compatibility), maupun karakteristik mendalam Mai Collection di bagian ini ke depannya.</p>
+                </div>
+            `;
+            
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById('view-zodiac').classList.add('active');
+            window.scrollTo(0, 0);
+        }
