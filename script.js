@@ -1,18 +1,115 @@
 // --- DATA ---
 const ZODIAC_DATA = [
-    { id: 'aries', name: 'Aries', dateRange: 'March 21 – April 19', svg: '<path d="M4,14 C4,8 12,4 12,12 C12,4 20,8 20,14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' },
-    { id: 'taurus', name: 'Taurus', dateRange: 'April 20 – May 20', svg: '<circle cx="12" cy="14" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M7,9 C7,4 17,4 17,9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' },
-    { id: 'gemini', name: 'Gemini', dateRange: 'May 21 – June 20', svg: '<path d="M7,5 L17,5 M7,19 L17,19 M9,5 L9,19 M15,5 L15,19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' },
-    { id: 'cancer', name: 'Cancer', dateRange: 'June 21 – July 22', svg: '<circle cx="8" cy="10" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M11,10 C16,7 20,10 18,14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="16" cy="14" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M13,14 C8,17 4,14 6,10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' },
-    { id: 'leo', name: 'Leo', dateRange: 'July 23 – August 22', svg: '<circle cx="7" cy="17" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10,17 C13,17 18,14 15,9 C12,4 6,8 9,13 C12,18 19,16 19,16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' },
-    { id: 'virgo', name: 'Virgo', dateRange: 'Aug 23 – Sep 22', svg: '<path d="M5,17 L7,7 L11,17 L14,9 C14,9 15,19 18,17 C21,15 19,10 19,10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' },
-    { id: 'libra', name: 'Libra', dateRange: 'Sep 23 – Oct 22', svg: '<path d="M4,15 L20,15 M4,18 L20,18 M12,15 C12,10 8,11 6,15 M12,15 C12,10 16,11 18,15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' },
-    { id: 'scorpio', name: 'Scorpio', dateRange: 'Oct 23 – Nov 21', svg: '<path d="M5,14 L7,6 L11,14 L14,7 C14,7 16,14 18,13 C20,12 20,8 20,8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M20,8 L22,10 M20,8 L18,10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' },
-    { id: 'sagittarius', name: 'Sagittarius', dateRange: 'Nov 22 – Dec 21', svg: '<path d="M6,18 L18,6 M12,6 L18,6 L18,12 M4,14 L10,20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' },
-    { id: 'capricorn', name: 'Capricorn', dateRange: 'Dec 22 – Jan 19', svg: '<path d="M5,7 L8,17 L12,9 C12,9 18,6 18,11 C18,16 14,20 9,19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' },
-    { id: 'aquarius', name: 'Aquarius', dateRange: 'Jan 20 – Feb 18', svg: '<path d="M3,9 L7,5 L11,9 L15,5 L19,9 M3,15 L7,11 L11,15 L15,11 L19,15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' },
-    { id: 'pisces', name: 'Pisces', dateRange: 'Feb 19 – Mar 20', svg: '<path d="M8,4 C5,10 5,14 8,20 M16,4 C19,10 19,14 16,20 M6,12 L18,12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' }
+    { 
+        id: 'aries', 
+        name: 'Aries', 
+        dateRange: 'March 21 – April 19', 
+        element: 'Fire Element',
+        tarotMatch: 'The Emperor',
+        desc: 'Aries adalah percikan api pertama di roda zodiak—sebuah simbol energi murni yang selalu antusias menyambut permulaan baru. Dikenal dengan keberanian yang sering kali mendahului rasa takut, zodiak ini hidup dalam gerak cepat, inisiatif tinggi, dan keyakinan bahwa jalan hidup harus dirintis sendiri, bukan sekadar diikuti.<br><br>Dalam pembacaan tarot, Aries sangat beresonansi dengan kartu <strong>The Emperor</strong>, yang mencerminkan otoritas, ketegasan, dan jiwa pelindung yang kuat. Tantangan terbesar bagi seorang Aries adalah meredam ego dan belajar bahwa kesabaran bukanlah kelemahan, melainkan strategi terbaik untuk memenangkan pertempuran jangka panjang.',
+        svg: '<path d="M4,14 C4,8 12,4 12,12 C12,4 20,8 20,14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' 
+    },
+    { 
+        id: 'taurus', 
+        name: 'Taurus', 
+        dateRange: 'April 20 – May 20', 
+        element: 'Earth Element',
+        tarotMatch: 'The Hierophant',
+        desc: 'Taurus adalah wujud nyata dari ketenangan bumi yang kokoh. Mereka memiliki apresiasi yang sangat tinggi terhadap keindahan estetika, kenyamanan indrawi, serta stabilitas hidup yang terencana. Di balik pembawaannya yang tenang, tersimpan tekad yang hampir mustahil untuk digoyahkan.<br><br>Energi Taurus merefleksikan kartu <strong>The Hierophant</strong>—melambangkan nilai-nilai tradisional yang dijaga ketat, pencarian makna spiritual yang membumi, serta kesetiaan tanpa syarat dalam hubungan. Bagi Taurus, rumah bukan sekadar tempat, melainkan sebuah rasa aman yang mereka bangun dengan penuh kesabaran.',
+        svg: '<circle cx="12" cy="14" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M7,9 C7,4 17,4 17,9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' 
+    },
+    { 
+        id: 'gemini', 
+        name: 'Gemini', 
+        dateRange: 'May 21 – June 20', 
+        element: 'Air Element',
+        tarotMatch: 'The Lovers',
+        desc: 'Gemini adalah angin musim semi yang bergerak lincah, membawa rasa ingin tahu tanpa batas dan kecerdasan yang memikat. Mereka adalah penjelajah ide, mampu melihat suatu masalah dari berbagai sudut pandang berbeda, dan memiliki pesona komunikasi yang hidup.<br><br>Karakter dinamis mereka diwakili oleh kartu <strong>The Lovers</strong>, yang tidak hanya menyimbolkan hubungan asmara, tetapi juga dilema pilihan hidup dan penyatuan sisi-sisi dualitas dalam diri. Tantangan terbesar Gemini adalah menemukan fokus di tengah badai informasi yang mereka serap setiap hari.',
+        svg: '<path d="M7,5 L17,5 M7,19 L17,19 M9,5 L9,19 M15,5 L15,19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' 
+    },
+    { 
+        id: 'cancer', 
+        name: 'Cancer', 
+        dateRange: 'June 21 – July 22', 
+        element: 'Water Element',
+        tarotMatch: 'The Chariot',
+        desc: 'Cancer adalah samudra emosi yang menyimpan kedalaman luar biasa di balik cangkang pelindungnya. Dipimpin oleh energi bulan, mereka memiliki intuisi yang sangat tajam—sering kali bisa merasakan perubahan energi di suatu ruangan bahkan sebelum orang lain menyadarinya.<br><br>Zodiak ini merepresentasikan kartu <strong>The Chariot</strong>, melambangkan perjalanan emosional yang intens di mana mereka harus belajar mengendalikan pasang surut perasaan agar tidak hanyut. Cancer adalah tempat berlindung yang paling aman bagi orang-orang yang mereka kasihi.',
+        svg: '<circle cx="8" cy="10" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M11,10 C16,7 20,10 18,14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="16" cy="14" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M13,14 C8,17 4,14 6,10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' 
+    },
+    { 
+        id: 'leo', 
+        name: 'Leo', 
+        dateRange: 'July 23 – August 22', 
+        element: 'Fire Element',
+        tarotMatch: 'Strength',
+        desc: 'Leo memancarkan kehangatan matahari yang menghidupkan segalanya di dekat mereka. Kreativitas tanpa batas, jiwa yang dermawan, dan karisma alami membuat seorang Leo selalu menonjol secara natural tanpa harus berusaha terlalu keras.<br><br>Energi mereka selaras dengan kartu <strong>Strength</strong>—bukan kekuatan fisik yang kasar, melainkan keberanian hati yang lembut, ketulusan, dan kemampuan menjinakkan ketakutan terbesar melalui rasa percaya diri. Di balik sorot lampu yang mereka dapatkan, Leo memiliki hati yang sangat loyal.',
+        svg: '<circle cx="7" cy="17" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10,17 C13,17 18,14 15,9 C12,4 6,8 9,13 C12,18 19,16 19,16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' 
+    },
+    { 
+        id: 'virgo', 
+        name: 'Virgo', 
+        dateRange: 'Aug 23 – Sep 22', 
+        element: 'Earth Element',
+        tarotMatch: 'The Hermit',
+        desc: 'Virgo adalah arsitek ketelitian yang melihat keindahan dalam detail-detail kecil yang sering diabaikan orang lain. Mereka adalah sosok yang analitis, berdedikasi tinggi, dan memiliki dorongan tulus untuk memperbaiki serta merawat lingkungan sekitarnya.<br><br>Karakter reflektif mereka tercermin dalam kartu <strong>The Hermit</strong>—pencarian kebenaran hakiki, kebutuhan untuk menyendiri demi mengisi ulang energi mental, dan kebijaksanaan yang lahir dari pengamatan mendalam. Virgo adalah bentuk cinta dalam wujud tindakan nyata dan perhatian sekecil apa pun.',
+        svg: '<path d="M5,17 L7,7 L11,17 L14,9 C14,9 15,19 18,17 C21,15 19,10 19,10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' 
+    },
+    { 
+        id: 'libra', 
+        name: 'Libra', 
+        dateRange: 'Sep 23 – Oct 22', 
+        element: 'Air Element',
+        tarotMatch: 'Justice',
+        desc: 'Libra adalah penari anggun di atas garis keseimbangan. Di bawah naungan planet estetika, mereka memiliki selera seni yang tinggi, kebencian mendalam pada konflik yang tidak perlu, serta kemampuan alami untuk merajut kedamaian di antara dua kubu yang bersitegang.<br><br>Zodiak ini beresonansi kuat dengan kartu <strong>Justice</strong>, yang melambangkan objektivitas, pencarian keadilan sejati, dan pentingnya menimbang segala keputusan dengan kepala dingin. Libra mengajarkan kita bahwa harmoni adalah sebuah karya seni yang harus dijaga setiap hari.',
+        svg: '<path d="M4,15 L20,15 M4,18 L20,18 M12,15 C12,10 8,11 6,15 M12,15 C12,10 16,11 18,15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' 
+    },
+    { 
+        id: 'scorpio', 
+        name: 'Scorpio', 
+        dateRange: 'Oct 23 – Nov 21', 
+        element: 'Water Element',
+        tarotMatch: 'Death',
+        desc: 'Scorpio adalah misteri yang hidup dalam intensitas emosi yang paling dalam. Mereka tidak mengenal kata "setengah-setengah"; bagi seorang Scorpio, hubungan, impian, dan perasaan harus dijalani dengan totalitas mutlak atau ditinggalkan sama sekali.<br><br>Energi mereka sangat lekat dengan kartu <strong>Death</strong>—bukan akhir yang menakutkan, melainkan proses transformasi radikal, pelepasan masa lalu yang sudah usang, dan kemampuan bangkit kembali seperti burung Phoenix dari abu kepedihan. Scorpio adalah simbol regenerasi jiwa yang paling tangguh.',
+        svg: '<path d="M5,14 L7,6 L11,14 L14,7 C14,7 16,14 18,13 C20,12 20,8 20,8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M20,8 L22,10 M20,8 L18,10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' 
+    },
+    { 
+        id: 'sagittarius', 
+        name: 'Sagittarius', 
+        dateRange: 'Nov 22 – Dec 21', 
+        element: 'Fire Element',
+        tarotMatch: 'Temperance',
+        desc: 'Sagittarius adalah pemanah bebas yang memandang cakrawala luas sebagai rumahnya. Jiwa petualang mereka selalu haus akan pengalaman baru, filosofi hidup, dan kebebasan mutlak untuk terbang ke mana pun angin membawanya.<br><br>Karakter mereka terhubung erat dengan kartu <strong>Temperance</strong>—melambangkan penyatuan berbagai pengalaman hidup menjadi kebijaksanaan, keselarasan spiritual, dan kemampuan menjaga aliran optimisme tetap stabil. Sagittarius adalah pengingat bahwa hidup adalah sebuah perjalanan suci yang harus dinikmati setiap detiknya.',
+        svg: '<path d="M6,18 L18,6 M12,6 L18,6 L18,12 M4,14 L10,20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' 
+    },
+    { 
+        id: 'capricorn', 
+        name: 'Capricorn', 
+        dateRange: 'Dec 22 – Jan 19', 
+        element: 'Earth Element',
+        tarotMatch: 'The Devil',
+        desc: 'Capricorn adalah pendaki gunung yang sabar, disiplin, dan tidak pernah gentar melihat seberapa tinggi puncak yang harus mereka capai. Mereka memiliki ketahanan mental yang luar biasa, etos kerja tinggi, dan visi jangka panjang yang matang.<br><br>Dalam dimensi spiritual, mereka merefleksikan pelajaran dari kartu <strong>The Devil</strong>—tentang bagaimana mengenali keterikatan duniawi, menguasai ambisi diri sendiri, dan membebaskan potensi terdalam dari rasa takut gagal. Capricorn membuktikan bahwa kesuksesan sejati dibangun dari konsistensi hari demi hari.',
+        svg: '<path d="M5,7 L8,17 L12,9 C12,9 18,6 18,11 C18,16 14,20 9,19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' 
+    },
+    { 
+        id: 'aquarius', 
+        name: 'Aquarius', 
+        dateRange: 'Jan 20 – Feb 18', 
+        element: 'Air Element',
+        tarotMatch: 'The Star',
+        desc: 'Aquarius adalah pemimpi masa depan yang berdiri di luar kotak konvensional. Pikiran mereka selalu berkelana melampaui zamannya, membawa inovasi, idealisme tinggi, dan kepedulian yang besar terhadap kesejahteraan umat manusia secara kolektif.<br><br>Energi mereka berpendar terang melalui kartu <strong>The Star</strong>—membawa inspirasi murni, harapan setelah melewati masa-masa gelap, dan keyakinan spiritual bahwa alam semesta selalu membimbing langkah mereka. Aquarius adalah percikan cahaya pembaruan bagi dunia.',
+        svg: '<path d="M3,9 L7,5 L11,9 L15,5 L19,9 M3,15 L7,11 L11,15 L15,11 L19,15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' 
+    },
+    { 
+        id: 'pisces', 
+        name: 'Pisces', 
+        dateRange: 'Feb 19 – Mar 20', 
+        element: 'Water Element',
+        tarotMatch: 'The Moon',
+        desc: 'Pisces adalah penyair terakhir di roda zodiak, hidup di antara batas dunia nyata dan dunia mimpi yang magis. Mereka memiliki tingkat empati yang tanpa batas, kepekaan artistik yang tinggi, serta kedalaman batin yang terhubung langsung dengan dimensi spiritual.<br><br>Zodiak ini berpadu erat dengan kartu <strong>The Moon</strong>—menyelami misteri alam bawah sadar, intuisi yang tidak pernah salah, dan menghadapi ilusi dengan keanggunan jiwa. Pisces adalah pelabuhan terakhir di mana seni, cinta, dan keajaiban melebur menjadi satu.',
+        svg: '<path d="M8,4 C5,10 5,14 8,20 M16,4 C19,10 19,14 16,20 M6,12 L18,12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' 
+    }
 ];
+
 
 const SPREADS = [
     { id: 'free', name: 'Free Spread', desc: 'Draw as many cards as you like (1-13).', count: 3 },
@@ -431,14 +528,19 @@ function showZodiac(id) {
     if (!z) return;
     
     document.getElementById('zodiac-detail-content').innerHTML = `
-        <div class="text-center mb-10">
-            <div class="text-pink-400 mb-4 w-16 h-16 mx-auto"><svg viewBox="0 0 24 24" class="w-full h-full">${z.svg}</svg></div>
-            <h1 class="font-cute font-bold text-4xl text-purple-800 mb-2">${z.name}</h1>
-            <p class="text-sm text-pink-400 tracking-wider font-cute">${z.dateRange}</p>
+        <div class="text-center mb-8">
+            <div class="text-pink-400 mb-3 w-16 h-16 mx-auto"><svg viewBox="0 0 24 24" class="w-full h-full">${z.svg}</svg></div>
+            <h1 class="font-cute font-bold text-4xl text-purple-800 mb-1">${z.name}</h1>
+            <p class="text-sm text-pink-400 tracking-wider font-cute mb-4">${z.dateRange}</p>
+            <div class="flex justify-center gap-2">
+                <span class="px-3 py-1 bg-pink-100 text-purple-700 text-xs font-cute font-bold rounded-full">${z.element}</span>
+                <span class="px-3 py-1 bg-purple-50 text-purple-600 text-xs font-cute font-bold rounded-full border border-purple-100">Tarot: ${z.tarotMatch}</span>
+            </div>
         </div>
-        <div class="bg-pink-50/30 p-8 rounded-3xl border border-pink-100 text-gray-600 font-cute leading-relaxed text-left">
-            <p>Selamat datang di profil energi <strong>${z.name}</strong>.</p>
-            <p class="mt-4">Zodiak ini dikenal dengan elemen dan karakter utamanya yang khas. Anda bisa menambahkan teks deskripsi astrologi harian, kecocokan (compatibility), maupun karakteristik mendalam Mai Collection di bagian ini ke depannya.</p>
+        <div class="bg-pink-50/30 p-6 sm:p-8 rounded-3xl border border-pink-100 text-gray-600 font-cute leading-relaxed text-left space-y-4 shadow-sm">
+            <p class="text-base">Selamat datang di profil energi <strong>${z.name}</strong>.</p>
+            <p class="text-sm font-light leading-relaxed">${z.desc}</p>
+            <p class="text-xs text-pink-400 italic pt-2">“Gunakan energi zodiak ini sebagai panduan refleksi harian dalam pembacaan tarot Anda bersama Mai Collection.”</p>
         </div>
     `;
     
@@ -446,6 +548,7 @@ function showZodiac(id) {
     document.getElementById('view-zodiac').classList.add('active');
     window.scrollTo(0, 0);
 }
+
 
 // --- GENERIC PAGES ---
 function renderGenericPage(title) {
