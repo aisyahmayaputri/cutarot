@@ -1381,3 +1381,459 @@ function renderGenericPage(title) {
 
 // Init App
 window.onload = initHome;
+// ==========================================
+// --- TAROT BIRTH CALCULATOR SYSTEM ---
+// ==========================================
+
+const BIRTH_CARD_MEANINGS = {
+    0: { // The Fool (22)
+        p1: "Sebagai Kartu Kepribadian, The Fool menandakan jalan hidup yang didefinisikan oleh eksplorasi tanpa henti dan jiwa muda yang tidak bisa dipatahkan. Kamu hadir di dunia ini untuk mendobrak batasan, menantang hal-hal konvensional, dan merangkul ketidakpastian dengan tangan terbuka.",
+        p2: "Orang-orang melihatmu sebagai sosok yang berani mengambil risiko dan selalu siap untuk memulai lembaran baru. Energi luar kamu memancarkan optimisme dan pengingat bagi orang lain bahwa hidup adalah petualangan besar yang tidak perlu terlalu ditakuti.",
+        s1: "Pada tingkat Jiwa (Soul), inti terdalammu mendambakan kebebasan mutlak dan kebenaran tanpa syarat. Perjalanan spiritualmu menuntutmu untuk memercayai alam semesta sepenuhnya, melepaskan kebutuhan untuk mengontrol setiap hasil dari tindakanmu.",
+        s2: "Tujuan sejatimu adalah menemukan kebijaksanaan yang mendalam di dalam sebuah kepolosan. Kamu ditakdirkan untuk tetap memiliki rasa ingin tahu yang murni, menemukan pencerahan justru ketika kamu berani melompat ke tempat yang sama sekali tidak kamu ketahui."
+    },
+    1: { // The Magician
+        p1: "Sebagai Kartu Kepribadian, The Magician menandakan bahwa kamu adalah seorang manifestor sejati. Kamu dianugerahi kecerdasan tajam, tekad yang luar biasa, dan kemampuan unik untuk mengubah ide-ide abstrak menjadi kenyataan materi.",
+        p2: "Dalam interaksi sehari-hari, kamu sering kali menjadi pemecah masalah yang andal. Jalan hidup eksternalmu adalah tentang memanfaatkan segala sumber daya yang ada—pikiran, tubuh, dan lingkungan—untuk menciptakan dunia yang kamu inginkan secara presisi.",
+        s1: "Pada tingkat Jiwa, kamu memiliki koneksi langsung dengan percikan ilahi dari penciptaan. Jiwamu berfungsi sebagai saluran ajaib yang menghubungkan alam spiritual dengan realitas fisik, membawa pencerahan dari atas ke bumi.",
+        s2: "Evolusi batinmu terletak pada penguasaan niat. Semakin dalam kamu menyelaraskan fokusmu dengan tujuan tertinggi, semakin besar keajaiban penyembuhan dan transformasi yang dapat kamu berikan kepada dirimu sendiri dan orang-orang di sekitarmu."
+    },
+    2: { // The High Priestess
+        p1: "Sebagai Kartu Kepribadian, The High Priestess memproyeksikan aura misteri, kedalaman emosional, dan intuisi yang sangat kuat. Orang lain sering kali merasa bahwa kamu mengetahui rahasia-rahasia tersembunyi tanpa perlu diucapkan.",
+        p2: "Kamu tidak mudah terpengaruh oleh keramaian dunia luar; sebaliknya, kamu memantulkan energi orang lain bagai cermin yang tenang. Pendekatan hidupmu sangat observatif, selalu membaca yang tersirat sebelum mengambil tindakan apa pun.",
+        s1: "Pada tingkat Jiwa, tujuan utamamu adalah mendengarkan dan memercayai suara batinmu di atas segalanya. Jiwamu adalah sebuah kuil kebijaksanaan kuno yang menyimpan pemahaman tentang siklus alam dan rahasia alam bawah sadar.",
+        s2: "Perjalanan sejatimu bukanlah tentang mencari jawaban dari luar, melainkan menyelami keheningan batinmu. Kamu ditakdirkan untuk menjadi pembimbing spiritual, membawa pencerahan bagi mereka yang tersesat di dalam kegelapan emosional mereka sendiri."
+    },
+    3: { // The Empress
+        p1: "Sebagai Kartu Kepribadian, The Empress menandakan bahwa hidupmu dipenuhi dengan tema pengasuhan, kreativitas, dan penciptaan keindahan. Kamu memiliki daya tarik alami yang hangat dan membuat siapa saja merasa betah di dekatmu.",
+        p2: "Secara eksternal, kamu sangat terhubung dengan kelimpahan, seni, dan kenyamanan duniawi. Kamu adalah pelindung bagi orang-orang yang kamu cintai, selalu memastikan harmoni dan kesejahteraan mekar di sekitarmu.",
+        s1: "Pada tingkat Jiwa, kamu membawa esensi dari 'Ibu Bumi' itu sendiri. Tujuan terdalam jiwamu adalah untuk mencintai tanpa syarat dan mengajarkan dunia bagaimana menerima cinta serta kelimpahan tanpa rasa bersalah.",
+        s2: "Evolusi batinmu tercapai ketika kamu menyadari bahwa kamu tidak hanya melahirkan ide atau merawat orang lain, tetapi juga wajib memelihara dirimu sendiri. Kamu ada untuk membuktikan bahwa kelembutan adalah bentuk kekuatan yang paling tak tertandingi."
+    },
+    4: { // The Emperor
+        p1: "Sebagai Kartu Kepribadian, The Emperor menjadikanmu arsitek dari struktur dan stabilitas. Kamu memancarkan otoritas, kepemimpinan yang teguh, dan kemampuan untuk membawa ketertiban ke dalam situasi yang kacau.",
+        p2: "Orang-orang secara alami mengandalkanmu karena visi jangka panjangmu yang realistis. Kamu menghadapi dunia dengan pikiran yang logis, melindungi apa yang menjadi hakmu, dan membangun fondasi solid untuk masa depan.",
+        s1: "Pada tingkat Jiwa, perjalanan spiritualmu adalah tentang menguasai diri sendiri (self-mastery). Jiwamu ditugaskan untuk mengubah kekuatan mentah menjadi otoritas yang bijaksana, bukan sekadar mendominasi.",
+        s2: "Tantangan dan panggilan sejatimu adalah memadukan ketegasan dengan welas asih. Ketika kamu berhasil memimpin dengan hati dan logika secara seimbang, kamu akan menciptakan warisan spiritual yang melindungi banyak generasi."
+    },
+    5: { // The Hierophant
+        p1: "Sebagai Kartu Kepribadian, The Hierophant menunjukkan bahwa kamu adalah sosok pencari kebenaran, tradisi, dan nilai-nilai fundamental. Kamu sangat menghargai struktur moral, pendidikan, dan sistem yang telah teruji oleh waktu.",
+        p2: "Dalam masyarakat, kamu sering bertindak sebagai mentor, guru, atau penasihat yang bijak. Kamu memberikan rasa aman bagi orang lain dengan menawarkan pedoman yang jelas dan mempertahankan tradisi yang menyatukan komunitas.",
+        s1: "Pada tingkat Jiwa, panggilan utamamu adalah menjembatani kearifan spiritual kuno dengan pemahaman modern. Jiwamu mendambakan makna suci dalam segala hal, mencari keyakinan yang lebih besar dari diri sendiri.",
+        s2: "Evolusi batinmu terjadi ketika kamu tidak hanya mengikuti aturan secara membabi buta, tetapi menemukan inti spiritual dari setiap kepercayaan. Kamu ditakdirkan untuk mengajarkan bahwa hukum alam semesta didasarkan pada cinta dan kebijaksanaan universal."
+    },
+    6: { // The Lovers
+        p1: "Sebagai Kartu Kepribadian, The Lovers membawa tema harmoni, kemitraan, dan persimpangan pilihan. Kamu memiliki pesona yang sangat magnetis dan kemampuan luar biasa untuk menyatukan orang-orang atau hal-hal yang saling bertentangan.",
+        p2: "Kehidupan luar kamu sering kali diwarnai oleh hubungan emosional yang mendalam dan keputusan-keputusan besar yang menguji nilai-nilai pribadimu. Orang melihatmu sebagai sosok yang penuh gairah dan selalu mencari keselarasan batin.",
+        s1: "Pada tingkat Jiwa, kamu membawa misi tentang integrasi dualitas—cahaya dan bayangan, maskulin dan feminin, logika dan intuisi. Jiwamu terus-menerus mencari 'keseutuhan' mutlak di dalam diri.",
+        s2: "Pemahaman spiritual terbesarmu akan datang ketika kamu menyadari bahwa cinta sejati dimulai dari penerimaan diri secara total. Kamu ada untuk mengajarkan dunia bahwa pilihan yang dibuat dari ruang cinta selalu lebih kuat daripada pilihan yang dibuat dari rasa takut."
+    },
+    7: { // The Chariot
+        p1: "Sebagai Kartu Kepribadian, The Chariot menandakan tekad baja, ambisi yang tak terhentikan, dan fokus pada kemenangan. Ketika kamu menetapkan pikiran pada suatu tujuan, tidak ada halangan duniawi yang dapat memperlambatmu.",
+        p2: "Kamu memproyeksikan citra seseorang yang memegang kendali penuh atas hidupnya. Meskipun di dalam mungkin terjadi gejolak, kamu sangat ahli dalam mengarahkan berbagai emosi yang bertentangan menjadi bahan bakar untuk maju.",
+        s1: "Pada tingkat Jiwa, perjalananmu adalah tentang kemenangan spiritual dan penguasaan atas ego. Jiwamu ditantang untuk menunggangi kereta kehidupan tanpa membiarkan insting dasar dan ketakutan mengendalikan arahmu.",
+        s2: "Pencerahanmu muncul saat kamu memahami bahwa kemenangan sejati bukan tentang mengalahkan orang lain, melainkan menaklukkan bayangan di dalam dirimu sendiri. Kamu adalah pejuang spiritual yang membawa cahaya melewati medan pertempuran."
+    },
+    8: { // Strength
+        p1: "Sebagai Kartu Kepribadian, Strength memancarkan aura keberanian yang tenang dan ketahanan luar biasa. Kamu tidak menyelesaikan masalah dengan kekerasan, melainkan dengan kelembutan, persuasi, dan kesabaran tanpa batas.",
+        p2: "Orang lain sering kali berlindung di balik ketangguhan mentalmu. Kamu memiliki kemampuan langka untuk menjinakkan situasi yang liar atau orang-orang yang sulit hanya dengan kehadiran dan empati tulusmu.",
+        s1: "Pada tingkat Jiwa, tujuan terbesarmu adalah mengubah rasa takut menjadi kekuatan batin. Jiwamu mengerti bahwa monster sejati bukanlah yang ada di luar, melainkan keraguan dan amarah di dalam diri sendiri.",
+        s2: "Evolusi spiritualmu tercapai ketika kamu berhasil merangkul semua sisi terang dan gelapmu dengan penuh cinta. Kamu dikirim ke dunia ini untuk membuktikan bahwa cinta dan kelembutan adalah kekuatan kosmik yang paling tak tertandingi."
+    },
+    9: { // The Hermit
+        p1: "Sebagai Kartu Kepribadian, The Hermit menunjukkan bahwa kamu adalah jiwa yang sangat introspektif, mandiri, dan pencari kebenaran. Kamu sering kali membutuhkan waktu menyendiri untuk mengisi ulang energi dan memproses dunia.",
+        p2: "Kamu tidak mudah terdistraksi oleh hal-hal superfisial. Orang melihatmu sebagai mercusuar kebijaksanaan—sosok tua yang bijak, tempat mereka datang meminta nasihat yang mendalam, objektif, dan jujur.",
+        s1: "Pada tingkat Jiwa, panggilan utamamu adalah pencarian pencerahan spiritual (enlightenment). Jiwamu menuntutmu untuk masuk ke dalam kegelapan batinmu sendiri untuk menemukan cahaya yang murni dan sejati.",
+        s2: "Misi batinmu bukanlah untuk mengasingkan diri selamanya, tetapi untuk membawa kembali lentera kebijaksanaan yang telah kamu nyalakan guna menerangi jalan bagi mereka yang masih tersesat di tengah malam."
+    },
+    10: { // Wheel of Fortune
+        p1: "Sebagai Kartu Kepribadian, Wheel of Fortune menandakan hidup yang penuh dengan perputaran siklus, keberuntungan tak terduga, dan kemampuan beradaptasi. Kamu seolah selalu berada di tempat yang tepat pada waktu yang tepat.",
+        p2: "Kamu memiliki pemahaman luar biasa bahwa tidak ada yang abadi, baik suka maupun duka. Fleksibilitasmu ini membuat orang kagum pada caramu bangkit dari kehancuran dan menunggangi gelombang takdir dengan senyuman.",
+        s1: "Pada tingkat Jiwa, kamu adalah sang pengamat roda karma. Jiwamu sangat selaras dengan ritme alam semesta dan hukum sebab-akibat. Kamu mengerti bahwa setiap tindakan bergema melintasi waktu.",
+        s2: "Panggilan spiritualmu adalah untuk menemukan ketenangan absolut di poros roda (di tengah badai). Alih-alih diombang-ambingkan oleh takdir, kamu ditugaskan untuk menjadi pusat gravitasi yang tenang di tengah dunia yang terus berubah."
+    },
+    11: { // Justice
+        p1: "Sebagai Kartu Kepribadian, Justice menonjolkan integritas, objektivitas, dan pencarian keadilan. Kamu memiliki kompas moral yang sangat tajam dan tidak ragu untuk memotong ilusi demi mengungkapkan kebenaran.",
+        p2: "Orang-orang menghargai sifat adil dan kejujuranmu, meskipun terkadang kata-katamu terasa dingin. Kamu selalu berusaha menyeimbangkan timbangan dalam segala aspek kehidupan, dari hubungan hingga urusan profesional.",
+        s1: "Pada tingkat Jiwa, kamu bertugas menyelaraskan karma dan kebenaran kosmik. Jiwamu menuntut akuntabilitas tidak hanya dari orang lain, tetapi secara brutal terhadap dirimu sendiri di atas segalanya.",
+        s2: "Evolusi batinmu terjadi saat kamu menyadari bahwa keadilan sejati selalu berjalan beriringan dengan kasih sayang. Tugasmu adalah membawa harmoni sejati dengan memastikan bahwa kebenaran yang diucapkan tidak untuk menghancurkan, melainkan untuk menyembuhkan."
+    },
+    12: { // The Hanged Man
+        p1: "Sebagai Kartu Kepribadian, The Hanged Man membuatmu menjadi seseorang dengan perspektif yang unik dan tidak konvensional. Kamu bersedia menunda kepuasan dan mengorbankan ego demi mencapai pemahaman yang lebih besar.",
+        p2: "Orang mungkin melihatmu sering berhenti sejenak atau berada di posisi 'menunggu', tetapi itu adalah strategimu. Kamu tidak takut untuk memutar balik caramu melihat dunia saat logika biasa menemui jalan buntu.",
+        s1: "Pada tingkat Jiwa, perjalananmu adalah tentang penyerahan diri secara spiritual (spiritual surrender). Jiwamu mengerti bahwa pencerahan sering kali datang dari melepaskan kendali dan membiarkan alam semesta bekerja.",
+        s2: "Misi sejatimu adalah menemukan kedamaian dalam jeda. Ketika kamu berhenti melawan arus, kamu akan menerima penglihatan batin yang sangat tajam, mengubah pengorbanan kecil menjadi mukjizat pencerahan."
+    },
+    13: { // Death
+        p1: "Sebagai Kartu Kepribadian, Death menunjukkan bahwa hidupmu dipenuhi dengan tema transformasi radikal, akhir dari sebuah fase, dan regenerasi. Kamu tidak suka kemandekan dan terus-menerus menemukan kembali dirimu.",
+        p2: "Kamu adalah agen perubahan bagi sekitarmu. Orang lain mungkin merasa terintimidasi oleh seberapa mudah kamu melepaskan hal-hal yang tidak lagi melayanimu, karena kamu memahami bahwa akhir adalah ibu dari permulaan.",
+        s1: "Pada tingkat Jiwa, kamu adalah saluran untuk kebangkitan (rebirth). Jiwamu beresonansi dengan siklus hidup dan mati mistis, membersihkan energi lama untuk memberi ruang bagi kehidupan spiritual yang baru.",
+        s2: "Evolusi batinmu terletak pada penerimaan mutlak terhadap sifat ketidakkekalan. Kamu hadir di dunia untuk menunjukkan bahwa dari abu kehancuran yang paling gelap, burung phoenix kebangkitan selalu siap untuk terbang."
+    },
+    14: { // Temperance
+        p1: "Sebagai Kartu Kepribadian, Temperance menjadikanmu sang alkemis kehidupan. Kamu memiliki bakat luar biasa untuk memadukan dua elemen ekstrem menjadi sebuah harmoni yang damai dan seimbang.",
+        p2: "Pendekatanmu terhadap hidup sangat moderat, tenang, dan menyembuhkan. Orang-orang tertarik padamu karena kehadiranmu membawa ketenangan instan dan menetralkan ketegangan yang ada di dalam sebuah ruangan.",
+        s1: "Pada tingkat Jiwa, kamu berada di jalur penyembuhan spiritual. Jiwamu bekerja keras untuk menyeimbangkan pikiran dan hati, dunia material dan spiritual, menciptakan sintesis sempurna di dalam dirimu.",
+        s2: "Panggilan tertinggimu adalah menjadi saluran kedamaian alam semesta. Melalui kesabaran dan keseimbangan batin, kamu ditakdirkan untuk menyembuhkan luka-luka masa lalu, baik milikmu sendiri maupun milik kolektif."
+    },
+    15: { // The Devil
+        p1: "Sebagai Kartu Kepribadian, The Devil menandakan intensitas magnetis, ambisi material yang kuat, dan daya tarik karismatik yang sulit ditolak. Kamu sangat terhubung dengan keinginan duniawi dan tidak takut mengejarnya.",
+        p2: "Kehadiranmu sangat provokatif, sering kali menantang batas-batas tabu masyarakat. Kamu sangat ahli dalam menavigasi dunia fisik, menikmati kemewahan, dan memahami kedalaman bayangan psikologis manusia.",
+        s1: "Pada tingkat Jiwa, ini adalah panggilan untuk pembebasan spiritual yang luar biasa. Jiwamu memilih jalan yang berat: mengenali, merangkul, dan pada akhirnya membebaskan diri dari rantai materialisme dan keterikatan ego.",
+        s2: "Pencerahanmu datang melalui pemahaman gelap-terang. Dengan menaklukkan ketakutan dan dorongan naluriahmu yang paling liar, kamu akan menemukan tingkat kebebasan rohani yang tidak bisa dicapai oleh orang biasa."
+    },
+    16: { // The Tower
+        p1: "Sebagai Kartu Kepribadian, The Tower membuatmu menjadi pendobrak struktur yang usang. Kehadiranmu sering kali membawa kejutan, kebenaran yang menyengat, dan perubahan yang sangat mendadak namun diperlukan.",
+        p2: "Kamu sangat otentik dan tidak tahan terhadap kebohongan atau fondasi hidup yang rapuh. Orang mungkin melihatmu sebagai petir yang menakutkan, tetapi mereka tahu kamu hanya menghancurkan apa yang pada akhirnya akan merugikan mereka.",
+        s1: "Pada tingkat Jiwa, kamu adalah katalisator untuk kebangkitan massal. Jiwamu terhubung langsung dengan kebenaran kosmik murni yang tidak mentolerir ilusi egois dari dunia fisik.",
+        s2: "Evolusi sejatimu adalah menemukan kedamaian dalam kehancuran. Kamu ada untuk mengajarkan bahwa ketika menara kesombongan runtuh, apa yang tersisa di reruntuhannya adalah tanah yang subur untuk pencerahan sejati."
+    },
+    17: { // The Star
+        p1: "Sebagai Kartu Kepribadian, The Star memancarkan harapan murni, inspirasi, dan optimisme yang tidak dapat dipadamkan oleh tragedi. Kamu adalah sumber cahaya yang menyembuhkan bagi banyak orang setelah masa-masa sulit.",
+        p2: "Energi luarmu sangat lembut, visioner, dan artistik. Kamu selalu percaya pada masa depan yang lebih baik, membuat orang lain merasa tenang, terinspirasi, dan dikelilingi oleh keajaiban saat mereka bersamamu.",
+        s1: "Pada tingkat Jiwa, kamu adalah saluran rahmat ilahi. Jiwamu membawa memori kosmik tentang kedamaian surga, tugasnya adalah menuangkan air penyembuhan rohani kembali ke bumi yang tandus.",
+        s2: "Tujuan batinmu adalah untuk bersinar tanpa keraguan dan tanpa perlu membuktikan apa-apa. Kamu membuktikan bahwa iman yang sejati kepada alam semesta pada akhirnya akan memulihkan jiwa yang paling hancur sekalipun."
+    },
+    18: { // The Moon
+        p1: "Sebagai Kartu Kepribadian, The Moon menandakan hidup yang sangat selaras dengan intuisi, seni, dan dunia mimpi bawah sadar. Kehadiranmu sangat misterius, puitis, dan terkadang sulit ditebak.",
+        p2: "Kamu memiliki radar yang sangat sensitif terhadap kebohongan dan energi tak terlihat. Kamu berjalan di tepi antara realitas fisik dan imajinasi magis, menjadikanmu sosok yang sangat empatik namun mudah menyerap emosi sekitar.",
+        s1: "Pada tingkat Jiwa, kamu ditugaskan untuk menyelami ketakutan-ketakutan terdalam dari alam bawah sadar. Jiwamu adalah lautan misteri yang menyimpan kebijaksanaan leluhur dan rahasia ilahi.",
+        s2: "Evolusi spiritualmu terjadi saat kamu berhenti takut pada ilusi dan kegelapan batin. Kamu ada untuk menjinakkan monster dalam mimpi, mengubah mimpi buruk menjadi bimbingan magis bagi dirimu dan semesta."
+    },
+    19: { // The Sun
+        p1: "Sebagai Kartu Kepribadian, The Sun membuatmu memancarkan kebahagiaan mutlak, kesuksesan yang cerah, dan karisma yang bersinar hangat. Kamu adalah pusat tata surya dalam lingkaran pergaulanmu.",
+        p2: "Pendekatanmu terhadap hidup sangat transparan, optimis, dan penuh vitalitas murni layaknya anak kecil. Kamu membuat masalah besar terlihat kecil hanya dengan memberikan kehangatan senyuman dan keyakinanmu.",
+        s1: "Pada tingkat Jiwa, kamu adalah percikan cahaya sejati dari Sang Pencipta. Jiwamu bergetar dengan frekuensi kegembiraan mutlak dan realisasi diri yang telah mencapai titik tertingginya tanpa hambatan ego.",
+        s2: "Tujuan sejatimu di dunia ini sangat sederhana namun agung: untuk hidup bahagia dan merayakan kehidupan. Dengan hanya menjadi dirimu yang otentik, kamu secara otomatis membakar habis kesedihan di sekitar ruangmu."
+    },
+    20: { // Judgement
+        p1: "Sebagai Kartu Kepribadian, Judgement menandakan bahwa hidupmu dipandu oleh panggilan yang lebih tinggi (a higher calling). Kamu memiliki kemampuan untuk mengevaluasi hidup dengan jernih dan sering kali membuat keputusan yang mengubah nasib.",
+        p2: "Kamu memancarkan aura seseorang yang telah 'terbangun'. Orang menghormati kejujuranmu yang radikal, dan kemampuanmu untuk mengampuni masa lalu demi melangkah ke fase kehidupan yang jauh lebih bermakna.",
+        s1: "Pada tingkat Jiwa, kamu berada di ambang pembebasan spiritual terakhir. Jiwamu mendengar trompet pembebasan yang memanggilmu untuk melepaskan segala sisa-sisa karma lama dan rasa bersalah.",
+        s2: "Evolusi batinmu adalah tentang kebangkitan (awakening) dan penebusan. Kamu di sini untuk membuktikan bahwa tidak peduli seberapa dalam seseorang terkubur dalam kesalahan, selalu ada pintu untuk terlahir kembali menjadi cahaya."
+    },
+    21: { // The World
+        p1: "Sebagai Kartu Kepribadian, The World menjadikanmu sosok yang utuh, berwawasan global, dan berprestasi tinggi. Segala hal yang kamu mulai biasanya akan berhasil kamu selesaikan dengan hasil yang sangat memuaskan.",
+        p2: "Kamu memproyeksikan citra keberhasilan total, penerimaan lintas batas, dan kepuasan hidup. Orang lain melihatmu sebagai contoh dari kehidupan yang telah mencapai puncaknya dalam keseimbangan materi dan harmoni.",
+        s1: "Pada tingkat Jiwa, ini adalah penanda dari kesempurnaan siklus. Jiwamu telah mengumpulkan seluruh pelajaran dari awal hingga akhir, mencapai tingkat kedamaian dan keutuhan kosmik yang absolut.",
+        s2: "Tugas sejatimu kini adalah menikmati tarian semesta dan merayakan pencapaian spiritualmu. Kamu ditakdirkan untuk menjadi penghubung antara dunia fisik yang terbatas dan alam semesta yang tak terhingga."
+    }
+};
+
+// Pastikan jika tidak ada deskripsi, fallback ke general.
+function getBirthCardMeaning(num) {
+    if (num > 21) num = 0; // The Fool handle
+    return BIRTH_CARD_MEANINGS[num] || BIRTH_CARD_MEANINGS[0];
+}
+
+function calculateTarotNumerology(mm, dd, yyyy) {
+    // Numerologi tarot esoterik:
+    const sum = parseInt(mm) + parseInt(dd) + parseInt(yyyy);
+    
+    // Fungsi menjumlahkan digit
+    const sumDigits = (num) => num.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+    
+    let personality = sumDigits(sum);
+    
+    // Kurangi hingga mencapai 22 atau kurang
+    while (personality > 22) {
+        personality = sumDigits(personality);
+    }
+    
+    if (personality === 22) personality = 0; // 0 is The Fool
+    
+    let soul = personality;
+    // Logika perhitungan Soul Card
+    if (personality === 0) {
+        soul = 4; // Special rule esoteric for Fool sum
+    } else if (personality > 9 && personality !== 19) {
+        soul = sumDigits(personality);
+    } else if (personality === 19) {
+        soul = 10; // The Sun(19) -> Wheel of Fortune(10). (Bisa lanjut ke Magician, tp 10 lebih lazim).
+    }
+    
+    return { pNum: personality, sNum: soul };
+}
+
+// ----------------------------------------------------
+// UI INJECTIONS
+// ----------------------------------------------------
+
+// Inject banner di dashboard (Tepat sebelum Zodiac)
+function ensureBirthCalculatorHome() {
+    const homeView = document.getElementById('view-home');
+    if (!homeView) return;
+    
+    const zodiacGrid = document.getElementById('home-zodiac-grid');
+    if (!zodiacGrid) return;
+    
+    let container = document.getElementById('home-birth-calculator');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'home-birth-calculator';
+        container.className = 'w-full max-w-lg mx-auto mb-10 px-4 cursor-pointer group';
+        container.onclick = () => {
+            initBirthCalculatorPage();
+            navigate('birth-calculator');
+        };
+        
+        container.innerHTML = `
+            <div class="flex flex-row items-center bg-white rounded-3xl border border-pink-100 p-4 shadow-sm hover:shadow-md transition-all group-hover:border-pink-300">
+                <div class="w-1/3 aspect-[3/4] bg-pink-50 rounded-2xl border border-pink-200 flex items-center justify-center overflow-hidden relative flex-shrink-0">
+                    <div class="absolute inset-1 border border-pink-200/60 rounded-xl"></div>
+                    <span class="text-pink-300 font-cute font-bold text-[10px] text-center px-2">Birth Card Cover</span>
+                </div>
+                <div class="w-2/3 pl-5 text-left flex flex-col justify-center">
+                    <div class="text-[9px] uppercase tracking-widest text-pink-400 font-bold mb-1 font-cute">Numerology & Astrology</div>
+                    <h3 class="font-cute font-bold text-xl text-purple-800 mb-2 leading-tight">Tarot Birth Calculator</h3>
+                    <p class="font-cute text-xs text-gray-500 leading-relaxed mb-3">Discover your Soul and Personality cards based on your birth date. Reveal the esoteric path you are destined to walk.</p>
+                    <div>
+                        <span class="inline-block px-3 py-1 bg-pink-50 text-pink-500 text-[10px] font-bold rounded-full font-cute border border-pink-100 group-hover:bg-pink-100 transition-colors">Calculate Yours &rarr;</span>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Sisipkan tepat sebelum section zodiak
+        const zodiacSection = zodiacGrid.parentElement;
+        zodiacSection.parentElement.insertBefore(container, zodiacSection);
+    }
+}
+
+// Inisialisasi HTML halaman Calculator penuh
+function initBirthCalculatorPage() {
+    if (document.getElementById('view-birth-calculator')) return;
+    
+    const mainEl = document.querySelector('main');
+    const viewDiv = document.createElement('div');
+    viewDiv.id = 'view-birth-calculator';
+    viewDiv.className = 'view-section hidden pb-24 text-center';
+    
+    viewDiv.innerHTML = `
+        <div class="w-full max-w-lg mx-auto px-4 mt-8">
+            <!-- Cover Image Area -->
+            <div class="w-40 aspect-[3/4] mx-auto bg-pink-50 rounded-2xl border-2 border-pink-100 flex items-center justify-center relative mb-8 shadow-sm">
+                <div class="absolute inset-2 border border-pink-200/60 rounded-xl"></div>
+                <span class="text-pink-300 font-cute font-bold text-xs text-center px-2">Birth Card Calculator Cover</span>
+            </div>
+            
+            <!-- Explanations -->
+            <div class="text-left space-y-4 mb-8 bg-pink-50/40 p-6 rounded-3xl border border-pink-100 shadow-sm font-cute text-sm text-gray-600 leading-relaxed">
+                <p>Welcome to the esoteric realm of Numerology and Astrology. The Tarot Birth Card Calculator unveils the energetic blueprint of your life's journey through the Major Arcana.</p>
+                <p>Your <strong>Personality Card</strong> represents how you interact with the world, the overarching themes of your external life, and the lessons you project outward. It is your worldly armor and guiding star in daily interactions.</p>
+                <p>Your <strong>Soul Card</strong> dives into your deepest core. It reflects your hidden spiritual purpose, your internal desires, and the quiet inner voice that guides your ultimate evolution. Together, they form the compass of your destiny.</p>
+            </div>
+            
+            <!-- Input Section -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-pink-200 shadow-md">
+                <h3 class="font-cute font-bold text-lg text-purple-800 mb-4">Enter Your Birthday</h3>
+                <input type="text" id="birthdate-input" 
+                    placeholder="MM/DD/YYYY" 
+                    oninput="handleBirthInput(event)"
+                    class="w-full px-5 py-4 rounded-2xl border-2 border-purple-300 focus:border-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-100 font-cute text-lg text-center text-gray-800 tracking-widest bg-gray-50 shadow-inner transition-all mb-6"
+                />
+                
+                <button id="btn-find-birth-cards" onclick="processBirthCards()" class="w-full bg-purple-700 text-white py-4 rounded-xl font-cute font-bold text-sm shadow-md transition-all transform hover:-translate-y-1 opacity-50 pointer-events-none">
+                    Find My Cards
+                </button>
+
+                <button id="btn-my-cards-reopen" onclick="showBirthCardsModal()" class="hidden w-full bg-pink-400 hover:bg-pink-500 text-white py-4 rounded-xl font-cute font-bold text-sm shadow-md transition-all transform hover:-translate-y-1">
+                    My Cards
+                </button>
+            </div>
+
+            <!-- Reset -->
+            <div class="mt-8">
+                <span onclick="resetBirthCalculator()" class="cursor-pointer text-xs font-cute font-bold text-pink-400 hover:text-pink-600 underline transition-colors">Enter Your Birthday Again</span>
+            </div>
+        </div>
+    `;
+    mainEl.appendChild(viewDiv);
+    
+    // Modal Floating Container
+    const modalDiv = document.createElement('div');
+    modalDiv.id = 'birth-cards-modal';
+    // Style backdrop agar nutupin halaman penuh + animasi smooth opacity
+    modalDiv.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-purple-900/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300';
+    modalDiv.onclick = (e) => {
+        if(e.target === modalDiv) closeBirthCardsModal();
+    };
+    
+    // Animasi bouncy pakai custom bezier timing
+    modalDiv.innerHTML = `
+        <div id="birth-cards-modal-content" class="bg-white w-full max-w-xl rounded-3xl p-6 sm:p-8 border-2 border-pink-200 shadow-2xl transform scale-95 transition-transform duration-500 max-h-[90vh] overflow-y-auto" style="transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);">
+            <div class="text-center mb-6">
+                <h2 class="font-cute font-bold text-3xl text-purple-800 leading-none">Your Destiny Cards</h2>
+                <p class="text-[10px] uppercase tracking-widest text-pink-400 font-bold mt-2 font-cute">Numerology Insight</p>
+            </div>
+            
+            <div id="birth-cards-results-grid" class="space-y-10 text-left"></div>
+            
+            <button onclick="closeBirthCardsModal()" class="w-full mt-8 bg-pink-100 text-purple-800 py-4 rounded-xl font-cute font-bold text-sm shadow-sm hover:bg-pink-200 transition-colors">Close</button>
+        </div>
+    `;
+    document.body.appendChild(modalDiv);
+}
+
+// Smart Input Masking: MM/DD/YYYY
+function handleBirthInput(e) {
+    let val = e.target.value.replace(/\D/g, ''); // Hapus semua kecuali angka
+    if (val.length > 8) val = val.substring(0, 8);
+    
+    let formatted = val;
+    if (val.length >= 5) {
+        formatted = val.substring(0, 2) + '/' + val.substring(2, 4) + '/' + val.substring(4, 8);
+    } else if (val.length >= 3) {
+        formatted = val.substring(0, 2) + '/' + val.substring(2, 4);
+    }
+    e.target.value = formatted;
+    
+    const btn = document.getElementById('btn-find-birth-cards');
+    if (val.length === 8) {
+        btn.classList.remove('opacity-50', 'pointer-events-none');
+    } else {
+        btn.classList.add('opacity-50', 'pointer-events-none');
+    }
+}
+
+// Proses Eksekusi Kartu
+function processBirthCards() {
+    const input = document.getElementById('birthdate-input').value; // MM/DD/YYYY
+    const parts = input.split('/');
+    if (parts.length !== 3 || parts[2].length !== 4) return;
+    
+    const mm = parts[0], dd = parts[1], yyyy = parts[2];
+    const { pNum, sNum } = calculateTarotNumerology(mm, dd, yyyy);
+    
+    // Cari data di TAROT_DECK untuk dapat nama, arcana, dll (karena Major arcana ada di 22 data pertama indeks 0-21)
+    // The Fool adalah nomor 0, The Magician 1, dst.
+    const pCardData = TAROT_DECK.find(c => c.arcana === 'Major Arcana' && c.number === pNum);
+    const sCardData = TAROT_DECK.find(c => c.arcana === 'Major Arcana' && c.number === sNum);
+    
+    const pMeaning = getBirthCardMeaning(pNum);
+    const sMeaning = getBirthCardMeaning(sNum);
+    
+    const grid = document.getElementById('birth-cards-results-grid');
+    
+    // Fungsi untuk merender satu card UI di modal
+    const renderModalCard = (title, cardObj, para1, para2, tagColor) => `
+        <div class="bg-pink-50/30 p-5 rounded-3xl border border-pink-100 shadow-sm relative pt-10">
+            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-${tagColor}-500 text-white px-6 py-1.5 rounded-full font-cute font-bold text-xs shadow-md tracking-wider uppercase">
+                ${title} Card
+            </div>
+            
+            <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+                <div class="w-28 flex-shrink-0">
+                    <div class="w-full aspect-[2/3.3] bg-white border border-pink-100 rounded-xl flex flex-col items-center justify-center p-2 text-center shadow-md">
+                        <div class="text-[9px] text-pink-400 font-cute font-bold mb-1 uppercase tracking-widest">Major</div>
+                        <div class="text-xs font-cute font-bold text-gray-800 leading-tight">${cardObj.name}</div>
+                        <div class="mt-2 text-pink-200 text-[10px] font-cute">${cardObj.number}</div>
+                    </div>
+                </div>
+                <div class="space-y-3 font-cute text-sm text-gray-600 leading-relaxed text-justify">
+                    <p>${para1}</p>
+                    <p>${para2}</p>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Render Personality dan Soul
+    grid.innerHTML = `
+        ${renderModalCard("Personality", pCardData, pMeaning.p1, pMeaning.p2, "purple")}
+        ${renderModalCard("Soul", sCardData, pMeaning.s1, pMeaning.s2, "pink")}
+    `;
+    
+    // Sembunyikan Find, Munculkan tombol My Cards
+    document.getElementById('btn-find-birth-cards').classList.add('hidden');
+    document.getElementById('btn-my-cards-reopen').classList.remove('hidden');
+    
+    showBirthCardsModal();
+}
+
+function showBirthCardsModal() {
+    const modal = document.getElementById('birth-cards-modal');
+    const content = document.getElementById('birth-cards-modal-content');
+    
+    modal.classList.remove('opacity-0', 'pointer-events-none');
+    
+    // Beri jeda kecil agar animasi bounce bekerja setelah display block
+    setTimeout(() => {
+        content.classList.remove('scale-95');
+        content.classList.add('scale-100');
+    }, 10);
+}
+
+function closeBirthCardsModal() {
+    const modal = document.getElementById('birth-cards-modal');
+    const content = document.getElementById('birth-cards-modal-content');
+    
+    content.classList.remove('scale-100');
+    content.classList.add('scale-95');
+    
+    setTimeout(() => {
+        modal.classList.add('opacity-0', 'pointer-events-none');
+    }, 300); // Sesuaikan dengan durasi transisi Tailwind (300ms)
+}
+
+function resetBirthCalculator() {
+    const input = document.getElementById('birthdate-input');
+    input.value = '';
+    document.getElementById('btn-find-birth-cards').classList.remove('hidden');
+    document.getElementById('btn-find-birth-cards').classList.add('opacity-50', 'pointer-events-none');
+    document.getElementById('btn-my-cards-reopen').classList.add('hidden');
+}
+
+
+// --- 2. PERBARUI FUNGSI INIT HOME ---
+// Timpa fungsi initHome lama kamu, cukup dengan memanggil ensureBirthCalculatorHome di dalamnya.
+const oldInitHome = window.onload;
+window.onload = function() {
+    if (typeof ensureDashboardSearch === 'function') ensureDashboardSearch(); 
+    ensureBirthCalculatorHome(); // <-- Panggilan krusial untuk fitur ini
+    if (typeof checkDailyCard === 'function') checkDailyCard();
+    
+    // Init Grid spreads (sesuaikan dgn punya kamu)
+    const spreadsGrid = document.getElementById('home-spreads-grid');
+    if(spreadsGrid && typeof SPREADS !== 'undefined') {
+        let spreadHtml = '';
+        SPREADS.forEach((s, i) => {
+            spreadHtml += `
+                <div onclick="selectSpread(${i})" class="p-4 rounded-xl border border-pink-50 hover:border-pink-200 bg-white hover:bg-pink-50/30 cursor-pointer transition-all h-full transform hover:-translate-y-1">
+                    <h3 class="font-cute font-bold text-sm text-purple-800 mb-1">${s.name}</h3>
+                    <p class="font-cute text-[11px] text-pink-400/90 leading-snug">${s.desc}</p>
+                </div>`;
+        });
+        spreadsGrid.innerHTML = spreadHtml;
+        const drawSpreadsGrid = document.getElementById('draw-spreads-grid');
+        if (drawSpreadsGrid) drawSpreadsGrid.innerHTML = spreadHtml;
+    }
+
+    const zodiacGrid = document.getElementById('home-zodiac-grid');
+    if(zodiacGrid && typeof ZODIAC_DATA !== 'undefined') {
+        let zodiacHtml = '';
+        ZODIAC_DATA.forEach(z => {
+            zodiacHtml += `
+                <div onclick="showZodiac('${z.id}')" class="p-3.5 rounded-xl border border-gray-100 hover:border-pink-200 text-center transition-all hover:bg-pink-50/30 transform hover:-translate-y-1 flex flex-col items-center cursor-pointer">
+                    <div class="text-purple-700 mb-2 w-6 h-6"><svg viewBox="0 0 24 24" class="w-full h-full">${z.svg}</svg></div>
+                    <div class="font-cute font-bold text-xs text-purple-700 mb-0.5">${z.name}</div>
+                    <div class="font-cute text-[9px] text-pink-400">${z.dateRange}</div>
+                </div>`;
+        });
+        zodiacGrid.innerHTML = zodiacHtml;
+    }
+};
+
+// --- 3. SISIPKAN ROUTE NAVIGASI ---
+// Timpa/Update fungsi navigate milikmu dengan menyisipkan logika route untuk 'birth-calculator'
+const originalNavigate = navigate;
+navigate = function(viewId, anchorOrTitle = null) {
+    if (viewId === 'birth-calculator') {
+        initBirthCalculatorPage();
+    }
+    
+    // Lanjutkan ke fungsi aslinya
+    originalNavigate(viewId, anchorOrTitle);
+};
+
+
