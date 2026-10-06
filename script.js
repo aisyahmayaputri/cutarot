@@ -1573,8 +1573,8 @@ function ensureBirthCalculatorHome() {
         container.id = 'home-birth-calculator';
         container.className = 'w-full max-w-lg mx-auto mb-10 px-4 cursor-pointer group';
         container.onclick = () => {
-            initBirthCalculatorPage();
-            navigate('birth-calculator');
+            initBirthCalculatorPage(); // Pastikan halamannya dirender dulu
+            navigate('birth-calculator'); // Lalu buka
         };
         
         container.innerHTML = `
@@ -1596,7 +1596,48 @@ function ensureBirthCalculatorHome() {
         
         // Sisipkan tepat sebelum section zodiak
         const zodiacSection = zodiacGrid.parentElement;
-        zodiacSection.parentElement.insertBefore(container, zodiacSection);
+        if (zodiacSection && zodiacSection.parentElement) {
+            zodiacSection.parentElement.insertBefore(container, zodiacSection);
+        }
+    }
+}
+
+// Fungsi menambah shortcut di menu Drawer (Sidebar)
+function ensureBirthCalculatorMenu() {
+    const drawer = document.getElementById('drawer-menu');
+    if (!drawer) return;
+    
+    if (document.getElementById('menu-birth-calc')) return; // Cegah duplikat
+    
+    // Cari elemen link Zodiac untuk disisipkan tepat di atasnya
+    const menuItems = drawer.querySelectorAll('a, button, div, li');
+    let zodiacItem = null;
+    
+    menuItems.forEach(item => {
+        if (item.getAttribute('onclick') && item.getAttribute('onclick').includes('zodiac')) {
+            zodiacItem = item;
+        } else if (item.innerText && item.innerText.trim().includes('Zodiac') && !zodiacItem) {
+            zodiacItem = item;
+        }
+    });
+    
+    const menuLink = document.createElement('a');
+    menuLink.id = 'menu-birth-calc';
+    menuLink.href = '#';
+    // Class menyesuaikan styling standar sidebar CuTarot agar estetis
+    menuLink.className = 'block px-4 py-3 text-gray-700 font-cute font-bold hover:bg-pink-50 hover:text-purple-700 rounded-xl transition-colors text-left mt-1';
+    menuLink.innerHTML = `<span class="inline-block w-1.5 h-1.5 rounded-full bg-pink-300 mr-2 mb-0.5"></span> Birth Calculator`;
+    menuLink.onclick = (e) => {
+        e.preventDefault();
+        initBirthCalculatorPage(); // Render halaman
+        navigate('birth-calculator'); // Pindah halaman
+    };
+    
+    if (zodiacItem && zodiacItem.parentNode) {
+        zodiacItem.parentNode.insertBefore(menuLink, zodiacItem);
+    } else {
+        const nav = drawer.querySelector('nav') || drawer;
+        nav.appendChild(menuLink);
     }
 }
 
@@ -1604,10 +1645,15 @@ function ensureBirthCalculatorHome() {
 function initBirthCalculatorPage() {
     if (document.getElementById('view-birth-calculator')) return;
     
-    const mainEl = document.querySelector('main');
+    const homeView = document.getElementById('view-home');
+    if (!homeView) return;
+    
+    // Perbaikan utama: Pasang halamannya berdampingan dengan halaman lain
+    const parentContainer = homeView.parentNode; 
+    
     const viewDiv = document.createElement('div');
     viewDiv.id = 'view-birth-calculator';
-    viewDiv.className = 'view-section hidden pb-24 text-center';
+    viewDiv.className = 'view-section pb-24 text-center'; // Menghapus class 'hidden' agar transisi CSS bawaan lancar
     
     viewDiv.innerHTML = `
         <div class="w-full max-w-lg mx-auto px-4 mt-8">
@@ -1648,36 +1694,36 @@ function initBirthCalculatorPage() {
             </div>
         </div>
     `;
-    mainEl.appendChild(viewDiv);
+    parentContainer.appendChild(viewDiv);
     
     // Modal Floating Container
-    const modalDiv = document.createElement('div');
-    modalDiv.id = 'birth-cards-modal';
-    // Style backdrop agar nutupin halaman penuh + animasi smooth opacity
-    modalDiv.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-purple-900/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300';
-    modalDiv.onclick = (e) => {
-        if(e.target === modalDiv) closeBirthCardsModal();
-    };
-    
-    // Animasi bouncy pakai custom bezier timing
-    modalDiv.innerHTML = `
-        <div id="birth-cards-modal-content" class="bg-white w-full max-w-xl rounded-3xl p-6 sm:p-8 border-2 border-pink-200 shadow-2xl transform scale-95 transition-transform duration-500 max-h-[90vh] overflow-y-auto" style="transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);">
-            <div class="text-center mb-6">
-                <h2 class="font-cute font-bold text-3xl text-purple-800 leading-none">Your Destiny Cards</h2>
-                <p class="text-[10px] uppercase tracking-widest text-pink-400 font-bold mt-2 font-cute">Numerology Insight</p>
+    if (!document.getElementById('birth-cards-modal')) {
+        const modalDiv = document.createElement('div');
+        modalDiv.id = 'birth-cards-modal';
+        modalDiv.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-purple-900/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300';
+        modalDiv.onclick = (e) => {
+            if(e.target === modalDiv) closeBirthCardsModal();
+        };
+        
+        modalDiv.innerHTML = `
+            <div id="birth-cards-modal-content" class="bg-white w-full max-w-xl rounded-3xl p-6 sm:p-8 border-2 border-pink-200 shadow-2xl transform scale-95 transition-transform duration-500 max-h-[90vh] overflow-y-auto" style="transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);">
+                <div class="text-center mb-6">
+                    <h2 class="font-cute font-bold text-3xl text-purple-800 leading-none">Your Destiny Cards</h2>
+                    <p class="text-[10px] uppercase tracking-widest text-pink-400 font-bold mt-2 font-cute">Numerology Insight</p>
+                </div>
+                
+                <div id="birth-cards-results-grid" class="space-y-10 text-left"></div>
+                
+                <button onclick="closeBirthCardsModal()" class="w-full mt-8 bg-pink-100 text-purple-800 py-4 rounded-xl font-cute font-bold text-sm shadow-sm hover:bg-pink-200 transition-colors">Close</button>
             </div>
-            
-            <div id="birth-cards-results-grid" class="space-y-10 text-left"></div>
-            
-            <button onclick="closeBirthCardsModal()" class="w-full mt-8 bg-pink-100 text-purple-800 py-4 rounded-xl font-cute font-bold text-sm shadow-sm hover:bg-pink-200 transition-colors">Close</button>
-        </div>
-    `;
-    document.body.appendChild(modalDiv);
+        `;
+        document.body.appendChild(modalDiv);
+    }
 }
 
 // Smart Input Masking: MM/DD/YYYY
 function handleBirthInput(e) {
-    let val = e.target.value.replace(/\D/g, ''); // Hapus semua kecuali angka
+    let val = e.target.value.replace(/\D/g, ''); // Hapus format selain angka
     if (val.length > 8) val = val.substring(0, 8);
     
     let formatted = val;
@@ -1698,15 +1744,13 @@ function handleBirthInput(e) {
 
 // Proses Eksekusi Kartu
 function processBirthCards() {
-    const input = document.getElementById('birthdate-input').value; // MM/DD/YYYY
+    const input = document.getElementById('birthdate-input').value; 
     const parts = input.split('/');
     if (parts.length !== 3 || parts[2].length !== 4) return;
     
     const mm = parts[0], dd = parts[1], yyyy = parts[2];
     const { pNum, sNum } = calculateTarotNumerology(mm, dd, yyyy);
     
-    // Cari data di TAROT_DECK untuk dapat nama, arcana, dll (karena Major arcana ada di 22 data pertama indeks 0-21)
-    // The Fool adalah nomor 0, The Magician 1, dst.
     const pCardData = TAROT_DECK.find(c => c.arcana === 'Major Arcana' && c.number === pNum);
     const sCardData = TAROT_DECK.find(c => c.arcana === 'Major Arcana' && c.number === sNum);
     
@@ -1715,7 +1759,6 @@ function processBirthCards() {
     
     const grid = document.getElementById('birth-cards-results-grid');
     
-    // Fungsi untuk merender satu card UI di modal
     const renderModalCard = (title, cardObj, para1, para2, tagColor) => `
         <div class="bg-pink-50/30 p-5 rounded-3xl border border-pink-100 shadow-sm relative pt-10">
             <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-${tagColor}-500 text-white px-6 py-1.5 rounded-full font-cute font-bold text-xs shadow-md tracking-wider uppercase">
@@ -1738,13 +1781,11 @@ function processBirthCards() {
         </div>
     `;
 
-    // Render Personality dan Soul
     grid.innerHTML = `
         ${renderModalCard("Personality", pCardData, pMeaning.p1, pMeaning.p2, "purple")}
         ${renderModalCard("Soul", sCardData, pMeaning.s1, pMeaning.s2, "pink")}
     `;
     
-    // Sembunyikan Find, Munculkan tombol My Cards
     document.getElementById('btn-find-birth-cards').classList.add('hidden');
     document.getElementById('btn-my-cards-reopen').classList.remove('hidden');
     
@@ -1757,7 +1798,6 @@ function showBirthCardsModal() {
     
     modal.classList.remove('opacity-0', 'pointer-events-none');
     
-    // Beri jeda kecil agar animasi bounce bekerja setelah display block
     setTimeout(() => {
         content.classList.remove('scale-95');
         content.classList.add('scale-100');
@@ -1773,7 +1813,7 @@ function closeBirthCardsModal() {
     
     setTimeout(() => {
         modal.classList.add('opacity-0', 'pointer-events-none');
-    }, 300); // Sesuaikan dengan durasi transisi Tailwind (300ms)
+    }, 300); 
 }
 
 function resetBirthCalculator() {
@@ -1784,56 +1824,14 @@ function resetBirthCalculator() {
     document.getElementById('btn-my-cards-reopen').classList.add('hidden');
 }
 
-
-// --- 2. PERBARUI FUNGSI INIT HOME ---
-// Timpa fungsi initHome lama kamu, cukup dengan memanggil ensureBirthCalculatorHome di dalamnya.
-const oldInitHome = window.onload;
-window.onload = function() {
-    if (typeof ensureDashboardSearch === 'function') ensureDashboardSearch(); 
-    ensureBirthCalculatorHome(); // <-- Panggilan krusial untuk fitur ini
-    if (typeof checkDailyCard === 'function') checkDailyCard();
+// --- MENYAMBUNGKAN SEMUA FUNGSI SECARA OTOMATIS ---
+const originalWindowOnload = window.onload;
+window.onload = function(e) {
+    if (originalWindowOnload) originalWindowOnload(e);
     
-    // Init Grid spreads (sesuaikan dgn punya kamu)
-    const spreadsGrid = document.getElementById('home-spreads-grid');
-    if(spreadsGrid && typeof SPREADS !== 'undefined') {
-        let spreadHtml = '';
-        SPREADS.forEach((s, i) => {
-            spreadHtml += `
-                <div onclick="selectSpread(${i})" class="p-4 rounded-xl border border-pink-50 hover:border-pink-200 bg-white hover:bg-pink-50/30 cursor-pointer transition-all h-full transform hover:-translate-y-1">
-                    <h3 class="font-cute font-bold text-sm text-purple-800 mb-1">${s.name}</h3>
-                    <p class="font-cute text-[11px] text-pink-400/90 leading-snug">${s.desc}</p>
-                </div>`;
-        });
-        spreadsGrid.innerHTML = spreadHtml;
-        const drawSpreadsGrid = document.getElementById('draw-spreads-grid');
-        if (drawSpreadsGrid) drawSpreadsGrid.innerHTML = spreadHtml;
-    }
-
-    const zodiacGrid = document.getElementById('home-zodiac-grid');
-    if(zodiacGrid && typeof ZODIAC_DATA !== 'undefined') {
-        let zodiacHtml = '';
-        ZODIAC_DATA.forEach(z => {
-            zodiacHtml += `
-                <div onclick="showZodiac('${z.id}')" class="p-3.5 rounded-xl border border-gray-100 hover:border-pink-200 text-center transition-all hover:bg-pink-50/30 transform hover:-translate-y-1 flex flex-col items-center cursor-pointer">
-                    <div class="text-purple-700 mb-2 w-6 h-6"><svg viewBox="0 0 24 24" class="w-full h-full">${z.svg}</svg></div>
-                    <div class="font-cute font-bold text-xs text-purple-700 mb-0.5">${z.name}</div>
-                    <div class="font-cute text-[9px] text-pink-400">${z.dateRange}</div>
-                </div>`;
-        });
-        zodiacGrid.innerHTML = zodiacHtml;
-    }
+    ensureBirthCalculatorHome(); // Pasang banner di halaman utama
+    ensureBirthCalculatorMenu(); // Sisipkan shortcut di Sidebar
 };
-
-// --- 3. SISIPKAN ROUTE NAVIGASI ---
-// Timpa/Update fungsi navigate milikmu dengan menyisipkan logika route untuk 'birth-calculator'
-const originalNavigate = navigate;
-navigate = function(viewId, anchorOrTitle = null) {
-    if (viewId === 'birth-calculator') {
-        initBirthCalculatorPage();
-    }
-    
-    // Lanjutkan ke fungsi aslinya
-    originalNavigate(viewId, anchorOrTitle);
-};
-
+     
+        
 
