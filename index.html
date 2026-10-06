@@ -10,10 +10,9 @@
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
-
+        <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #ffffff; overflow-x: hidden; }
+        body { font-family: 'Inter', sans-serif; background-color: #fff7fc; overflow-x: hidden; }
         .font-serif { font-family: 'Playfair Display', serif; }
                 .font-cute { font-family: 'Quicksand', sans-serif; letter-spacing: 0.02em; }
 
@@ -51,10 +50,11 @@
             <button onclick="toggleMenu()" class="p-2 -ml-2 text-gray-600 hover:text-pink-500 transition-colors">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" /></svg>
             </button>
-            <div class="flex flex-col items-center cursor-pointer transform transition-transform hover:scale-105" onclick="navigate('home')">
-                <h1 class="font-serif text-2xl tracking-wide leading-none">CuTarot</h1>
-                <span class="font-serif italic text-[10px] text-pink-400 tracking-wider">by Mai Collection</span>
+                        <div class="flex flex-col items-center cursor-pointer transform transition-transform hover:scale-105" onclick="navigate('home')">
+                <h1 class="font-cute font-bold text-xl tracking-wide leading-none text-purple-700">CuTarot</h1>
+                <span class="font-['Caveat'] text-xs text-purple-400 tracking-wider">by Mai Collection</span>
             </div>
+
             <div class="w-9"></div>
         </div>
     </header>
@@ -95,17 +95,18 @@
         
         <!-- VIEW: HOME -->
         <section id="view-home" class="view-section active flex-1 pb-16">
-            <div class="animate-fade-in-up text-center pt-16 pb-16 px-4">
-                <h1 class="font-serif text-5xl md:text-6xl text-gray-800 tracking-tight mb-2">CuTarot</h1>
-                <p class="font-serif italic text-sm text-pink-500 tracking-widest mb-8">by Mai Collection</p>
-                <p class="text-gray-500 text-base md:text-lg max-w-md mx-auto font-light">“Pause, draw, and let the cards tell the story.”</p>
+            <div class="animate-fade-in-up text-center pt-12 pb-12 px-4">
+                <h1 class="font-cute font-bold text-4xl md:text-5xl text-purple-800 tracking-tight mb-1">CuTarot</h1>
+                <p class="font-['Caveat'] text-base text-purple-500 tracking-wide mb-6">by Mai Collection</p>
+                <p class="text-gray-500 text-xs md:text-sm max-w-xs mx-auto font-cute">“Pause, draw, and let the cards tell the story.”</p>
             </div>
 
             <!-- Primary Actions -->
-            <div class="animate-fade-in-up max-w-md mx-auto px-4 space-y-4 mb-24">
-                <button onclick="navigate('draw')" class="w-full bg-pink-100 hover:bg-pink-200 text-gray-800 py-4 rounded-2xl font-serif text-lg shadow-sm transition-transform transform hover:-translate-y-1">Start Reading</button>
-                <button id="btn-daily-card" onclick="toggleDailyCard()" class="w-full bg-white border border-pink-200 hover:border-pink-300 text-gray-600 py-4 rounded-2xl font-serif text-lg transition-transform transform hover:-translate-y-1">Today's Card</button>
-                
+            <div class="animate-fade-in-up max-w-xs mx-auto px-4 space-y-3 mb-20">
+                <button onclick="navigate('draw')" class="w-full bg-pink-100/80 hover:bg-pink-200 text-purple-700 py-3 rounded-xl font-cute font-bold text-sm shadow-sm transition-transform transform hover:-translate-y-0.5">Start Reading</button>
+                <button id="btn-daily-card" onclick="toggleDailyCard()" class="w-full bg-white border border-pink-200 hover:border-pink-300 text-purple-700 py-3 rounded-xl font-cute font-bold text-sm shadow-sm transition-transform transform hover:-translate-y-0.5">Today's Card</button>
+
+            
                 <!-- Inline Daily Card -->
                 <div id="inline-daily-card" class="hidden mt-6 animate-fade-in-up bg-pink-50/50 p-6 rounded-3xl border border-pink-100 flex-col items-center text-center">
                     <!-- Injected by JS -->
