@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CuTarot by Mai Collection</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- React & ReactDOM (Production UMD) -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    
+    <!-- Babel dengan konfigurasi aman untuk browser -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #ffffff; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .custom-scroll::-webkit-scrollbar { height: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #fdf2f8; border-radius: 10px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #fbcfe8; border-radius: 10px; }
+        
+        .backface-hidden {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .deck-container {
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+        .tarot-card-item {
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .tarot-card-item:hover, .tarot-card-item:active {
+            transform: translateY(-15px) scale(1.05) !important;
+            z-index: 50;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel" data-presets="react">
+        const { useState, useEffect, useRef } = React;
+
+        const ZODIAC_DATA = [
+          { id: 'aries', name: 'Aries', dateRange: 'March 21 – April 19', symbolSvg: <path d="M4,14 C4,8 12,4 12,12 C12,4 20,8 20,14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>, description: 'In astrology, Aries is associated with bold, pioneering, and courageous energy.' },
+          { id: 'taurus', name: 'Taurus', dateRange: 'April 20 – May 20', symbolSvg: <><circle cx="12" cy="14" r="5" fill="none" stroke="currentColor" strokeWidth="1.5"/><path d="M7,9 C7,4 17,4 17,9" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></>, description: 'In astrology, Taurus is associated with stability, sensuality, and an appreciation for beauty.' },
+          { id: 'gemini', name: 'Gemini', dateRange: 'May 21 – June 20', symbolSvg: <path d="M7,5 L17,5 M7,19 L17,19 M9,5 L9,19 M15,5 L15,19" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>, description: 'In astrology, Gemini is associated with intellect, communication, and adaptability.' },
+          { id: 'cancer', name: 'Cancer', dateRange: 'June 21 – July 22', symbolSvg: <><circle cx="8" cy="10" r="3" fill="none" stroke="currentColor" strokeWidth="1.5"/><path d="M11,10 C16,7 20,10 18,14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><circle cx="16" cy="14" r="3" fill="none" stroke="currentColor" strokeWidth="1.5"/><path d="M13,14 C8,17 4,14 6,10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></>, description: 'In astrology, Cancer is associated with intuition, emotional depth, and nurturing.' },
+          { id: 'leo', name: 'Leo', dateRange: 'July 23 – August 22', symbolSvg: <><circle cx="7" cy="17" r="3" fill="none" stroke="currentColor" strokeWidth="1.5"/><path d="M10,17 C13,17 18,14 15,9 C12,4 6,8 9,13 C12,18 19,16 19,16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></>, description: 'In astrology, Leo is associated with warmth, creativity, and a natural regal presence.' },
+          { id: 'virgo', name: 'Virgo', dateRange: 'August 23 – September 22', symbolSvg: <path d="M5,17 L7,7 L11,17 L14,9 C14,9 15,19 18,17 C21,15 19,10 19,10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>, description: 'In astrology, Virgo is associated with practicality, analytical thinking, and service.' },
+          { id: 'libra', name: 'Libra', dateRange: 'September 23 – October 22', symbolSvg: <path d="M4,15 L20,15 M4,18 L20,18 M12,15 C12,10 8,11 6,15 M12,15 C12,10 16,11 18,15" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>, description: 'In astrology, Libra is associated with balance, harmony, and diplomacy.' },
+          { id: 'scorpio', name: 'Scorpio', dateRange: 'October 23 – November 21', symbolSvg: <path d="M5,14 L7,6 L11,14 L14,7 C14,7 16,14 18,13 C20,12 20,8 20,8" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><path d="M20,8 L22,10 M20,8 L18,10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>, description: 'In astrology, Scorpio is associated with transformation, intensity, and deep emotional truth.' },
+          { id: 'sagittarius', name: 'Sagittarius', dateRange: 'November 22 – December 21', symbolSvg: <path d="M6,18 L18,6 M12,6 L18,6 L18,12 M4,14 L10,20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>, description: 'In astrology, Sagittarius is associated with philosophy, exploration, and optimism.' },
+          { id: 'capricorn', name: 'Capricorn', dateRange: 'December 22 – January 19', symbolSvg: <path d="M5,7 L8,17 L12,9 C12,9 18,6 18,11 C18,16 14,20 9,19" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>, description: 'In astrology, Capricorn is associated with ambition, discipline, and structural foundation.' },
+          { id: 'aquarius', name: 'Aquarius', dateRange: 'January 20 – February 18', symbolSvg: <path d="M3,9 L7,5 L11,9 L15,5 L19,9 M3,15 L7,11 L11,15 L15,11 L19,15" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>, description: 'In astrology, Aquarius is associated with innovation, collective consciousness, and originality.' },
+          { id: 'pisces', name: 'Pisces', dateRange: 'February 19 – March 20', symbolSvg: <path d="M8,4 C5,10 5,14 8,20 M16,4 C19,10 19,14 16,20 M6,12 L18,12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>, description: 'In astrology, Pisces is associated with empathy, artistry, and spiritual depth.' }
+        ];
+
+        const SPREADS = [
+          { id: 'free', name: 'Free Spread', description: 'Draw as many cards as you like (1-13).', recommendedCardCount: 3 },
+          { id: 'daily', name: 'Daily Draw', description: 'A single card to guide your focus for the day.', recommendedCardCount: 1 },
+          { id: 'past-present-future', name: 'Past, Present, Future', description: 'Understand how the past influences the present.', recommendedCardCount: 3 },
+          { id: 'relationship', name: 'Relationship', description: 'Explore relationship dynamics.', recommendedCardCount: 3 }
+        ];
+
+        const TAROT_DECK = Array.from({ length: 78 }, (_, i) => {
+          const isMajor = i < 22;
+          const suits = ['Wands', 'Cups', 'Swords', 'Pentacles'];
+          let arcana = isMajor ? 'Major Arcana' : 'Minor Arcana';
+          let suit = isMajor ? null : suits[Math.floor((i - 22) / 14)];
+          let number = isMajor ? i : ((i - 22) % 14) + 1;
+          let name = isMajor ? `Major Arcana ${i}` : `${number} of ${suit}`;
+          if (isMajor && i === 0) name = 'The Fool';
+          if (isMajor && i === 1) name = 'The Magician';
+          return { id: `card-${i}`, name, arcana, suit, number, image: null, isReversed: Math.random() > 0.5 };
+        });
+
+        const shuffleDeck = (deck) => {
+          const shuffled = [...deck];
+          for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+          }
+          return shuffled;
+        };
+
+        const FadeInSection = ({ children, delay = 0, className = "" }) => {
+          const [isVisible, setVisible] = useState(false);
+          const domRef = useRef();
+          useEffect(() => {
+            const observer = new IntersectionObserver(entries => {
+              entries.forEach(entry => { if (entry.isIntersecting) { setVisible(true); if (domRef.current) observer.unobserve(domRef.current); }});
+            }, { threshold: 0.1 });
+            if (domRef.current) observer.observe(domRef.current);
+            return () => { if (domRef.current) observer.unobserve(domRef.current); };
+          }, []);
+          return (
+            <div ref={domRef} className={`transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'} ${className}`} style={{ transitionDelay: `${delay}ms` }}>
+              {children}
+            </div>
+          );
+        };
+
+        const CardBack = () => (
+          <div className="w-full h-full bg-pink-100 border border-pink-200 rounded-xl shadow-sm flex items-center justify-center relative overflow-hidden group">
+            <div className="absolute inset-2 border border-pink-200/60 rounded-lg"></div>
+            <div className="w-8 h-8 rounded-full border border-pink-300 opacity-50"></div>
+            <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-pink-300/10 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </div>
+        );
+
+        const TarotCard = ({ card, isReversed, isFaceUp, onClick, className = '' }) => {
+          return (
+            <div className={`relative cursor-pointer transition-transform duration-500 ${className}`} style={{ width: '100%', aspectRatio: '2/3.3', perspective: '1000px' }} onClick={onClick}>
+              <div className="w-full h-full transition-all duration-700 rounded-xl" style={{ transformStyle: 'preserve-3d', transform: isFaceUp ? `rotateY(180deg) ${isReversed ? 'rotateZ(180deg)' : ''}` : 'rotateY(0deg)', boxShadow: '0 4px 15px rgba(0,0,0,0.05)' }}>
+                <div className="absolute inset-0 w-full h-full backface-hidden"><CardBack /></div>
+                <div className="absolute inset-0 w-full h-full bg-white border border-pink-100 rounded-xl flex flex-col items-center justify-center p-2 text-center backface-hidden" style={{ transform: 'rotateY(180deg)' }}>
+                  <div className="text-[9px] sm:text-[10px] text-pink-400 font-serif mb-1 sm:mb-2 uppercase tracking-widest">{card.arcana}</div>
+                  <div className="text-xs sm:text-sm font-serif text-gray-800 font-medium leading-tight">{card.name}</div>
+                  <div className="mt-2 w-8 h-8 sm:w-10 sm:h-10 border border-pink-100 rounded-full flex items-center justify-center">
+                     <span className="text-pink-200 text-[10px] sm:text-xs text-center">{card.number}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        };
+
+        function App() {
+          const [route, setRoute] = useState('/');
+          const [isMenuOpen, setIsMenuOpen] = useState(false);
+          const [homeScrollAnchor, setHomeScrollAnchor] = useState(null);
+          
+          const [selectedSpread, setSelectedSpread] = useState(null);
+          const [readingPhase, setReadingPhase] = useState('select-spread'); 
+          const [deckConfig, setDeckConfig] = useState({ count: 3, arcana: 'all', autoReveal: true });
+          const [activeDeck, setActiveDeck] = useState([]);
+          const [drawnCards, setDrawnCards] = useState([]);
+
+          const [showDailyCard, setShowDailyCard] = useState(false);
+          const [dailyCardData, setDailyCardData] = useState(null);
+          
+          const navigate = (path, anchorId = null) => {
+            setRoute(path); setIsMenuOpen(false);
+            window.scrollTo({ top: 0, behavior: 'auto' });
+            if (path === '/' && anchorId) setHomeScrollAnchor(anchorId); else setHomeScrollAnchor(null);
+          };
+
+          useEffect(() => {
+            if (route === '/' && homeScrollAnchor) {
+              const timer = setTimeout(() => {
+                const el = document.getElementById(homeScrollAnchor);
+                if (el) { const y = el.getBoundingClientRect().top + window.scrollY - 80; window.scrollTo({ top: y, behavior: 'smooth' }); }
+                setHomeScrollAnchor(null);
+              }, 100);
+              return () => clearTimeout(timer);
+            }
+          }, [route, homeScrollAnchor]);
+
+          const revealDailyCard = () => {
+            const randomCard = { ...TAROT_DECK[Math.floor(Math.random() * 78)], isReversed: Math.random() > 0.8 };
+            setDailyCardData(randomCard);
+            setShowDailyCard(true);
+          };
+
+          const renderHeader = () => (
+            <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-pink-50 transition-all">
+              <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+                <button onClick={() => setIsMenuOpen(true)} className="p-2 -ml-2 text-gray-600 hover:text-pink-500 transition-colors">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" /></svg>
+                </button>
+                <div className="flex flex-col items-center cursor-pointer transform transition-transform hover:scale-105" onClick={() => navigate('/')}>
+                  <h1 className="font-serif text-2xl text-gray-800 tracking-wide leading-none">CuTarot</h1>
+                  <span className="font-serif italic text-[10px] text-pink-400 tracking-wider">by Mai Collection</span>
+                </div>
+                <div className="w-9"></div>
+              </div>
+            </header>
+          );
+
+          const renderDrawer = () => (
+            <React.Fragment>
+              <div className={`fixed inset-0 bg-black/20 backdrop-blur-sm z-50 transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onClick={() => setIsMenuOpen(false)}></div>
+              <div className={`fixed inset-y-0 left-0 bg-white/95 backdrop-blur-md w-64 z-50 transform transition-transform duration-300 flex flex-col shadow-2xl border-r border-pink-50 ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+                <div className="flex-1 overflow-y-auto pt-20 px-6 space-y-2">
+                  {['Home', 'Spreads', 'Zodiac', 'About Tarot'].map((item) => {
+                    const paths = { 'Home': '/', 'Spreads': '/spreads', 'Zodiac': '/zodiac-index', 'About Tarot': '/learn' };
+                    return (
+                      <button key={item} onClick={() => navigate(paths[item])} className="block w-full text-left py-2.5 text-base text-gray-700 hover:text-pink-500 hover:translate-x-1 transition-all font-medium">
+                        {item}
+                      </button>
+                    );
+                  })}
+                </div>
+                <div className="border-t border-pink-100 p-6 space-y-3 bg-pink-50/30">
+                  <button onClick={() => navigate('/personal-reading')} className="block w-full text-left text-sm text-gray-500 hover:text-pink-600 transition-colors">Personal Reading</button>
+                  <button onClick={() => navigate('/buy-deck')} className="block w-full text-left text-sm text-gray-500 hover:text-pink-600 transition-colors">Buy Deck / Shop</button>
+                </div>
+              </div>
+            </React.Fragment>
+          );
+
+          const renderFooter = () => (
+            <footer className="bg-white border-t border-pink-50 py-12 mt-auto">
+              <div className="max-w-4xl mx-auto px-4 text-center">
+                <h2 className="font-serif text-xl text-gray-800 mb-1">CuTarot</h2>
+                <p className="font-serif italic text-xs text-pink-400 mb-6">by Mai Collection</p>
+                <div className="flex justify-center space-x-6 text-sm text-gray-500">
+                  <button onClick={() => navigate('/personal-reading')} className="hover:text-pink-500 transition-colors">About Us</button>
+                  <button onClick={() => navigate('/buy-deck')} className="hover:text-pink-500 transition-colors">Shop Now</button>
+                  <button onClick={() => navigate('/terms')} className="hover:text-pink-500 transition-colors">Terms & Policy</button>
+                </div>
+              </div>
+            </footer>
+          );
+
+          if (route === '/draw') {
+            const initializeDeck = () => {
+              let shuffled = shuffleDeck([...TAROT_DECK]).map(card => ({...card, isReversed: Math.random() > 0.5, isDrawn: false}));
+              setActiveDeck(shuffled); setDrawnCards([]); setReadingPhase('draw');
+            };
+
+            const handleCardDraw = (cardIndex) => {
+              if (drawnCards.length >= deckConfig.count) return;
+              const card = activeDeck[cardIndex];
+              if (card.isDrawn) return;
+              const newDeck = [...activeDeck]; newDeck[cardIndex].isDrawn = true; setActiveDeck(newDeck);
+              const newDrawnCards = [...drawnCards, card]; setDrawnCards(newDrawnCards);
+              if (newDrawnCards.length === deckConfig.count) setTimeout(() => setReadingPhase('result'), 800);
+            };
+
+            return (
+              <div className="flex flex-col min-h-screen bg-white">
+                {renderHeader()}{renderDrawer()}
+                <main className="flex-1 pt-8 pb-16 px-4 max-w-5xl mx-auto w-full">
+                  
+                  {readingPhase === 'select-spread' && (
+                    <div className="animate-fade-in-up">
+                      <button onClick={() => navigate('/', 'spreads-section')} className="text-sm text-gray-400 mb-8 hover:text-pink-500 transition-colors">← Back to Home</button>
+                      <h2 className="font-serif text-2xl text-gray-800 text-center mb-10">Choose a Spread</h2>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {SPREADS.map(spread => (
+                          <div key={spread.id} onClick={() => { setSelectedSpread(spread); setDeckConfig(prev => ({ ...prev, count: spread.recommendedCardCount })); setReadingPhase('config'); }} className="p-6 rounded-2xl border border-pink-100 hover:border-pink-300 bg-white cursor-pointer transition-all transform hover:-translate-y-1 hover:shadow-sm">
+                            <h3 className="font-serif text-lg text-gray-800 mb-2">{spread.name}</h3>
+                            <p className="text-sm text-gray-500 font-light">{spread.description}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {readingPhase === 'config' && selectedSpread && (
+                    <div className="max-w-xl mx-auto animate-fade-in-up">
+                      <button onClick={() => setReadingPhase('select-spread')} className="text-sm text-gray-400 mb-8 hover:text-pink-500 transition-colors">← Back</button>
+                      <div className="text-center mb-8">
+                        <h2 className="font-serif text-3xl text-gray-800 mb-2">{selectedSpread.name}</h2>
+                      </div>
+                      <div className="bg-pink-50/30 p-6 sm:p-8 rounded-3xl border border-pink-100">
+                        <label className="block text-sm font-serif text-gray-700 mb-4 text-center">Select Number of Cards</label>
+                        <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
+                          {[...Array(13)].map((_, i) => (
+                             <button
+                               key={i+1}
+                               onClick={() => setDeckConfig({...deckConfig, count: i+1})}
+                               className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-serif text-sm transition-all duration-300 ${deckConfig.count === i+1 ? 'bg-pink-300 text-white shadow-md transform scale-110' : 'bg-white text-gray-600 border border-pink-100 hover:border-pink-300 hover:bg-pink-50'}`}
+                             >
+                               {i+1}
+                             </button>
+                          ))}
+                        </div>
+                        <button onClick={initializeDeck} className="w-full mt-10 bg-pink-100 hover:bg-pink-200 text-gray-800 py-4 rounded-2xl font-serif text-lg transition-transform transform hover:-translate-y-1">Shuffle & Draw</button>
+                      </div>
+                    </div>
+                  )}
+
+                  {readingPhase === 'draw' && (
+                    <div className="animate-fade-in-up flex flex-col items-center">
+                      <div className="w-full relative">
+                        <button onClick={() => setReadingPhase('config')} className="absolute left-0 top-0 text-sm text-gray-400 hover:text-pink-500 transition-colors z-10">← Back</button>
+                        <div className="text-center mb-8">
+                           <h2 className="font-serif text-xl text-gray-800">Select Your Cards</h2>
+                           <p className="text-sm text-pink-400 mt-2">{drawnCards.length} / {deckConfig.count} selected</p>
+                        </div>
+                      </div>
+                      
+                      <div className="w-full relative py-12 px-4 overflow-x-auto deck-container hide-scrollbar select-none cursor-grab active:cursor-grabbing">
+                        <div className="relative mx-auto h-[260px]" style={{ width: `${Math.max(800, activeDeck.length * 16 + 120)}px` }}>
+                          {activeDeck.map((card, idx) => {
+                            if (card.isDrawn) return null;
+                            const distCenter = idx - (activeDeck.length / 2);
+                            const arcY = Math.pow(distCenter * 0.15, 2);
+                            return (
+                              <div key={`deck-${idx}`} className="tarot-card-item absolute top-0" style={{ left: `${idx * 16}px`, transform: `translateY(${arcY}px) rotate(${distCenter * 0.3}deg)` }} onClick={() => handleCardDraw(idx)}>
+                                 <div style={{ width: '100px', height: '170px' }}><CardBack /></div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                      
+                      <div className="mt-8 w-full max-w-3xl flex justify-center gap-2 flex-wrap min-h-[100px] p-4 bg-pink-50/20 rounded-3xl border border-pink-50">
+                        {Array.from({ length: deckConfig.count }).map((_, idx) => (
+                          <div key={`slot-${idx}`} className="w-[50px] h-[85px] border-2 border-dashed border-pink-100 rounded-lg flex items-center justify-center relative">
+                            {drawnCards[idx] && (
+                              <div className="absolute inset-0 scale-[0.45] origin-top-left">
+                                <TarotCard card={drawnCards[idx]} isReversed={drawnCards[idx].isReversed} isFaceUp={deckConfig.autoReveal} />
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                      {!deckConfig.autoReveal && drawnCards.length === deckConfig.count && <button onClick={() => setReadingPhase('result')} className="mt-8 bg-gray-800 text-white px-8 py-3 rounded-full font-serif shadow-lg animate-pulse">Reveal Cards</button>}
+                    </div>
+                  )}
+
+                  {readingPhase === 'result' && (
+                    <div className="animate-fade-in-up">
+                      <div className="flex justify-between items-center mb-10">
+                        <h2 className="font-serif text-2xl text-gray-800">Your Reading</h2>
+                        <button onClick={() => setReadingPhase('select-spread')} className="text-sm text-pink-500 hover:bg-pink-50 px-4 py-2 border border-pink-100 rounded-full transition-colors">Draw Again</button>
+                      </div>
+                      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-3 sm:gap-6 justify-items-center">
+                        {drawnCards.map((card, idx) => (
+                          <FadeInSection key={`result-${idx}`} delay={idx * 150} className="flex flex-col items-center w-full">
+                            <TarotCard card={card} isReversed={card.isReversed} isFaceUp={true} className="w-full" />
+                            <span className="text-xs sm:text-sm font-serif text-gray-700 mt-3 text-center leading-tight">
+                              {card.name} <br/> <span className="text-[10px] text-pink-400 italic">{card.isReversed ? '(Rv)' : ''}</span>
+                            </span>
+                          </FadeInSection>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </main>
+              </div>
+            );
+          }
+
+          return (
+            <div className="flex flex-col min-h-screen bg-white">
+              {renderHeader()}{renderDrawer()}
+              <main className="flex-1 pb-16">
+                <FadeInSection className="text-center pt-20 pb-16 px-4">
+                  <h1 className="font-serif text-5xl md:text-6xl text-gray-800 tracking-tight mb-2 relative z-10">CuTarot</h1>
+                  <p className="font-serif italic text-sm text-pink-500 tracking-widest mb-8">by Mai Collection</p>
+                  <p className="text-gray-500 text-base md:text-lg max-w-md mx-auto font-light">“Pause, draw, and let the cards tell the story.”</p>
+                </FadeInSection>
+
+                <FadeInSection delay={150} className="max-w-md mx-auto px-4 space-y-4 mb-24">
+                  <button onClick={() => navigate('/draw')} className="w-full bg-pink-100 hover:bg-pink-200 text-gray-800 py-4 rounded-2xl font-serif text-lg shadow-sm transition-all transform hover:-translate-y-1">Start Reading</button>
+                  <button onClick={revealDailyCard} className="w-full bg-white border border-pink-200 hover:border-pink-300 text-gray-600 py-4 rounded-2xl font-serif text-lg transition-all transform hover:-translate-y-1">Today's Card</button>
+                  
+                  {showDailyCard && dailyCardData && (
+                     <div className="mt-6 animate-fade-in-up bg-pink-50/50 p-6 rounded-3xl border border-pink-100 flex flex-col items-center text-center">
+                       <div className="w-[120px] mb-6">
+                           <TarotCard card={dailyCardData} isReversed={dailyCardData.isReversed} isFaceUp={true} />
+                       </div>
+                       <h3 className="font-serif text-2xl text-gray-800 mb-1">{dailyCardData.name}</h3>
+                       <p className="text-xs text-pink-500 italic mb-4">{dailyCardData.isReversed ? 'Reversed' : 'Upright'}</p>
+                       <div className="w-full h-px bg-pink-200/50 mb-4 max-w-[150px]"></div>
+                       
+                       <p className="text-[10px] uppercase tracking-widest text-pink-400 mb-2 font-semibold">Today's Energy</p>
+                       <p className="text-sm text-gray-600 mb-5 font-light leading-relaxed">Embrace the essence of the {dailyCardData.name}. It calls you to focus on your inner feelings and observe the subtle shifts around you.</p>
+                       
+                       <p className="text-[10px] uppercase tracking-widest text-pink-400 mb-2 font-semibold">Card Message</p>
+                       <p className="text-sm text-gray-600 italic font-serif">"Trust the journey, breathe, and allow the flow of the universe to gently guide your steps today."</p>
+                     </div>
+                  )}
+                </FadeInSection>
+
+                <div id="spreads-section" className="scroll-mt-24">
+                  <FadeInSection className="max-w-5xl mx-auto px-4 mb-24">
+                    <div className="text-center mb-10"><h2 className="font-serif text-2xl text-gray-800">Explore Tarot Spreads</h2><div className="w-12 h-px bg-pink-200 mx-auto mt-4"></div></div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                      {SPREADS.map((spread, i) => (
+                        <FadeInSection key={spread.id} delay={i * 100} className="h-full">
+                          <div onClick={() => { setSelectedSpread(spread); setDeckConfig(prev => ({ ...prev, count: spread.recommendedCardCount })); setReadingPhase('config'); navigate('/draw'); }} className="p-6 rounded-2xl border border-pink-50 hover:border-pink-200 bg-white hover:bg-pink-50/30 cursor-pointer transition-all h-full flex flex-col group transform hover:-translate-y-1">
+                            <h3 className="font-serif text-lg text-gray-800 mb-2 group-hover:text-pink-600">{spread.name}</h3>
+                            <p className="text-sm text-gray-500 font-light flex-1 leading-relaxed">{spread.description}</p>
+                          </div>
+                        </FadeInSection>
+                      ))}
+                    </div>
+                  </FadeInSection>
+                </div>
+
+                <div id="zodiac-section" className="scroll-mt-24">
+                  <FadeInSection className="max-w-5xl mx-auto px-4 mb-24">
+                    <div className="text-center mb-10"><h2 className="font-serif text-2xl text-gray-800">Zodiac Signs</h2><div className="w-12 h-px bg-pink-200 mx-auto mt-4"></div></div>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                      {ZODIAC_DATA.map((sign, i) => (
+                        <FadeInSection key={sign.id} delay={i * 50}>
+                          <div className="p-5 rounded-2xl border border-gray-100 hover:border-pink-200 text-center transition-all hover:bg-pink-50/30 transform hover:-translate-y-1 flex flex-col items-center">
+                            <div className="text-pink-300 mb-3" style={{ width: '32px', height: '32px' }}>
+                               <svg viewBox="0 0 24 24" className="w-full h-full">{sign.symbolSvg}</svg>
+                            </div>
+                            <div className="font-serif text-gray-800 text-sm mb-1">{sign.name}</div>
+                            <div className="text-[10px] text-gray-400">{sign.dateRange}</div>
+                          </div>
+                        </FadeInSection>
+                      ))}
+                    </div>
+                  </FadeInSection>
+                </div>
+
+                <div id="about-section">
+                  <FadeInSection className="max-w-3xl mx-auto px-4 mb-8">
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                      <div className="flex-1 p-4 rounded-xl bg-gray-50 hover:bg-pink-50/50 cursor-pointer text-center">
+                        <h3 className="font-serif text-sm text-gray-700 mb-1">About Tarot</h3>
+                        <p className="text-xs text-gray-500 font-light">History, structure, and reading practices.</p>
+                      </div>
+                      <div className="flex-1 p-4 rounded-xl bg-gray-50 hover:bg-pink-50/50 cursor-pointer text-center">
+                        <h3 className="font-serif text-sm text-gray-700 mb-1">About Us</h3>
+                        <p className="text-xs text-gray-500 font-light">Meet the creator behind CuTarot.</p>
+                      </div>
+                    </div>
+                  </FadeInSection>
+                </div>
+              </main>
+              {renderFooter()}
+            </div>
+          );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
