@@ -611,6 +611,7 @@ const TAROT_DECK = [
 ];
 
 // --- STATE ---
+let tarotQuestion = '';
 let currentSpread = null;
 let deckCount = 3;
 let activeDeck = [];
@@ -781,11 +782,40 @@ function setDrawPhase(phase) {
     
     const target = document.getElementById('phase-' + phase);
     target.classList.remove('hidden');
-    if(phase === 'draw') target.classList.add('flex');
+    if(phase === 'draw') {
+        target.classList.add('flex');
+        ensureQuestionInput(); // Menyisipkan kotak tanya secara dinamis
+    }
     window.scrollTo(0,0);
     
     if (phase === 'result') renderResult();
 }
+function ensureQuestionInput() {
+    const drawPhaseEl = document.getElementById('phase-draw');
+    if (!drawPhaseEl) return;
+    
+    let container = document.getElementById('tarot-question-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'tarot-question-container';
+        container.className = 'w-full max-w-md mb-6 px-4';
+        container.innerHTML = `
+            <div class="font-cute text-xs font-bold text-purple-800 mb-2 text-center uppercase tracking-wider">What is on your mind?</div>
+            <input type="text" id="tarot-question-input" 
+                value="${tarotQuestion}" 
+                placeholder="Ask CuTarot" 
+                oninput="tarotQuestion = this.value"
+                class="w-full px-4 py-3 rounded-2xl border-2 border-purple-700/70 focus:border-purple-800 focus:outline-none focus:ring-2 focus:ring-purple-200 font-cute text-sm text-gray-700 bg-white shadow-sm transition-all"
+            />
+        `;
+        // Menyisipkan di bagian paling atas dari kontainer draw
+        drawPhaseEl.insertBefore(container, drawPhaseEl.firstChild);
+    } else {
+        const input = document.getElementById('tarot-question-input');
+        if (input) input.value = tarotQuestion;
+    }
+}
+
 
 function selectSpread(index) {
     currentSpread = SPREADS[index];
@@ -926,6 +956,18 @@ function updateDrawUI() {
 function renderResult() {
     const grid = document.getElementById('result-grid');
     let html = '';
+    
+    // Cetak pertanyaan pengguna di halaman hasil jika diisi
+    let questionHtml = '';
+    if (tarotQuestion && tarotQuestion.trim() !== '') {
+        questionHtml = `
+            <div class="w-full max-w-xl mb-6 bg-pink-50/70 border border-pink-200 p-4 rounded-2xl text-center font-cute shadow-sm">
+                <div class="text-[10px] uppercase tracking-widest text-pink-400 font-bold mb-1">Your Question / Intention</div>
+                <p class="text-sm sm:text-base font-bold text-purple-800">"${tarotQuestion}"</p>
+            </div>
+        `;
+    }
+
     drawnCards.forEach((card, idx) => {
         const orientationText = card.isReversed ? 'Reversed' : 'Upright';
         const descText = card.isReversed ? card.reversed : card.upright;
@@ -947,8 +989,10 @@ function renderResult() {
             </div>` : ''}
         </div>`;
     });
-    grid.innerHTML = html;
+    
+    grid.innerHTML = questionHtml + html;
 }
+
 
 // --- TAROT LIBRARY SYSTEM ---
 function renderLibrary(filter = 'All') {
