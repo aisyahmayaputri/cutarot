@@ -1,4 +1,4 @@
-<script>
+
         // --- DATA ---
         const ZODIAC_DATA = [
             { id: 'aries', name: 'Aries', dateRange: 'March 21 – April 19', svg: '<path d="M4,14 C4,8 12,4 12,12 C12,4 20,8 20,14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' },
@@ -471,4 +471,3 @@ function renderConfigNumbers() {
 
         // Init App
         window.onload = initHome;
-    </script>
