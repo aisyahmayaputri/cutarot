@@ -294,7 +294,8 @@
             let zodiacHtml = '';
             ZODIAC_DATA.forEach(z => {
                 zodiacHtml += `
-                    <div class="p-5 rounded-2xl border border-gray-100 hover:border-pink-200 text-center transition-all hover:bg-pink-50/30 transform hover:-translate-y-1 flex flex-col items-center">
+                                        <div onclick="showZodiac('${z.id}')" class="p-5 rounded-2xl border border-gray-100 hover:border-pink-200 text-center transition-all hover:bg-pink-50/30 transform hover:-translate-y-1 flex flex-col items-center cursor-pointer">
+
                         <div class="text-pink-300 mb-3 w-8 h-8"><svg viewBox="0 0 24 24" class="w-full h-full">${z.svg}</svg></div>
                         <div class="font-serif text-gray-800 text-sm mb-1">${z.name}</div>
                         <div class="text-[10px] text-gray-400">${z.dateRange}</div>
