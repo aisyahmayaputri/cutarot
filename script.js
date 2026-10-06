@@ -664,6 +664,7 @@ function navigate(viewId, anchorOrTitle = null) {
     } else if (viewId === 'generic') {
         renderGenericPage(anchorOrTitle);
     } else if (viewId === 'all-cards') {
+        ensureLibrarySearch(); // <--- Pastikan baris ini ada di sini!
         filterLibrary('All');
     }
 }
@@ -1021,7 +1022,33 @@ function renderLibrary(filter = 'All') {
     grid.innerHTML = html;
 }
 
-function filterLibrary(filter) {
+// --- 1. FUNGSI UNTUK MEMBUAT KOTAK PENCARIAN DI TAROT LIBRARY ---
+function ensureLibrarySearch() {
+    const filtersEl = document.getElementById('card-filters');
+    if (!filtersEl) return;
+    let container = document.getElementById('library-search-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'library-search-container';
+        container.className = 'w-full max-w-md mx-auto mb-6 px-4';
+        container.innerHTML = `
+            <input type="text" id="library-search-input" 
+                placeholder="Find CuTarot card" 
+                oninput="filterLibrary(window.currentLibraryFilter || 'All', this.value)"
+                class="w-full px-4 py-3 rounded-2xl border-2 border-pink-200 focus:border-purple-700 focus:outline-none focus:ring-2 focus:ring-pink-100 font-cute text-sm text-gray-700 bg-white shadow-sm transition-all text-center"
+            />
+        `;
+        filtersEl.parentNode.insertBefore(container, filtersEl.nextSibling);
+    }
+}
+
+// --- 2. FUNGSI FILTER & PENCARIAN INSTAN (MENGGANTIKAN YANG LAMA) ---
+window.currentLibraryFilter = 'All';
+function filterLibrary(filter, searchTerm = '') {
+    window.currentLibraryFilter = filter;
+    const input = document.getElementById('library-search-input');
+    const term = searchTerm !== '' ? searchTerm : (input ? input.value : '');
+    
     const buttons = document.getElementById('card-filters').children;
     for (let btn of buttons) {
         if (btn.innerText.includes(filter) || (filter === 'Major Arcana' && btn.innerText === 'Major')) {
@@ -1030,8 +1057,34 @@ function filterLibrary(filter) {
             btn.className = "px-4 py-2 rounded-full border border-pink-200 text-sm font-cute font-bold transition-colors bg-white hover:bg-pink-50 text-gray-600";
         }
     }
-    renderLibrary(filter);
+    
+    const grid = document.getElementById('library-grid');
+    let html = '';
+    TAROT_DECK.forEach((card, index) => {
+        const isMajor = card.arcana === 'Major Arcana';
+        const suit = isMajor ? null : card.name.split(' of ')[1];
+        
+        let isMatchCategory = (filter === 'All') || 
+                              (filter === 'Major Arcana' && isMajor) || 
+                              (filter === suit);
+        
+        let isMatchSearch = term === '' || card.name.toLowerCase().includes(term.toLowerCase());
+        
+        if (isMatchCategory && isMatchSearch) {
+            html += `
+                <div onclick="showCardDetail(${index})" class="cursor-pointer transform transition-transform hover:-translate-y-2">
+                    <div class="w-full aspect-[2/3.3] bg-white border border-pink-100 rounded-xl flex flex-col items-center justify-center p-2 text-center shadow-sm hover:shadow-md transition-shadow">
+                        <div class="text-[9px] text-pink-400 font-cute font-bold mb-1 uppercase tracking-widest">${isMajor ? 'Major' : suit}</div>
+                        <div class="text-xs sm:text-sm font-cute font-bold text-gray-800 leading-tight">${card.name}</div>
+                        <div class="mt-2 text-pink-200 text-[10px] font-cute">${card.number}</div>
+                    </div>
+                </div>
+            `;
+        }
+    });
+    grid.innerHTML = html;
 }
+
 
 function showCardDetail(index) {
     const card = TAROT_DECK[index];
