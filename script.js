@@ -1,4 +1,4 @@
-// --- DATA ---
+// --- DATA ZODIAC ---
 const ZODIAC_DATA = [
     { 
         id: 'aries', 
@@ -110,7 +110,6 @@ const ZODIAC_DATA = [
     }
 ];
 
-
 const SPREADS = [
     { id: 'free', name: 'Free Spread', desc: 'Draw as many cards as you like (1-13).', count: 3 },
     { id: 'daily', name: 'Daily Draw', desc: 'A single card to guide your focus for the day.', count: 1 },
@@ -125,17 +124,96 @@ const SPREADS = [
     { id: 'career', name: 'Career Path', desc: 'Gain clarity on your professional journey and upcoming opportunities.', count: 5 }
 ];
 
-const TAROT_DECK = Array.from({ length: 78 }, (_, i) => {
-    const isMajor = i < 22;
-    const suits = ['Wands', 'Cups', 'Swords', 'Pentacles'];
-    let arcana = isMajor ? 'Major Arcana' : 'Minor Arcana';
-    let suit = isMajor ? null : suits[Math.floor((i - 22) / 14)];
-    let number = isMajor ? i : ((i - 22) % 14) + 1;
-    let name = isMajor ? `Major Arcana ${i}` : `${number} of ${suit}`;
-    if (isMajor && i === 0) name = 'The Fool';
-    if (isMajor && i === 1) name = 'The Magician';
-    return { name, arcana, number };
-});
+// --- TAROT DECK LENGKAP 78 KARTU TRADISIONAL ---
+const TAROT_DECK = [
+    // Major Arcana (0 - 21)
+    { name: 'The Fool', arcana: 'Major Arcana', number: 0 },
+    { name: 'The Magician', arcana: 'Major Arcana', number: 1 },
+    { name: 'The High Priestess', arcana: 'Major Arcana', number: 2 },
+    { name: 'The Empress', arcana: 'Major Arcana', number: 3 },
+    { name: 'The Emperor', arcana: 'Major Arcana', number: 4 },
+    { name: 'The Hierophant', arcana: 'Major Arcana', number: 5 },
+    { name: 'The Lovers', arcana: 'Major Arcana', number: 6 },
+    { name: 'The Chariot', arcana: 'Major Arcana', number: 7 },
+    { name: 'Strength', arcana: 'Major Arcana', number: 8 },
+    { name: 'The Hermit', arcana: 'Major Arcana', number: 9 },
+    { name: 'Wheel of Fortune', arcana: 'Major Arcana', number: 10 },
+    { name: 'Justice', arcana: 'Major Arcana', number: 11 },
+    { name: 'The Hanged Man', arcana: 'Major Arcana', number: 12 },
+    { name: 'Death', arcana: 'Major Arcana', number: 13 },
+    { name: 'Temperance', arcana: 'Major Arcana', number: 14 },
+    { name: 'The Devil', arcana: 'Major Arcana', number: 15 },
+    { name: 'The Tower', arcana: 'Major Arcana', number: 16 },
+    { name: 'The Star', arcana: 'Major Arcana', number: 17 },
+    { name: 'The Moon', arcana: 'Major Arcana', number: 18 },
+    { name: 'The Sun', arcana: 'Major Arcana', number: 19 },
+    { name: 'Judgement', arcana: 'Major Arcana', number: 20 },
+    { name: 'The World', arcana: 'Major Arcana', number: 21 },
+
+    // Suit of Wands
+    { name: 'Ace of Wands', arcana: 'Minor Arcana', number: 1 },
+    { name: 'Two of Wands', arcana: 'Minor Arcana', number: 2 },
+    { name: 'Three of Wands', arcana: 'Minor Arcana', number: 3 },
+    { name: 'Four of Wands', arcana: 'Minor Arcana', number: 4 },
+    { name: 'Five of Wands', arcana: 'Minor Arcana', number: 5 },
+    { name: 'Six of Wands', arcana: 'Minor Arcana', number: 6 },
+    { name: 'Seven of Wands', arcana: 'Minor Arcana', number: 7 },
+    { name: 'Eight of Wands', arcana: 'Minor Arcana', number: 8 },
+    { name: 'Nine of Wands', arcana: 'Minor Arcana', number: 9 },
+    { name: 'Ten of Wands', arcana: 'Minor Arcana', number: 10 },
+    { name: 'Page of Wands', arcana: 'Minor Arcana', number: 11 },
+    { name: 'Knight of Wands', arcana: 'Minor Arcana', number: 12 },
+    { name: 'Queen of Wands', arcana: 'Minor Arcana', number: 13 },
+    { name: 'King of Wands', arcana: 'Minor Arcana', number: 14 },
+
+    // Suit of Cups
+    { name: 'Ace of Cups', arcana: 'Minor Arcana', number: 1 },
+    { name: 'Two of Cups', arcana: 'Minor Arcana', number: 2 },
+    { name: 'Three of Cups', arcana: 'Minor Arcana', number: 3 },
+    { name: 'Four of Cups', arcana: 'Minor Arcana', number: 4 },
+    { name: 'Five of Cups', arcana: 'Minor Arcana', number: 5 },
+    { name: 'Six of Cups', arcana: 'Minor Arcana', number: 6 },
+    { name: 'Seven of Cups', arcana: 'Minor Arcana', number: 7 },
+    { name: 'Eight of Cups', arcana: 'Minor Arcana', number: 8 },
+    { name: 'Nine of Cups', arcana: 'Minor Arcana', number: 9 },
+    { name: 'Ten of Cups', arcana: 'Minor Arcana', number: 10 },
+    { name: 'Page of Cups', arcana: 'Minor Arcana', number: 11 },
+    { name: 'Knight of Cups', arcana: 'Minor Arcana', number: 12 },
+    { name: 'Queen of Cups', arcana: 'Minor Arcana', number: 13 },
+    { name: 'King of Cups', arcana: 'Minor Arcana', number: 14 },
+
+    // Suit of Swords
+    { name: 'Ace of Swords', arcana: 'Minor Arcana', number: 1 },
+    { name: 'Two of Swords', arcana: 'Minor Arcana', number: 2 },
+    { name: 'Three of Swords', arcana: 'Minor Arcana', number: 3 },
+    { name: 'Four of Swords', arcana: 'Minor Arcana', number: 4 },
+    { name: 'Five of Swords', arcana: 'Minor Arcana', number: 5 },
+    { name: 'Six of Swords', arcana: 'Minor Arcana', number: 6 },
+    { name: 'Seven of Swords', arcana: 'Minor Arcana', number: 7 },
+    { name: 'Eight of Swords', arcana: 'Minor Arcana', number: 8 },
+    { name: 'Nine of Swords', arcana: 'Minor Arcana', number: 9 },
+    { name: 'Ten of Swords', arcana: 'Minor Arcana', number: 10 },
+    { name: 'Page of Swords', arcana: 'Minor Arcana', number: 11 },
+    { name: 'Knight of Swords', arcana: 'Minor Arcana', number: 12 },
+    { name: 'Queen of Swords', arcana: 'Minor Arcana', number: 13 },
+    { name: 'King of Swords', arcana: 'Minor Arcana', number: 14 },
+
+    // Suit of Pentacles
+    { name: 'Ace of Pentacles', arcana: 'Minor Arcana', number: 1 },
+    { name: 'Two of Pentacles', arcana: 'Minor Arcana', number: 2 },
+    { name: 'Three of Pentacles', arcana: 'Minor Arcana', number: 3 },
+    { name: 'Four of Pentacles', arcana: 'Minor Arcana', number: 4 },
+    { name: 'Five of Pentacles', arcana: 'Minor Arcana', number: 5 },
+    { name: 'Six of Pentacles', arcana: 'Minor Arcana', number: 6 },
+    { name: 'Seven of Pentacles', arcana: 'Minor Arcana', number: 7 },
+    { name: 'Eight of Pentacles', arcana: 'Minor Arcana', number: 8 },
+    { name: 'Nine of Pentacles', arcana: 'Minor Arcana', number: 9 },
+    { name: 'Ten of Pentacles', arcana: 'Minor Arcana', number: 10 },
+    { name: 'Page of Pentacles', arcana: 'Minor Arcana', number: 11 },
+    { name: 'Knight of Pentacles', arcana: 'Minor Arcana', number: 12 },
+    { name: 'Queen of Pentacles', arcana: 'Minor Arcana', number: 13 },
+    { name: 'King of Pentacles', arcana: 'Minor Arcana', number: 14 }
+];
 
 // --- STATE ---
 let currentSpread = null;
@@ -548,7 +626,6 @@ function showZodiac(id) {
     document.getElementById('view-zodiac').classList.add('active');
     window.scrollTo(0, 0);
 }
-
 
 // --- GENERIC PAGES ---
 function renderGenericPage(title) {
