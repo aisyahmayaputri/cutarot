@@ -85,6 +85,7 @@ const TAROT_DECK = [
     // Major Arcana (0 - 21)
     {
         name: 'The Fool', arcana: 'Major Arcana', number: 0, yesNo: 'Yes', astrology: 'Uranus',
+        img: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=500', // <-- CONTOH LINK GAMBAR ONLINE
         upright: 'New beginnings, innocence, spontaneity, a leap of faith into the unknown, and taking a bold first step on a grand adventure.',
         reversed: 'Recklessness, risk-taking without foresight, hesitation, folly, or holding back out of unwarranted fear.',
         love: 'A fresh, exciting romance filled with spontaneity. For singles, expect unexpected new romantic potentials.'
@@ -97,7 +98,6 @@ const TAROT_DECK = [
     },
     {
         name: 'The High Priestess', arcana: 'Major Arcana', number: 2, yesNo: 'Yes (Intuitive)', astrology: 'Moon',
-        img : 'https://pin.it/4Y6U4Y2aF/high-priestess.jpg',
         upright: 'Deep intuition, mystery, the subconscious mind, hidden wisdom, and honoring your inner voice.',
         reversed: 'Secrets exposed, ignoring gut feelings, gossip, inner anxiety, or emotional detachment.',
         love: 'A potent, mysterious spiritual bond. A relationship rooted in silent mutual understanding.'
@@ -562,7 +562,6 @@ const TAROT_DECK = [
     }
 ];
 
-
 // ==========================================
 // --- STATE ---
 // ==========================================
@@ -597,7 +596,6 @@ function toggleMenu() {
     }
 }
 
-let originalNavigate = navigate;
 function navigate(viewId, anchorOrTitle = null) {
     document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
     document.getElementById('view-' + viewId).classList.add('active');
@@ -638,10 +636,13 @@ function renderDailyCardHTML(card, isReversed) {
     
     cardEl.innerHTML = `
         <div class="w-[120px] mb-6">
-            <div class="w-full aspect-[2/3.3] bg-white border border-pink-100 rounded-xl flex flex-col items-center justify-center p-2 shadow-md">
-                <div class="text-[9px] text-pink-400 font-cute font-bold mb-1 uppercase">${card.arcana}</div>
-                <div class="text-sm font-cute font-bold text-gray-800 leading-tight">${card.name}</div>
-                <div class="mt-2 text-pink-200 text-xs font-cute">${card.number}</div>
+            <div class="w-full aspect-[2/3.3] bg-white border border-pink-100 rounded-xl flex flex-col items-center justify-center p-2 shadow-md relative overflow-hidden ${card.img ? '' : ''}">
+                ${card.img 
+                    ? `<img src="${card.img}" alt="${card.name}" class="w-full h-full object-cover rounded-xl" />`
+                    : `<div class="text-[9px] text-pink-400 font-cute font-bold mb-1 uppercase">${card.arcana}</div>
+                       <div class="text-sm font-cute font-bold text-gray-800 leading-tight">${card.name}</div>
+                       <div class="mt-2 text-pink-200 text-xs font-cute">${card.number}</div>`
+                }
             </div>
         </div>
         <h3 class="font-cute font-bold text-2xl text-purple-800 mb-1">${card.name}</h3>
@@ -882,6 +883,7 @@ function updateDrawUI() {
     slots.innerHTML = html;
 }
 
+// === STEP 3 (A): DUKUNGAN GAMBAR PADA HASIL DRAW ===
 function renderResult() {
     const grid = document.getElementById('result-grid');
     let html = '';
@@ -902,10 +904,13 @@ function renderResult() {
 
         html += `
         <div class="flex flex-col items-center w-full" style="animation-delay: ${idx * 100}ms">
-            <div class="w-full max-w-[120px] aspect-[2/3.3] bg-white border border-pink-100 rounded-xl flex flex-col items-center justify-center p-2 text-center shadow-md">
-                 <div class="text-[9px] text-pink-400 font-cute font-bold mb-1 uppercase tracking-widest">${card.arcana}</div>
-                 <div class="text-xs sm:text-sm font-cute font-bold text-gray-800 leading-tight">${card.name}</div>
-                 <div class="mt-2 text-pink-200 text-[10px] font-cute">${card.number}</div>
+            <div class="w-full max-w-[120px] aspect-[2/3.3] rounded-xl flex flex-col items-center justify-center text-center shadow-md relative overflow-hidden ${card.img ? '' : 'bg-white border border-pink-100 p-2'}">
+                 ${card.img 
+                     ? `<img src="${card.img}" alt="${card.name}" class="w-full h-full object-cover" />`
+                     : `<div class="text-[9px] text-pink-400 font-cute font-bold mb-1 uppercase tracking-widest">${card.arcana}</div>
+                        <div class="text-xs sm:text-sm font-cute font-bold text-gray-800 leading-tight">${card.name}</div>
+                        <div class="mt-2 text-pink-200 text-[10px] font-cute">${card.number}</div>`
+                 }
             </div>
             <span class="text-xs sm:text-sm font-cute text-gray-700 mt-3 text-center leading-tight">
                 ${card.name} <br> <span class="text-[10px] text-pink-400 italic">${orientationText}</span>
@@ -943,6 +948,7 @@ function ensureLibrarySearch() {
     }
 }
 
+// === STEP 3 (B): DUKUNGAN GAMBAR PADA LIBRARY (ALL CARDS) ===
 window.currentLibraryFilter = 'All';
 function filterLibrary(filter, searchTerm = '') {
     window.currentLibraryFilter = filter;
@@ -973,10 +979,13 @@ function filterLibrary(filter, searchTerm = '') {
         if (isMatchCategory && isMatchSearch) {
             html += `
                 <div onclick="showCardDetail(${index})" class="cursor-pointer transform transition-transform hover:-translate-y-2">
-                    <div class="w-full aspect-[2/3.3] bg-white border border-pink-100 rounded-xl flex flex-col items-center justify-center p-2 text-center shadow-sm hover:shadow-md transition-shadow">
-                        <div class="text-[9px] text-pink-400 font-cute font-bold mb-1 uppercase tracking-widest">${isMajor ? 'Major' : suit}</div>
-                        <div class="text-xs sm:text-sm font-cute font-bold text-gray-800 leading-tight">${card.name}</div>
-                        <div class="mt-2 text-pink-200 text-[10px] font-cute">${card.number}</div>
+                    <div class="w-full aspect-[2/3.3] rounded-xl flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-shadow relative overflow-hidden ${card.img ? '' : 'bg-white border border-pink-100 p-2'}">
+                        ${card.img 
+                            ? `<img src="${card.img}" alt="${card.name}" class="w-full h-full object-cover" />`
+                            : `<div class="text-[9px] text-pink-400 font-cute font-bold mb-1 uppercase tracking-widest">${isMajor ? 'Major' : suit}</div>
+                               <div class="text-xs sm:text-sm font-cute font-bold text-gray-800 leading-tight">${card.name}</div>
+                               <div class="mt-2 text-pink-200 text-[10px] font-cute">${card.number}</div>`
+                        }
                     </div>
                 </div>
             `;
@@ -985,6 +994,7 @@ function filterLibrary(filter, searchTerm = '') {
     grid.innerHTML = html;
 }
 
+// === STEP 3 (C): DUKUNGAN GAMBAR PADA DETAIL KARTU ===
 function showCardDetail(index) {
     const card = TAROT_DECK[index];
     let yesNoClass = card.yesNo === 'Yes' ? 'text-green-600' : (card.yesNo === 'No' ? 'text-red-500' : 'text-orange-400');
@@ -992,10 +1002,13 @@ function showCardDetail(index) {
     document.getElementById('card-detail-content').innerHTML = `
         <div class="flex flex-col md:flex-row gap-8 lg:gap-12">
             <div class="w-full md:w-1/3 flex justify-center">
-                <div class="w-64 md:w-full aspect-[2/3.3] bg-gradient-to-b from-pink-50 to-white border-2 border-pink-100 rounded-2xl flex flex-col items-center justify-center p-6 shadow-xl relative overflow-hidden group">
-                    <div class="absolute inset-2 border border-pink-200/60 rounded-xl"></div>
-                    <h2 class="font-cute font-bold text-3xl text-center text-purple-800 z-10 leading-tight">${card.name}</h2>
-                    <p class="text-xs text-pink-400 font-cute font-bold uppercase tracking-widest mt-4 z-10">${card.arcana}</p>
+                <div class="w-64 md:w-full aspect-[2/3.3] rounded-2xl flex flex-col items-center justify-center shadow-xl relative overflow-hidden group ${card.img ? '' : 'bg-gradient-to-b from-pink-50 to-white border-2 border-pink-100 p-6'}">
+                    ${card.img 
+                        ? `<img src="${card.img}" alt="${card.name}" class="w-full h-full object-cover rounded-2xl" />`
+                        : `<div class="absolute inset-2 border border-pink-200/60 rounded-xl"></div>
+                           <h2 class="font-cute font-bold text-3xl text-center text-purple-800 z-10 leading-tight">${card.name}</h2>
+                           <p class="text-xs text-pink-400 font-cute font-bold uppercase tracking-widest mt-4 z-10">${card.arcana}</p>`
+                    }
                 </div>
             </div>
             
@@ -1226,133 +1239,133 @@ function handleDashboardSearch(query) {
 // --- TAROT BIRTH CALCULATOR SYSTEM ---
 // ==========================================
 const BIRTH_CARD_MEANINGS = {
-    0: { // The Fool (22)
+    0: { 
         p1: "Sebagai Kartu Kepribadian, The Fool menandakan jalan hidup yang didefinisikan oleh eksplorasi tanpa henti dan jiwa muda yang tidak bisa dipatahkan. Kamu hadir di dunia ini untuk mendobrak batasan, menantang hal-hal konvensional, dan merangkul ketidakpastian dengan tangan terbuka.",
         p2: "Orang-orang melihatmu sebagai sosok yang berani mengambil risiko dan selalu siap untuk memulai lembaran baru. Energi luar kamu memancarkan optimisme dan pengingat bagi orang lain bahwa hidup adalah petualangan besar yang tidak perlu terlalu ditakuti.",
         s1: "Pada tingkat Jiwa (Soul), inti terdalammu mendambakan kebebasan mutlak dan kebenaran tanpa syarat. Perjalanan spiritualmu menuntutmu untuk memercayai alam semesta sepenuhnya, melepaskan kebutuhan untuk mengontrol setiap hasil dari tindakanmu.",
         s2: "Tujuan sejatimu adalah menemukan kebijaksanaan yang mendalam di dalam sebuah kepolosan. Kamu ditakdirkan untuk tetap memiliki rasa ingin tahu yang murni, menemukan pencerahan justru ketika kamu berani melompat ke tempat yang sama sekali tidak kamu ketahui."
     },
-    1: { // The Magician
+    1: { 
         p1: "Sebagai Kartu Kepribadian, The Magician menandakan bahwa kamu adalah seorang manifestor sejati. Kamu dianugerahi kecerdasan tajam, tekad yang luar biasa, dan kemampuan unik untuk mengubah ide-ide abstrak menjadi kenyataan materi.",
         p2: "Dalam interaksi sehari-hari, kamu sering kali menjadi pemecah masalah yang andal. Jalan hidup eksternalmu adalah tentang memanfaatkan segala sumber daya yang ada—pikiran, tubuh, dan lingkungan—untuk menciptakan dunia yang kamu inginkan secara presisi.",
         s1: "Pada tingkat Jiwa, kamu memiliki koneksi langsung dengan percikan ilahi dari penciptaan. Jiwamu berfungsi sebagai saluran ajaib yang menghubungkan alam spiritual dengan realitas fisik, membawa pencerahan dari atas ke bumi.",
         s2: "Evolusi batinmu terletak pada penguasaan niat. Semakin dalam kamu menyelaraskan fokusmu dengan tujuan tertinggi, semakin besar keajaiban penyembuhan dan transformasi yang dapat kamu berikan kepada dirimu sendiri dan orang-orang di sekitarmu."
     },
-    2: { // The High Priestess
+    2: { 
         p1: "Sebagai Kartu Kepribadian, The High Priestess memproyeksikan aura misteri, kedalaman emosional, dan intuisi yang sangat kuat. Orang lain sering kali merasa bahwa kamu mengetahui rahasia-rahasia tersembunyi tanpa perlu diucapkan.",
         p2: "Kamu tidak mudah terpengaruh oleh keramaian dunia luar; sebaliknya, kamu memantulkan energi orang lain bagai cermin yang tenang. Pendekatan hidupmu sangat observatif, selalu membaca yang tersirat sebelum mengambil tindakan apa pun.",
         s1: "Pada tingkat Jiwa, tujuan utamamu adalah mendengarkan dan memercayai suara batinmu di atas segalanya. Jiwamu adalah sebuah kuil kebijaksanaan kuno yang menyimpan pemahaman tentang siklus alam dan rahasia alam bawah sadar.",
         s2: "Perjalanan sejatimu bukanlah tentang mencari jawaban dari luar, melainkan menyelami keheningan batinmu. Kamu ditakdirkan untuk menjadi pembimbing spiritual, membawa pencerahan bagi mereka yang tersesat di dalam kegelapan emosional mereka sendiri."
     },
-    3: { // The Empress
+    3: { 
         p1: "Sebagai Kartu Kepribadian, The Empress menandakan bahwa hidupmu dipenuhi dengan tema pengasuhan, kreativitas, dan penciptaan keindahan. Kamu memiliki daya tarik alami yang hangat dan membuat siapa saja merasa betah di dekatmu.",
         p2: "Secara eksternal, kamu sangat terhubung dengan kelimpahan, seni, dan kenyamanan duniawi. Kamu adalah pelindung bagi orang lain, memastikan harmoni mekar di sekitarmu.",
         s1: "Pada tingkat Jiwa, kamu membawa esensi dari 'Ibu Bumi'. Tujuan terdalam jiwamu adalah untuk mencintai tanpa syarat dan mengajarkan dunia bagaimana menerima cinta serta kelimpahan tanpa rasa bersalah.",
         s2: "Evolusi batinmu tercapai ketika kamu menyadari bahwa kamu tidak hanya wajib memelihara orang lain, tetapi juga memelihara dirimu sendiri. Kamu membuktikan kelembutan adalah bentuk kekuatan sejati."
     },
-    4: { // The Emperor
+    4: { 
         p1: "Sebagai Kartu Kepribadian, The Emperor menjadikanmu arsitek dari struktur dan stabilitas. Kamu memancarkan otoritas, kepemimpinan yang teguh, dan kemampuan untuk membawa ketertiban ke dalam situasi yang kacau.",
         p2: "Orang-orang secara alami mengandalkanmu karena visi jangka panjangmu yang realistis. Kamu melindungi apa yang menjadi hakmu dan membangun fondasi solid untuk masa depan.",
         s1: "Pada tingkat Jiwa, perjalanan spiritualmu adalah tentang menguasai diri sendiri (self-mastery). Jiwamu ditugaskan untuk mengubah kekuatan mentah menjadi otoritas yang bijaksana.",
         s2: "Panggilan sejatimu adalah memadukan ketegasan dengan welas asih. Ketika kamu berhasil memimpin dengan hati dan logika, kamu menciptakan warisan spiritual yang melindungi banyak generasi."
     },
-    5: { // The Hierophant
+    5: { 
         p1: "Sebagai Kartu Kepribadian, The Hierophant menunjukkan bahwa kamu adalah sosok pencari kebenaran, tradisi, dan nilai-nilai fundamental. Kamu sangat menghargai struktur moral dan pendidikan.",
         p2: "Dalam masyarakat, kamu sering bertindak sebagai mentor atau penasihat yang bijak. Kamu memberikan rasa aman dengan mempertahankan tradisi yang menyatukan komunitas.",
         s1: "Pada tingkat Jiwa, panggilan utamamu adalah menjembatani kearifan spiritual kuno dengan pemahaman modern. Jiwamu mencari keyakinan yang lebih besar dari diri sendiri.",
         s2: "Evolusi batinmu terjadi ketika kamu tidak hanya mengikuti aturan secara membabi buta, tetapi menemukan inti spiritual universal bahwa hukum alam didasarkan pada cinta."
     },
-    6: { // The Lovers
+    6: { 
         p1: "Sebagai Kartu Kepribadian, The Lovers membawa tema harmoni, kemitraan, dan persimpangan pilihan. Kamu memiliki pesona yang sangat magnetis dan kemampuan menyatukan perbedaan.",
         p2: "Kehidupan luar kamu sering kali diwarnai oleh hubungan emosional yang mendalam dan keputusan-keputusan besar yang menguji nilai pribadimu.",
         s1: "Pada tingkat Jiwa, kamu membawa misi tentang integrasi dualitas—cahaya dan bayangan, maskulin dan feminin. Jiwamu mencari 'keseutuhan' mutlak di dalam diri.",
         s2: "Pemahaman spiritualmu akan datang ketika kamu menyadari bahwa pilihan yang dibuat dari ruang cinta selalu lebih kuat daripada pilihan yang dibuat dari rasa takut."
     },
-    7: { // The Chariot
+    7: { 
         p1: "Sebagai Kartu Kepribadian, The Chariot menandakan tekad baja, ambisi yang tak terhentikan, dan fokus pada kemenangan. Tidak ada halangan duniawi yang dapat memperlambatmu.",
         p2: "Kamu memproyeksikan citra kendali penuh atas hidup. Di dalam mungkin ada gejolak, tetapi kamu sangat ahli dalam mengarahkan berbagai emosi menjadi bahan bakar kemajuan.",
         s1: "Pada tingkat Jiwa, perjalananmu adalah tentang kemenangan spiritual dan penguasaan ego. Jiwamu ditantang menunggangi kehidupan tanpa membiarkan insting mengendalikan arahmu.",
         s2: "Kemenangan sejati bukan tentang mengalahkan orang lain, melainkan menaklukkan bayangan di dalam dirimu sendiri. Kamu adalah pejuang spiritual yang membawa cahaya melewati pertempuran."
     },
-    8: { // Strength
+    8: { 
         p1: "Sebagai Kartu Kepribadian, Strength memancarkan aura keberanian yang tenang dan ketahanan luar biasa. Kamu tidak menyelesaikan masalah dengan kekerasan, melainkan dengan empati dan kesabaran.",
         p2: "Orang lain sering kali berlindung di balik ketangguhan mentalmu. Kamu mampu menjinakkan situasi liar hanya dengan kehadiran tulusmu.",
         s1: "Pada tingkat Jiwa, tujuan terbesarmu adalah mengubah rasa takut menjadi kekuatan batin. Monster sejati bukanlah yang ada di luar, melainkan keraguan di dalam diri.",
         s2: "Evolusi spiritualmu tercapai ketika kamu merangkul semua sisi terang dan gelapmu dengan cinta. Kelembutan adalah kekuatan kosmik yang paling tak tertandingi."
     },
-    9: { // The Hermit
+    9: { 
         p1: "Sebagai Kartu Kepribadian, The Hermit menunjukkan jiwa introspektif, mandiri, dan pencari kebenaran. Kamu membutuhkan waktu menyendiri untuk memproses dunia.",
         p2: "Orang melihatmu sebagai mercusuar kebijaksanaan, tempat mereka meminta nasihat mendalam, objektif, dan jujur di tengah kebisingan hidup.",
         s1: "Pada tingkat Jiwa, panggilan utamamu adalah pencarian pencerahan (enlightenment). Kamu harus masuk ke dalam kegelapan batinmu untuk menemukan cahaya murni.",
         s2: "Misi batinmu bukan untuk mengasingkan diri, tetapi membawa kembali lentera kebijaksanaan yang menyala guna menerangi jalan bagi mereka yang tersesat."
     },
-    10: { // Wheel of Fortune
+    10: { 
         p1: "Sebagai Kartu Kepribadian, Wheel of Fortune menandakan hidup yang penuh siklus, keberuntungan tak terduga, dan adaptabilitas yang tinggi.",
         p2: "Kamu memiliki pemahaman luar biasa bahwa tak ada yang abadi. Fleksibilitasmu membuat orang kagum pada caramu menunggangi gelombang takdir dengan senyuman.",
         s1: "Pada tingkat Jiwa, kamu adalah pengamat roda karma. Jiwamu sangat selaras dengan ritme alam semesta dan hukum sebab-akibat lintas waktu.",
         s2: "Panggilan spiritualmu adalah menemukan ketenangan absolut di poros roda. Alih-alih diombang-ambingkan badai, kamu ditugaskan menjadi pusat gravitasi yang tenang."
     },
-    11: { // Justice
+    11: { 
         p1: "Sebagai Kartu Kepribadian, Justice menonjolkan integritas, objektivitas, dan pencarian keadilan. Kamu memiliki kompas moral yang tajam untuk mengungkap kebenaran.",
         p2: "Orang menghargai kejujuranmu meskipun kata-katamu terasa dingin. Kamu selalu berusaha menyeimbangkan timbangan di dalam semua aspek kehidupan.",
         s1: "Pada tingkat Jiwa, kamu bertugas menyelaraskan karma kosmik. Jiwamu menuntut akuntabilitas secara brutal terhadap dirimu sendiri di atas segalanya.",
         s2: "Evolusi batinmu terjadi saat kamu menyadari bahwa keadilan sejati berjalan beriringan dengan kasih sayang; kebenaran harus diucapkan untuk menyembuhkan, bukan menghancurkan."
     },
-    12: { // The Hanged Man
+    12: { 
         p1: "Sebagai Kartu Kepribadian, The Hanged Man membuatmu bersedia menunda kepuasan dan mengorbankan ego demi mencapai pemahaman yang lebih besar.",
         p2: "Kamu tidak takut memutar balik caramu melihat dunia saat logika biasa menemui jalan buntu. Posisi 'menunggu' seringkali adalah strategimu.",
         s1: "Pada tingkat Jiwa, perjalananmu adalah tentang penyerahan diri spiritual (surrender). Pencerahan sering datang dari membiarkan alam semesta bekerja.",
         s2: "Misi sejatimu adalah menemukan kedamaian dalam jeda, mengubah pengorbanan kecil menjadi mukjizat visi batin yang sangat tajam."
     },
-    13: { // Death
+    13: { 
         p1: "Sebagai Kartu Kepribadian, Death menunjukkan hidup yang dipenuhi tema transformasi radikal, regenerasi, dan penemuan kembali diri.",
         p2: "Kamu adalah agen perubahan bagi sekitarmu. Kamu memahami bahwa setiap akhir adalah pemicu untuk sebuah awal yang lebih besar.",
         s1: "Pada tingkat Jiwa, kamu adalah saluran kebangkitan (rebirth). Membersihkan energi lama untuk memberi ruang kehidupan rohani yang baru.",
         s2: "Penerimaan mutlak terhadap sifat ketidakkekalan adalah kunci. Dari abu kehancuran paling gelap, kebangkitan siap mengambil tempat."
     },
-    14: { // Temperance
+    14: { 
         p1: "Sebagai Kartu Kepribadian, Temperance menjadikanmu sang alkemis kehidupan. Kamu berbakat memadukan hal ekstrem menjadi harmoni damai.",
         p2: "Pendekatanmu terhadap hidup tenang dan menyembuhkan. Kehadiranmu menetralkan ketegangan yang ada dalam ruangan.",
         s1: "Pada tingkat Jiwa, kamu bekerja keras menyeimbangkan dunia material dan spiritual untuk menciptakan sintesis sempurna di dalam dirimu.",
         s2: "Panggilan tertinggimu adalah menjadi saluran kedamaian alam semesta, menyembuhkan luka-luka masa lalu milikmu sendiri maupun kolektif."
     },
-    15: { // The Devil
+    15: { 
         p1: "Sebagai Kartu Kepribadian, The Devil menandakan intensitas magnetis dan ambisi material yang kuat. Kamu terhubung dengan keinginan duniawi.",
         p2: "Kehadiranmu provokatif. Kamu ahli menavigasi dunia fisik, menikmati kemewahan, dan memahami kedalaman bayangan psikologis manusia.",
         s1: "Pada tingkat Jiwa, ini adalah panggilan pembebasan luar biasa. Kamu harus mengenali dan membebaskan diri dari rantai materialisme.",
         s2: "Pencerahanmu datang melalui pemahaman gelap-terang, menaklukkan ketakutan naluriah untuk mencapai kebebasan rohani tertinggi."
     },
-    16: { // The Tower
+    16: { 
         p1: "Sebagai Kartu Kepribadian, The Tower membuatmu menjadi pendobrak struktur yang usang. Kamu selalu membawa kebenaran yang menyengat namun diperlukan.",
         p2: "Kamu sangat otentik dan menghancurkan apa yang pada akhirnya merugikan orang-orang, layaknya petir pembebas.",
         s1: "Pada tingkat Jiwa, kamu adalah katalisator kebangkitan massal. Terhubung langsung dengan kebenaran kosmik yang tak mentolerir ilusi egois.",
         s2: "Evolusi sejatimu adalah mengajarkan bahwa ketika menara kesombongan runtuh, reruntuhannya adalah tanah subur untuk pencerahan sejati."
     },
-    17: { // The Star
+    17: { 
         p1: "Sebagai Kartu Kepribadian, The Star memancarkan harapan murni, optimisme, dan inspirasi penyembuhan bagi banyak orang setelah masa sulit.",
         p2: "Energi luarmu sangat lembut dan artistik. Kamu senantiasa dikelilingi oleh keajaiban karena kamu percaya pada masa depan yang lebih baik.",
         s1: "Pada tingkat Jiwa, kamu adalah saluran rahmat ilahi yang bertugas menuangkan air penyembuhan kembali ke bumi yang tandus.",
         s2: "Iman sejatimu kepada alam semesta pada akhirnya akan memulihkan jiwa yang paling hancur sekalipun tanpa keraguan."
     },
-    18: { // The Moon
+    18: { 
         p1: "Sebagai Kartu Kepribadian, The Moon menandakan hidup yang selaras dengan intuisi, seni, dan dunia mimpi bawah sadar. Kehadiranmu misterius dan puitis.",
         p2: "Kamu berjalan di tepi realitas fisik dan imajinasi magis, menjadikanmu sosok yang sangat empatik terhadap energi tak terlihat.",
         s1: "Pada tingkat Jiwa, kamu ditugaskan menyelami ketakutan terdalam alam bawah sadar, menjaga kebijaksanaan leluhur mistis.",
         s2: "Evolusi spiritualmu terjadi saat kamu berhenti takut pada kegelapan batin, mengubah mimpi buruk menjadi bimbingan ilahi."
     },
-    19: { // The Sun
+    19: { 
         p1: "Sebagai Kartu Kepribadian, The Sun membuatmu memancarkan kebahagiaan mutlak dan vitalitas murni layaknya anak kecil.",
         p2: "Pendekatanmu hidupmu optimis. Kamu membuat masalah besar terlihat kecil hanya dengan memberikan kehangatan senyumanmu.",
         s1: "Pada tingkat Jiwa, kamu adalah percikan cahaya murni. Bergetar dengan frekuensi kegembiraan dan realisasi diri tanpa hambatan.",
         s2: "Tujuan agungmu adalah merayakan kehidupan dan membakar habis kesedihan orang lain dengan hanya menjadi dirimu yang otentik."
     },
-    20: { // Judgement
+    20: { 
         p1: "Sebagai Kartu Kepribadian, Judgement menandakan hidupmu dipandu panggilan yang lebih tinggi. Kamu ahli mengevaluasi hidup dengan kejujuran mutlak.",
         p2: "Orang menghormatimu yang telah 'terbangun', dan bersedia mengampuni masa lalu demi fase baru yang bermakna.",
         s1: "Pada tingkat Jiwa, kamu melepaskan segala sisa karma lama dan rasa bersalah menuju pembebasan spiritual terakhir.",
         s2: "Kamu ada untuk membuktikan bahwa tidak peduli seberapa dalam seseorang terkubur dalam kesalahan, selalu ada pintu terlahir kembali menjadi cahaya."
     },
-    21: { // The World
+    21: { 
         p1: "Sebagai Kartu Kepribadian, The World menjadikanmu sosok utuh yang berwawasan luas. Kamu selalu berhasil menyelesaikan siklus dengan sempurna.",
         p2: "Kamu memproyeksikan citra kepuasan hidup. Contoh kehidupan yang telah mencapai puncak dalam keseimbangan materi dan harmoni.",
         s1: "Pada tingkat Jiwa, jiwamu telah mengumpulkan seluruh pelajaran, mencapai kedamaian dan keutuhan kosmik yang absolut.",
@@ -1564,10 +1577,13 @@ function processBirthCards() {
             </div>
             <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6">
                 <div class="w-28 flex-shrink-0">
-                    <div class="w-full aspect-[2/3.3] bg-white border border-pink-100 rounded-xl flex flex-col items-center justify-center p-2 text-center shadow-md">
-                        <div class="text-[9px] text-pink-400 font-cute font-bold mb-1 uppercase tracking-widest">Major</div>
-                        <div class="text-xs font-cute font-bold text-gray-800 leading-tight">${cardObj.name}</div>
-                        <div class="mt-2 text-pink-200 text-[10px] font-cute">${cardObj.number}</div>
+                    <div class="w-full aspect-[2/3.3] bg-white border border-pink-100 rounded-xl flex flex-col items-center justify-center p-2 text-center shadow-md relative overflow-hidden">
+                        ${cardObj.img 
+                            ? `<img src="${cardObj.img}" alt="${cardObj.name}" class="w-full h-full object-cover rounded-xl" />`
+                            : `<div class="text-[9px] text-pink-400 font-cute font-bold mb-1 uppercase tracking-widest">Major</div>
+                               <div class="text-xs font-cute font-bold text-gray-800 leading-tight">${cardObj.name}</div>
+                               <div class="mt-2 text-pink-200 text-[10px] font-cute">${cardObj.number}</div>`
+                        }
                     </div>
                 </div>
                 <div class="space-y-3 font-cute text-sm text-gray-600 leading-relaxed text-justify">
