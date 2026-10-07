@@ -1089,13 +1089,11 @@ function renderLibrary(filter = 'All') {
                       (filter === 'Major Arcana' && isMajor) || 
                       (filter === suit);
         
-                if (isMatchCategory && isMatchSearch) {
+                if (isMatchCategory) {
             html += `
                 <div onclick="showCardDetail(${index})" class="cursor-pointer transform transition-transform hover:-translate-y-2">
-                    <div class="w-full aspect-[2/3.3] rounded-xl flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-shadow relative overflow-hidden ${card.img ? '' : 'bg-white border border-pink-100 p-2'}">
-                        
-                        ${card.img 
-                            ? `<img src="${card.img}" alt="${card.name}" class="w-full h-full object-cover" />`
+                    <div class="w-full aspect-[2/3.3] bg-white border border-pink-100 rounded-xl flex flex-col items-center justify-center p-2 text-center shadow-sm hover:shadow-md transition-shadow">
+                
                             : `<div class="text-[9px] text-pink-400 font-cute font-bold mb-1 uppercase tracking-widest">${isMajor ? 'Major' : suit}</div>
                                <div class="text-xs sm:text-sm font-cute font-bold text-gray-800 leading-tight">${card.name}</div>
                                <div class="mt-2 text-pink-200 text-[10px] font-cute">${card.number}</div>`
