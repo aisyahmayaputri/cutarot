@@ -906,7 +906,7 @@ function renderResult() {
         <div class="flex flex-col items-center w-full" style="animation-delay: ${idx * 100}ms">
             <div class="w-full max-w-[120px] aspect-[2/3.3] rounded-xl flex flex-col items-center justify-center text-center shadow-md relative overflow-hidden ${card.img ? '' : 'bg-white border border-pink-100 p-2'}">
                  ${card.img 
-                     ? `<img src="${card.img}" alt="${card.name}" class="w-full h-full object-cover" />`
+                     ? `<img src="${card.img}" alt="${card.name}" class="w-full h-full object-contain" />`
                      : `<div class="text-[9px] text-pink-400 font-cute font-bold mb-1 uppercase tracking-widest">${card.arcana}</div>
                         <div class="text-xs sm:text-sm font-cute font-bold text-gray-800 leading-tight">${card.name}</div>
                         <div class="mt-2 text-pink-200 text-[10px] font-cute">${card.number}</div>`
@@ -981,7 +981,7 @@ function filterLibrary(filter, searchTerm = '') {
                 <div onclick="showCardDetail(${index})" class="cursor-pointer transform transition-transform hover:-translate-y-2">
                     <div class="w-full aspect-[2/3.3] rounded-xl flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-shadow relative overflow-hidden ${card.img ? '' : 'bg-white border border-pink-100 p-2'}">
                         ${card.img 
-                            ? `<img src="${card.img}" alt="${card.name}" class="w-full h-full object-cover" />`
+                            ? `<img src="${card.img}" alt="${card.name}" class="w-full h-full object-contain" />`
                             : `<div class="text-[9px] text-pink-400 font-cute font-bold mb-1 uppercase tracking-widest">${isMajor ? 'Major' : suit}</div>
                                <div class="text-xs sm:text-sm font-cute font-bold text-gray-800 leading-tight">${card.name}</div>
                                <div class="mt-2 text-pink-200 text-[10px] font-cute">${card.number}</div>`
@@ -1004,7 +1004,7 @@ function showCardDetail(index) {
             <div class="w-full md:w-1/3 flex justify-center">
                 <div class="w-64 md:w-full aspect-[2/3.3] rounded-2xl flex flex-col items-center justify-center shadow-xl relative overflow-hidden group ${card.img ? '' : 'bg-gradient-to-b from-pink-50 to-white border-2 border-pink-100 p-6'}">
                     ${card.img 
-                        ? `<img src="${card.img}" alt="${card.name}" class="w-full h-full object-cover rounded-2xl" />`
+                        ? `<img src="${card.img}" alt="${card.name}" class="w-full h-full object-contain rounded-2xl" />`
                         : `<div class="absolute inset-2 border border-pink-200/60 rounded-xl"></div>
                            <h2 class="font-cute font-bold text-3xl text-center text-purple-800 z-10 leading-tight">${card.name}</h2>
                            <p class="text-xs text-pink-400 font-cute font-bold uppercase tracking-widest mt-4 z-10">${card.arcana}</p>`
