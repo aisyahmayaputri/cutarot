@@ -85,7 +85,6 @@ const TAROT_DECK = [
     // Major Arcana (0 - 21)
     {
         name: 'The Fool', arcana: 'Major Arcana', number: 0, yesNo: 'Yes', astrology: 'Uranus',
-        img: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=500', // <-- CONTOH LINK GAMBAR ONLINE
         upright: 'New beginnings, innocence, spontaneity, a leap of faith into the unknown, and taking a bold first step on a grand adventure.',
         reversed: 'Recklessness, risk-taking without foresight, hesitation, folly, or holding back out of unwarranted fear.',
         love: 'A fresh, exciting romance filled with spontaneity. For singles, expect unexpected new romantic potentials.'
@@ -98,6 +97,7 @@ const TAROT_DECK = [
     },
     {
         name: 'The High Priestess', arcana: 'Major Arcana', number: 2, yesNo: 'Yes (Intuitive)', astrology: 'Moon',
+        img : 'the-high-priestes.png',
         upright: 'Deep intuition, mystery, the subconscious mind, hidden wisdom, and honoring your inner voice.',
         reversed: 'Secrets exposed, ignoring gut feelings, gossip, inner anxiety, or emotional detachment.',
         love: 'A potent, mysterious spiritual bond. A relationship rooted in silent mutual understanding.'
