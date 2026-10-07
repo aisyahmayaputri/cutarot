@@ -1159,7 +1159,7 @@ function filterLibrary(filter, searchTerm = '') {
         
         let isMatchSearch = term === '' || card.name.toLowerCase().includes(term.toLowerCase());
         
-        if (isMatchCategory && isMatchSearch) {
+                if (isMatchCategory && isMatchSearch) {
             html += `
                 <div onclick="showCardDetail(${index})" class="cursor-pointer transform transition-transform hover:-translate-y-2">
                     <div class="w-full aspect-[2/3.3] bg-white border border-pink-100 rounded-xl flex flex-col items-center justify-center p-2 text-center shadow-sm hover:shadow-md transition-shadow">
@@ -1170,6 +1170,7 @@ function filterLibrary(filter, searchTerm = '') {
                 </div>
             `;
         }
+
     });
     grid.innerHTML = html;
 }
@@ -1181,23 +1182,18 @@ function showCardDetail(index) {
     
     let yesNoClass = card.yesNo === 'Yes' ? 'text-green-600' : (card.yesNo === 'No' ? 'text-red-500' : 'text-orange-400');
 
-        document.getElementById('card-detail-content').innerHTML = `
+            document.getElementById('card-detail-content').innerHTML = `
         <div class="flex flex-col md:flex-row gap-8 lg:gap-12">
             <div class="w-full md:w-1/3 flex justify-center">
-                <div class="w-64 md:w-full aspect-[2/3.3] rounded-2xl flex flex-col items-center justify-center shadow-xl relative overflow-hidden group ${card.img ? '' : 'bg-gradient-to-b from-pink-50 to-white border-2 border-pink-100 p-6'}">
-                    
-                    ${card.img 
-                        ? `<img src="${card.img}" alt="${card.name}" class="w-full h-full object-cover rounded-2xl" />`
-                        : `<div class="absolute inset-2 border border-pink-200/60 rounded-xl"></div>
-                           <h2 class="font-cute font-bold text-3xl text-center text-purple-800 z-10 leading-tight">${card.name}</h2>
-                           <p class="text-xs text-pink-400 font-cute font-bold uppercase tracking-widest mt-4 z-10">${card.arcana}</p>`
-                    }
-
+                <div class="w-64 md:w-full aspect-[2/3.3] bg-gradient-to-b from-pink-50 to-white border-2 border-pink-100 rounded-2xl flex flex-col items-center justify-center p-6 shadow-xl relative overflow-hidden group">
+                    <div class="absolute inset-2 border border-pink-200/60 rounded-xl"></div>
+                    <h2 class="font-cute font-bold text-3xl text-center text-purple-800 z-10 leading-tight">${card.name}</h2>
+                    <p class="text-xs text-pink-400 font-cute font-bold uppercase tracking-widest mt-4 z-10">${card.arcana}</p>
                 </div>
             </div>
-
             
             <div class="w-full md:w-2/3 space-y-6">
+
                 <div>
                     <h1 class="font-cute font-bold text-4xl md:text-5xl text-purple-800 mb-2">${card.name}</h1>
                     <p class="text-sm text-pink-500 font-medium tracking-widest uppercase font-cute">${card.arcana}</p>
