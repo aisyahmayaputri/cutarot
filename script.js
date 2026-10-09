@@ -1,203 +1,65 @@
-// Inject Dynamic Styles for Smooth Page Transitions & Layout Fixes
-const dynamicStyle = document.createElement('style');
-dynamicStyle.innerHTML = `
-    .view-section {
-        display: none;
-        opacity: 0;
-        transform: translateY(10px);
-        transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-    }
-    .view-section.active {
-        display: block;
-        opacity: 1;
-        transform: translateY(0);
-    }
-    .scrollbar-none::-webkit-scrollbar {
-        display: none;
-    }
-    .scrollbar-none {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
-    body {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
-    #main-footer {
-        margin-top: auto;
-    }
-`;
-document.head.appendChild(dynamicStyle);
-
-// ==========================================
-// --- NAVIGATION HISTORY & SCROLL TRACKING ---
-// ==========================================
-let navHistory = [{ viewId: 'home', extra: null, scrollY: 0 }];
-let lastHomeScrollPosition = 0;
-let lastClickedHomeSectionId = null;
-
-function trackHomeScroll() {
-    if (document.getElementById('view-home')?.classList.contains('active')) {
-        lastHomeScrollPosition = window.scrollY;
-    }
-}
-window.addEventListener('scroll', trackHomeScroll);
-
-function navigate(viewId, anchorOrTitle = null, pushToHistory = true) {
-    if (document.getElementById('view-home')?.classList.contains('active')) {
-        lastHomeScrollPosition = window.scrollY;
-    }
-
-    if (viewId === 'home' && anchorOrTitle) {
-        lastClickedHomeSectionId = anchorOrTitle;
-    }
-
-    if (pushToHistory) {
-        navHistory.push({ viewId, extra: anchorOrTitle, scrollY: window.scrollY });
-    }
-
-    document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-
-    const targetView = document.getElementById('view-' + viewId);
-    if (targetView) {
-        targetView.classList.add('active');
-    }
-
-    const drawer = document.getElementById('drawer-menu');
-    if (drawer && !drawer.classList.contains('-translate-x-full')) {
-        toggleMenu();
-    }
-
-    if (viewId === 'home') {
-        if (anchorOrTitle) {
-            setTimeout(() => {
-                const el = document.getElementById(anchorOrTitle);
-                if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
-            }, 100);
-        } else if (lastHomeScrollPosition > 0) {
-            window.scrollTo({ top: lastHomeScrollPosition, behavior: 'smooth' });
-        } else {
-            window.scrollTo(0, 0);
-        }
-    } else {
-        window.scrollTo(0, 0);
-    }
-
-    if (viewId === 'draw') {
-        setDrawPhase('spread');
-    } else if (viewId === 'generic') {
-        renderGenericPage(anchorOrTitle);
-    } else if (viewId === 'all-cards') {
-        ensureLibrarySearch();
-        filterLibrary('All');
-    } else if (viewId === 'birth-calculator') {
-        initBirthCalculatorPage();
-    } else if (viewId === 'oracle-library') {
-        renderOracleLibrary('All');
-    } else if (viewId === 'oracle-draw') {
-        renderOracleConfigNumbers();
-        document.getElementById('oracle-step-config')?.classList.remove('hidden');
-        document.getElementById('oracle-step-draw')?.classList.add('hidden');
-        document.getElementById('oracle-step-result')?.classList.add('hidden');
-    }
-
-    ensureFooterPosition();
-}
-
-function goBack() {
-    if (navHistory.length > 1) {
-        navHistory.pop(); // Remove current view
-        const prev = navHistory[navHistory.length - 1];
-        if (prev) {
-            navigate(prev.viewId, prev.extra, false);
-            return;
-        }
-    }
-    goBackToHome();
-}
-
-function goBackToHome() {
-    navHistory = [{ viewId: 'home', extra: null, scrollY: lastHomeScrollPosition }];
-    navigate('home', lastClickedHomeSectionId, false);
-}
-
-function renderNavHeaderHTML(title = '') {
-    return `
-        <div class="flex items-center justify-between w-full max-w-xl mx-auto mb-6 px-4 font-cute">
-            <button onclick="goBack()" class="flex items-center text-xs font-bold text-pink-500 hover:text-pink-700 bg-pink-50 hover:bg-pink-100 px-3.5 py-2 rounded-xl transition-all shadow-sm">
-                &larr; Back
-            </button>
-            ${title ? `<span class="text-sm font-bold text-purple-800">${title}</span>` : ''}
-            <button onclick="goBackToHome()" class="flex items-center text-xs font-bold text-purple-700 hover:text-purple-900 bg-purple-50 hover:bg-purple-100 px-3.5 py-2 rounded-xl transition-all shadow-sm">
-                Home &rarr;
-            </button>
-        </div>
-    `;
-}
-
 // ==========================================
 // --- DATA ZODIAC ---
 // ==========================================
 const ZODIAC_DATA = [
     { 
         id: 'aries', name: 'Aries', dateRange: 'March 21 – April 19', element: 'Fire Element', tarotMatch: 'The Emperor',
-        desc: 'Aries is the first spark in the zodiac wheel—a symbol of pure energy that eagerly welcomes new beginnings. Known for a boldness that often precedes fear, this sign lives in fast motion, high initiative, and the belief that the path of life must be forged rather than merely followed.<br><br>In tarot readings, Aries deeply resonates with <strong>The Emperor</strong>, reflecting authority, assertiveness, and a strong protective spirit.',
+        desc: 'Aries is the first spark in the zodiac wheel—a symbol of pure energy that eagerly welcomes new beginnings. Known for a boldness that often precedes fear, this sign lives in fast motion, high initiative, and the belief that the path of life must be forged rather than merely followed.<br><br>In tarot readings, Aries deeply resonates with <strong>The Emperor</strong>, reflecting authority, assertiveness, and a strong protective spirit. The greatest challenge for an Aries is to tame the ego and learn that patience is not a weakness, but the ultimate strategy to win long-term battles.',
         svg: '<path d="M4,14 C4,8 12,4 12,12 C12,4 20,8 20,14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' 
     },
     { 
         id: 'taurus', name: 'Taurus', dateRange: 'April 20 – May 20', element: 'Earth Element', tarotMatch: 'The Hierophant',
-        desc: 'Taurus is the physical embodiment of grounded, steady earth. They possess a deep appreciation for aesthetic beauty, sensory comfort, and well-planned life stability.',
+        desc: 'Taurus is the physical embodiment of grounded, steady earth. They possess a deep appreciation for aesthetic beauty, sensory comfort, and well-planned life stability. Beneath their calm demeanor lies a determination that is nearly impossible to shake.<br><br>Taurus energy reflects <strong>The Hierophant</strong>—symbolizing guarded traditional values, down-to-earth spiritual searching, and unwavering loyalty in relationships. For Taurus, home is not just a place, but a sanctuary built with immense patience.',
         svg: '<circle cx="12" cy="14" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M7,9 C7,4 17,4 17,9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' 
     },
     { 
         id: 'gemini', name: 'Gemini', dateRange: 'May 21 – June 20', element: 'Air Element', tarotMatch: 'The Lovers',
-        desc: 'Gemini is the nimble spring breeze, carrying boundless curiosity and captivating intellect. They are explorers of ideas, capable of viewing problems from multiple perspectives.',
+        desc: 'Gemini is the nimble spring breeze, carrying boundless curiosity and captivating intellect. They are explorers of ideas, capable of viewing a single problem from multiple perspectives with a lively, charming communication style.<br><br>Their dynamic character is represented by <strong>The Lovers</strong>, symbolizing not only romance but also life-altering choices and the integration of dualities within the self. Gemini\'s greatest challenge is finding focus amidst the storm of information they absorb daily.',
         svg: '<path d="M7,5 L17,5 M7,19 L17,19 M9,5 L9,19 M15,5 L15,19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' 
     },
     { 
         id: 'cancer', name: 'Cancer', dateRange: 'June 21 – July 22', element: 'Water Element', tarotMatch: 'The Chariot',
-        desc: 'Cancer is an ocean of emotion holding extraordinary depths behind protective shells. Ruled by lunar energies, they possess razor-sharp intuition.',
+        desc: 'Cancer is an ocean of emotion holding extraordinary depths behind protective shells. Ruled by lunar energies, they possess razor-sharp intuition—often sensing shifts in a room\'s energy long before anyone else notices.<br><br>This sign represents <strong>The Chariot</strong>, symbolizing an intense emotional journey where they must learn to navigate powerful tides without losing themselves. Cancer is the safest harbor for those they hold dear.',
         svg: '<circle cx="8" cy="10" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M11,10 C16,7 20,10 18,14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="16" cy="14" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M13,14 C8,17 4,14 6,10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' 
     },
     { 
         id: 'leo', name: 'Leo', dateRange: 'July 23 – August 22', element: 'Fire Element', tarotMatch: 'Strength',
-        desc: 'Leo radiates solar warmth bringing life to everything around them. Boundless creativity, a generous spirit, and natural charisma ensure a Leo always stands out effortlessly.',
+        desc: 'Leo radiates the solar warmth that brings life to everything around them. Boundless creativity, a generous spirit, and natural charisma ensure a Leo always stands out effortlessly without trying too hard.<br><br>Their energy aligns with <strong>Strength</strong>—not raw physical force, but gentle courage, sincerity, and the ability to tame deep-seated fears through supreme self-confidence. Beneath the spotlight, Leo holds a fiercely loyal heart.',
         svg: '<circle cx="7" cy="17" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10,17 C13,17 18,14 15,9 C12,4 6,8 9,13 C12,18 19,16 19,16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' 
     },
     { 
         id: 'virgo', name: 'Virgo', dateRange: 'Aug 23 – Sep 22', element: 'Earth Element', tarotMatch: 'The Hermit',
-        desc: 'Virgo is the architect of precision, finding beauty in minute details that others overlook. They are analytical, deeply dedicated, and driven by a sincere impulse to nurture.',
+        desc: 'Virgo is the architect of precision, finding beauty in minute details that others overlook. They are analytical, deeply dedicated, and driven by a sincere impulse to mend and nurture their environment.<br><br>Their reflective character mirrors <strong>The Hermit</strong>—the quest for ultimate truth, the need for solitude to recharge mental clarity, and wisdom born from deep observation. Virgo is love manifested through tangible acts of service.',
         svg: '<path d="M5,17 L7,7 L11,17 L14,9 C14,9 15,19 18,17 C21,15 19,10 19,10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' 
     },
     { 
         id: 'libra', name: 'Libra', dateRange: 'Sep 23 – Oct 22', element: 'Air Element', tarotMatch: 'Justice',
-        desc: 'Libra is a graceful dancer along the line of equilibrium. They possess refined artistic taste, an aversion to unnecessary conflict, and a gift for weaving peace.',
+        desc: 'Libra is a graceful dancer along the line of equilibrium. Under the banner of aesthetic planets, they possess refined artistic taste, a deep aversion to unnecessary conflict, and a natural gift for weaving peace between opposing forces.<br><br>This sign resonates strongly with <strong>Justice</strong>, symbolizing objectivity, the pursuit of true fairness, and weighing choices with a cool head. Libra teaches us that harmony is an art form requiring daily maintenance.',
         svg: '<path d="M4,15 L20,15 M4,18 L20,18 M12,15 C12,10 8,11 6,15 M12,15 C12,10 16,11 18,15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' 
     },
     { 
         id: 'scorpio', name: 'Scorpio', dateRange: 'Oct 23 – Nov 21', element: 'Water Element', tarotMatch: 'Death',
-        desc: 'Scorpio is a mystery living in intense emotional depths. They do not understand half-measures; relationships and ambitions must be pursued with absolute totality.',
+        desc: 'Scorpio is a mystery living in intense emotional depths. They do not understand half-measures; for a Scorpio, relationships, ambitions, and feelings must be pursued with absolute totality or left behind entirely.<br><br>Their energy is closely tied to <strong>Death</strong>—not a terrifying end, but radical transformation, shedding obsolete pasts, and rising like a phoenix from the ashes of adversity. Scorpio is the ultimate symbol of spiritual rebirth.',
         svg: '<path d="M5,14 L7,6 L11,14 L14,7 C14,7 16,14 18,13 C20,12 20,8 20,8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M20,8 L22,10 M20,8 L18,10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' 
     },
     { 
         id: 'sagittarius', name: 'Sagittarius', dateRange: 'Nov 22 – Dec 21', element: 'Fire Element', tarotMatch: 'Temperance',
-        desc: 'Sagittarius is the free archer viewing the vast horizon as home. Their adventurous spirit hungers for new experiences and absolute freedom to explore.',
+        desc: 'Sagittarius is the free archer viewing the vast horizon as home. Their adventurous spirit hungers for new experiences, life philosophies, and absolute freedom to fly wherever the wind takes them.<br><br>Their character links directly to <strong>Temperance</strong>—symbolizing the synthesis of life experiences into wisdom, spiritual alignment, and maintaining steady optimism. Sagittarius reminds us that life is a sacred journey meant to be savored every step of the way.',
         svg: '<path d="M6,18 L18,6 M12,6 L18,6 L18,12 M4,14 L10,20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' 
     },
     { 
         id: 'capricorn', name: 'Capricorn', dateRange: 'Dec 22 – Jan 19', element: 'Earth Element', tarotMatch: 'The Devil',
-        desc: 'Capricorn is the patient mountain climber, disciplined and unfazed by how steep the peak ahead may be. They possess incredible mental resilience.',
+        desc: 'Capricorn is the patient mountain climber, disciplined and unfazed by how steep the peak ahead may be. They possess incredible mental resilience, a strong work ethic, and mature long-term vision.<br><br>In spiritual dimensions, they reflect lessons from <strong>The Devil</strong>—recognizing worldly attachments, mastering personal ambitions, and freeing one’s deepest potential from the fear of failure. Capricorn proves true success is built through daily consistency.',
         svg: '<path d="M5,7 L8,17 L12,9 C12,9 18,6 18,11 C18,16 14,20 9,19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' 
     },
     { 
         id: 'aquarius', name: 'Aquarius', dateRange: 'Jan 20 – Feb 18', element: 'Air Element', tarotMatch: 'The Star',
-        desc: 'Aquarius is the future dreamer standing outside conventional boxes. Their minds wander far ahead, bringing innovation and profound care for humanity.',
+        desc: 'Aquarius is the future dreamer standing outside conventional boxes. Their minds wander far ahead of their time, bringing innovation, strong idealism, and profound care for collective human well-being.<br><br>Their energy shines brightly through <strong>The Star</strong>—bringing pure inspiration, hope after dark times, and spiritual conviction that the universe guides their steps. Aquarius is a spark of renewal for the world.',
         svg: '<path d="M3,9 L7,5 L11,9 L15,5 L19,9 M3,15 L7,11 L11,15 L15,11 L19,15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' 
     },
     { 
         id: 'pisces', name: 'Pisces', dateRange: 'Feb 19 – Mar 20', element: 'Water Element', tarotMatch: 'The Moon',
-        desc: 'Pisces is the final poet of the zodiac, living between tangible reality and magical dreamscapes. They possess limitless empathy and high artistic sensitivity.',
+        desc: 'Pisces is the final poet of the zodiac, living between tangible reality and magical dreamscapes. They possess limitless empathy, high artistic sensitivity, and deep inner ties to spiritual dimensions.<br><br>This sign merges closely with <strong>The Moon</strong>—exploring subconscious mysteries, unerring intuition, and facing illusions with graceful soulfulness. Pisces is the sanctuary where art, love, and wonder melt into one.',
         svg: '<path d="M8,4 C5,10 5,14 8,20 M16,4 C19,10 19,14 16,20 M6,12 L18,12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' 
     }
 ];
@@ -354,134 +216,405 @@ const TAROT_DECK = [
         love: 'A relationship reaching peak happiness and complete emotional wholeness.'
     },
 
-    // Minor Arcana - Wands, Cups, Swords, Pentacles
-    { name: 'Ace of Wands', arcana: 'Minor Arcana', number: 1, yesNo: 'Yes', astrology: 'Fire Signs', upright: 'Inspirational spark, creative potential.', reversed: 'Losing momentum.', love: 'Explosive romantic passion.' },
-    { name: 'Two of Wands', arcana: 'Minor Arcana', number: 2, yesNo: 'Yes', astrology: 'Mars in Aries', upright: 'Future planning, major choices.', reversed: 'Fear of stepping out of comfort zones.', love: 'Planning a shared future.' },
-    { name: 'Three of Wands', arcana: 'Minor Arcana', number: 3, yesNo: 'Yes', astrology: 'Sun in Aries', upright: 'Expansion, broadening horizons.', reversed: 'Disappointment over delayed results.', love: 'Optimistic about long-distance.' },
-    { name: 'Four of Wands', arcana: 'Minor Arcana', number: 4, yesNo: 'Yes', astrology: 'Venus in Aries', upright: 'Joyful celebrations, household harmony.', reversed: 'Domestic friction.', love: 'Weddings and engagements.' },
-    { name: 'Five of Wands', arcana: 'Minor Arcana', number: 5, yesNo: 'No', astrology: 'Saturn in Leo', upright: 'Fierce competition, clashing egos.', reversed: 'Avoiding conflict.', love: 'Minor arguments fueled by egos.' },
-    { name: 'Six of Wands', arcana: 'Minor Arcana', number: 6, yesNo: 'Yes', astrology: 'Jupiter in Leo', upright: 'Triumphant victory, public recognition.', reversed: 'Loss of face, arrogance.', love: 'Proud of your partner.' },
-    { name: 'Seven of Wands', arcana: 'Minor Arcana', number: 7, yesNo: 'Yes', astrology: 'Mars in Leo', upright: 'Defending principles, holding ground.', reversed: 'Yielding under pressure.', love: 'Guarding relationship from interference.' },
-    { name: 'Eight of Wands', arcana: 'Minor Arcana', number: 8, yesNo: 'Yes', astrology: 'Mercury in Sagittarius', upright: 'Lightning-fast momentum, sudden news.', reversed: 'Miscommunications, delays.', love: 'Unexpected loving messages.' },
-    { name: 'Nine of Wands', arcana: 'Minor Arcana', number: 9, yesNo: 'Neutral', astrology: 'Moon in Sagittarius', upright: 'Resilience at exhaustion edge, vigilance.', reversed: 'Extreme exhaustion, paranoia.', love: 'Feeling emotionally weary.' },
-    { name: 'Ten of Wands', arcana: 'Minor Arcana', number: 10, yesNo: 'No', astrology: 'Saturn in Sagittarius', upright: 'Heavy burdens, excessive responsibilities.', reversed: 'Delegating tasks, dropping loads.', love: 'Carrying weight alone.' },
-    { name: 'Page of Wands', arcana: 'Minor Arcana', number: 11, yesNo: 'Yes', astrology: 'Earth in Fire', upright: 'Exploration enthusiasm, fresh ideas.', reversed: 'Aimlessness, childishness.', love: 'Playful flirting.' },
-    { name: 'Knight of Wands', arcana: 'Minor Arcana', number: 12, yesNo: 'Yes', astrology: 'Fire in Fire', upright: 'Swift action, fierce passion.', reversed: 'Impulsivity, recklessness.', love: 'Passionate romance.' },
-    { name: 'Queen of Wands', arcana: 'Minor Arcana', number: 13, yesNo: 'Yes', astrology: 'Water in Fire', upright: 'High self-confidence, magnetism.', reversed: 'Jealousy, selfishness.', love: 'Warm, confident partner.' },
-    { name: 'King of Wands', arcana: 'Minor Arcana', number: 14, yesNo: 'Yes', astrology: 'Fire in Fire', upright: 'Visionary leadership, bold decisions.', reversed: 'Authoritarian, dictatorial.', love: 'Mature, protective partner.' },
+    // Suit of Wands
+    {
+        name: 'Ace of Wands', arcana: 'Minor Arcana', number: 1, yesNo: 'Yes', astrology: 'Fire Signs',
+        upright: 'Inspirational spark, burning creative potential, surging enthusiasm, and golden opportunities.',
+        reversed: 'Losing momentum, project delays, lack of motivation, or early hesitation.',
+        love: 'Explosive romantic passion at the start. Intense physical and emotional attraction.'
+    },
+    {
+        name: 'Two of Wands', arcana: 'Minor Arcana', number: 2, yesNo: 'Yes', astrology: 'Mars in Aries',
+        upright: 'Future planning, major choices, crafting expansion strategies, and taking control.',
+        reversed: 'Fear of stepping out of comfort zones, flawed planning, or hesitation.',
+        love: 'Planning a shared future with a partner or facing pivotal choices regarding relationship direction.'
+    },
+    {
+        name: 'Three of Wands', arcana: 'Minor Arcana', number: 3, yesNo: 'Yes', astrology: 'Sun in Aries',
+        upright: 'Waiting for planted efforts to yield results, expansion, broadening horizons, and optimism.',
+        reversed: 'Disappointment over delayed results, travel hurdles, or inflated expectations.',
+        love: 'Waiting for commitment or remaining optimistic about long-distance dynamics.'
+    },
+    {
+        name: 'Four of Wands', arcana: 'Minor Arcana', number: 4, yesNo: 'Yes', astrology: 'Venus in Aries',
+        upright: 'Joyful celebrations, household harmony, weddings, community, and security.',
+        reversed: 'Domestic friction, delayed celebrations, or a sense of instability at home.',
+        love: 'Weddings, engagements, or joyful celebrations shared with loved ones.'
+    },
+    {
+        name: 'Five of Wands', arcana: 'Minor Arcana', number: 5, yesNo: 'No', astrology: 'Saturn in Leo',
+        upright: 'Fierce competition, clashing egos, differing opinions, and minor group friction.',
+        reversed: 'Avoiding conflict, reaching a truce, or calming unhealthy rivalries.',
+        love: 'Minor arguments fueled by stubborn egos. Open dialogue is required to ease tension.'
+    },
+    {
+        name: 'Six of Wands', arcana: 'Minor Arcana', number: 6, yesNo: 'Yes', astrology: 'Jupiter in Leo',
+        upright: 'Triumphant victory, public recognition, appreciated achievements, and strong confidence.',
+        reversed: 'Loss of face, excessive arrogance, empty praise, or delayed recognition.',
+        love: 'Feeling proud of your partner or enjoying a romance celebrated by those around you.'
+    },
+    {
+        name: 'Seven of Wands', arcana: 'Minor Arcana', number: 7, yesNo: 'Yes', astrology: 'Mars in Leo',
+        upright: 'Defending personal principles, holding ground under pressure, and protecting rights.',
+        reversed: 'Yielding under pressure, feeling intimidated, or overwhelmed by piling issues.',
+        love: 'Guarding your relationship against outside interference or external criticisms.'
+    },
+    {
+        name: 'Eight of Wands', arcana: 'Minor Arcana', number: 8, yesNo: 'Yes', astrology: 'Mercury in Sagittarius',
+        upright: 'Lightning-fast momentum, delightful sudden news, efficiency, and swift travel.',
+        reversed: 'Chaos from rushing, miscommunications, schedule delays, or scattered energy.',
+        love: 'Unexpected loving messages or relationship developments moving at breakneck speed.'
+    },
+    {
+        name: 'Nine of Wands', arcana: 'Minor Arcana', number: 9, yesNo: 'Neutral', astrology: 'Moon in Sagittarius',
+        upright: 'Mental resilience at exhaustion\'s edge, vigilance, self-protection, and final reserves.',
+        reversed: 'Extreme exhaustion, excessive paranoia, hyper-defensiveness, or burning out.',
+        love: 'Feeling emotionally weary due to past relationship scars continuing to haunt you.'
+    },
+    {
+        name: 'Ten of Wands', arcana: 'Minor Arcana', number: 10, yesNo: 'No', astrology: 'Saturn in Sagittarius',
+        upright: 'Heavy burdens, carrying excessive responsibilities alone, and exhaustion.',
+        reversed: 'Successfully delegating tasks, dropping heavy loads, or learning to say "no".',
+        love: 'Carrying the weight of relationship issues entirely on your shoulders without fair sharing.'
+    },
+    {
+        name: 'Page of Wands', arcana: 'Minor Arcana', number: 11, yesNo: 'Yes', astrology: 'Earth in Fire',
+        upright: 'Youthful explorer, exploration enthusiasm, fresh creative ideas, and good news.',
+        reversed: 'Aimlessness, half-baked ideas, childishness, or quick boredom.',
+        love: 'Playful flirting, renewed spark in courting, or cheerful news from your crush.'
+    },
+    {
+        name: 'Knight of Wands', arcana: 'Minor Arcana', number: 12, yesNo: 'Yes', astrology: 'Fire in Fire',
+        upright: 'Swift action, fierce passion, risk-taking courage, adventure, and high charisma.',
+        reversed: 'Impulsivity, recklessness, hot temper, emotional volatility, and unstable commitments.',
+        love: 'A passionate romance driven by intense physical attraction, sometimes lacking long-term planning.'
+    },
+    {
+        name: 'Queen of Wands', arcana: 'Minor Arcana', number: 13, yesNo: 'Yes', astrology: 'Water in Fire',
+        upright: 'Independence, high self-confidence, magnetism, warmth, friendliness, and zest for life.',
+        reversed: 'Demanding traits, blind jealousy, selfishness, or fading charm from stress.',
+        love: 'A warm, confident, loyal partner who effortlessly commands positive attention.'
+    },
+    {
+        name: 'King of Wands', arcana: 'Minor Arcana', number: 14, yesNo: 'Yes', astrology: 'Fire in Fire',
+        upright: 'Visionary leadership, successful entrepreneur, master inspirer, bold decision-maker.',
+        reversed: 'Dictatorial, authoritarian, impulsive in personal/business decisions, arrogant.',
+        love: 'A mature, deeply protective partner with very strong standards and opinions.'
+    },
 
     // Suit of Cups
-    { name: 'Ace of Cups', arcana: 'Minor Arcana', number: 1, yesNo: 'Yes', astrology: 'Water Signs', upright: 'Overflowing affection, new beginnings.', reversed: 'Emotional blockages.', love: 'Peak emotional fulfillment.' },
-    { name: 'Two of Cups', arcana: 'Minor Arcana', number: 2, yesNo: 'Yes', astrology: 'Venus in Cancer', upright: 'Harmonious soul connection, mutual respect.', reversed: 'Relationship imbalance.', love: 'Deeply romantic mutual bond.' },
-    { name: 'Three of Cups', arcana: 'Minor Arcana', number: 3, yesNo: 'Yes', astrology: 'Mercury in Cancer', upright: 'Celebrations with friends, social joy.', reversed: 'Gossip, drama.', love: 'Friend circle support.' },
-    { name: 'Four of Cups', arcana: 'Minor Arcana', number: 4, yesNo: 'No', astrology: 'Moon in Cancer', upright: 'Apathy, routine boredom, rumination.', reversed: 'Breaking out of stagnation.', love: 'Jaded with routines.' },
-    { name: 'Five of Cups', arcana: 'Minor Arcana', number: 5, yesNo: 'No', astrology: 'Mars in Scorpio', upright: 'Remorse, grief over loss.', reversed: 'Healing past disappointments.', love: 'Disappointed by expectations.' },
-    { name: 'Six of Cups', arcana: 'Minor Arcana', number: 6, yesNo: 'Yes', astrology: 'Sun in Scorpio', upright: 'Sweet nostalgia, innocent memories.', reversed: 'Trapped in the past.', love: 'Reconnecting with pure love.' },
-    { name: 'Seven of Cups', arcana: 'Minor Arcana', number: 7, yesNo: 'No', astrology: 'Venus in Scorpio', upright: 'Illusory choices, wishful thinking.', reversed: 'Gaining clear perspective.', love: 'Fantasies of a perfect partner.' },
-    { name: 'Eight of Cups', arcana: 'Minor Arcana', number: 8, yesNo: 'Neutral', astrology: 'Saturn in Pisces', upright: 'Walking away from unfulfilling situations.', reversed: 'Fear of stepping away.', love: 'Leaving hollow relationships.' },
-    { name: 'Nine of Cups', arcana: 'Minor Arcana', number: 9, yesNo: 'Yes', astrology: 'Jupiter in Pisces', upright: 'Emotional satisfaction, wish card.', reversed: 'Arrogance, ingratitude.', love: 'All romantic dreams manifest.' },
-    { name: 'Ten of Cups', arcana: 'Minor Arcana', number: 10, yesNo: 'Yes', astrology: 'Mars in Pisces', upright: 'Perfect domestic bliss, lasting peace.', reversed: 'Family conflicts.', love: 'Happiness in long-term commitments.' },
-    { name: 'Page of Cups', arcana: 'Minor Arcana', number: 11, yesNo: 'Yes', astrology: 'Earth in Water', upright: 'Sweet love messages, artistic sensitivity.', reversed: 'Emotional anxiety.', love: 'Romantic declarations.' },
-    { name: 'Knight of Cups', arcana: 'Minor Arcana', number: 12, yesNo: 'Yes', astrology: 'Fire in Water', upright: 'Romantic suitor, proposals from heart.', reversed: 'Empty sweet promises.', love: 'Extraordinary romance.' },
-    { name: 'Queen of Cups', arcana: 'Minor Arcana', number: 13, yesNo: 'Yes', astrology: 'Water in Water', upright: 'Deep empathy, gentle heart.', reversed: 'Emotional dependency.', love: 'Compassionate, intuitive partner.' },
-    { name: 'King of Cups', arcana: 'Minor Arcana', number: 14, yesNo: 'Yes', astrology: 'Air in Water', upright: 'High emotional intelligence, calm.', reversed: 'Emotional manipulation.', love: 'Mature, emotionally balanced partner.' },
+    {
+        name: 'Ace of Cups', arcana: 'Minor Arcana', number: 1, yesNo: 'Yes', astrology: 'Water Signs',
+        upright: 'Overflowing affection, clear emotional intuition, and blessed new romantic beginnings.',
+        reversed: 'Emotional blockages, emptiness, unrequited love, or inner wounds.',
+        love: 'Peak emotional fulfillment. Deep falling in love or healing past heartbreaks.'
+    },
+    {
+        name: 'Two of Cups', arcana: 'Minor Arcana', number: 2, yesNo: 'Yes', astrology: 'Venus in Cancer',
+        upright: 'Harmonious soul connection, balanced partnership, mutual respect, and love bonds.',
+        reversed: 'Relationship imbalance, misunderstandings, communication breakdowns, or ego clashes.',
+        love: 'A deeply romantic mutual bond. Heartfelt agreements between two loving individuals.'
+    },
+    {
+        name: 'Three of Cups', arcana: 'Minor Arcana', number: 3, yesNo: 'Yes', astrology: 'Mercury in Cancer',
+        upright: 'Celebrations with friends, social joy, harmonious collaboration, and gatherings.',
+        reversed: 'Toxic gossip, excessive exclusivity, too much partying, or social drama.',
+        love: 'Receiving wholehearted support from your friend circle regarding your romance.'
+    },
+    {
+        name: 'Four of Cups', arcana: 'Minor Arcana', number: 4, yesNo: 'No', astrology: 'Moon in Cancer',
+        upright: 'Apathy, routine boredom, excessive rumination, and rejecting favorable offers.',
+        reversed: 'Breaking out of stagnation, accepting reality, and appreciating small surroundings.',
+        love: 'Feeling jaded with relationship routines. Overlooking attentive gestures from a partner.'
+    },
+    {
+        name: 'Five of Cups', arcana: 'Minor Arcana', number: 5, yesNo: 'No', astrology: 'Mars in Scorpio',
+        upright: 'Deep remorse, grief over loss, dwelling on negative outcomes.',
+        reversed: 'Healing past disappointments, forgiving oneself, and spotting glimmers of hope.',
+        love: 'Disappointed by romantic expectations. Learning to release painful past baggage.'
+    },
+    {
+        name: 'Six of Cups', arcana: 'Minor Arcana', number: 6, yesNo: 'Yes', astrology: 'Sun in Scorpio',
+        upright: 'Sweet nostalgia, childhood memories, innocence, and echoes from past connections.',
+        reversed: 'Trapped in the past, resisting adulthood, or rosy illusions fading.',
+        love: 'Reconnecting with an ex or rediscovering the warmth of pure, sincere love.'
+    },
+    {
+        name: 'Seven of Cups', arcana: 'Minor Arcana', number: 7, yesNo: 'No', astrology: 'Venus in Scorpio',
+        upright: 'Illusory choices, daydreams, confusion over priorities, and wishful thinking.',
+        reversed: 'Gaining clear perspective, breaking illusions, and picking a realistic focus.',
+        love: 'Getting lost in fantasies of a "perfect" partner instead of seeing reality.'
+    },
+    {
+        name: 'Eight of Cups', arcana: 'Minor Arcana', number: 8, yesNo: 'Neutral', astrology: 'Saturn in Pisces',
+        upright: 'Walking away from unfulfilling situations toward higher spiritual or emotional quests.',
+        reversed: 'Fear of stepping away, staying in toxic spaces due to loneliness, hesitation.',
+        love: 'Difficult choices to leave a hollow relationship and pursue inner peace.'
+    },
+    {
+        name: 'Nine of Cups', arcana: 'Minor Arcana', number: 9, yesNo: 'Yes', astrology: 'Jupiter in Pisces',
+        upright: 'Emotional satisfaction, "The Wish Card", fulfilled dreams, gratitude, and joy.',
+        reversed: 'Arrogance over achievements, superficial satisfaction, ingratitude, or materialism.',
+        love: 'All romantic dreams manifest in reality. Total emotional fulfillment and contentment.'
+    },
+    {
+        name: 'Ten of Cups', arcana: 'Minor Arcana', number: 10, yesNo: 'Yes', astrology: 'Mars in Pisces',
+        upright: 'Perfect domestic bliss, lasting peace, true love, and harmony.',
+        reversed: 'Family conflicts, fracturing marital harmony, or illusions of happy homes.',
+        love: 'Peak happiness in long-term commitments, dream weddings, and warm family bonds.'
+    },
+    {
+        name: 'Page of Cups', arcana: 'Minor Arcana', number: 11, yesNo: 'Yes', astrology: 'Earth in Water',
+        upright: 'Sweet love messages, subtle intuition, artistic sensitivity, and sincere emotional offers.',
+        reversed: 'Emotional anxiety, childishness, over-sensitivity, or unstable moods.',
+        love: 'Sweet, romantic declarations filled with sincerity from someone caring.'
+    },
+    {
+        name: 'Knight of Cups', arcana: 'Minor Arcana', number: 12, yesNo: 'Yes', astrology: 'Fire in Water',
+        upright: 'The romantic suitor, proposals from the heart, grace, and gentle diplomacy.',
+        reversed: 'Moody, empty sweet promises, unrealistic romance, emotional deceit.',
+        love: 'Moments of extraordinary romance. A deeply attentive partner skilled in love language.'
+    },
+    {
+        name: 'Queen of Cups', arcana: 'Minor Arcana', number: 13, yesNo: 'Yes', astrology: 'Water in Water',
+        upright: 'Deep empathy, gentle heart, strong intuition, emotional healer, and loyal listener.',
+        reversed: 'Emotional dependency, over-sensitivity, being taken advantage of, or inner drama.',
+        love: 'A deeply compassionate, intuitive partner who listens to your heart sincerely.'
+    },
+    {
+        name: 'King of Cups', arcana: 'Minor Arcana', number: 14, yesNo: 'Yes', astrology: 'Air in Water',
+        upright: 'High emotional intelligence, inner calm amid storms, wisdom, and fairness.',
+        reversed: 'Emotional manipulation, inner coldness, suppressed feelings, or hidden rage.',
+        love: 'A mature, emotionally balanced partner capable of calming your storms with wisdom.'
+    },
 
     // Suit of Swords
-    { name: 'Ace of Swords', arcana: 'Minor Arcana', number: 1, yesNo: 'Yes', astrology: 'Air Signs', upright: 'Sharp mental clarity, breakthroughs.', reversed: 'Mental fog, misunderstandings.', love: 'Transparent communication.' },
-    { name: 'Two of Swords', arcana: 'Minor Arcana', number: 2, yesNo: 'No', astrology: 'Moon in Libra', upright: 'Stalemate, major dilemmas, silence.', reversed: 'Forced removal of blindfolds.', love: 'Avoiding vital confrontations.' },
-    { name: 'Three of Swords', arcana: 'Minor Arcana', number: 3, yesNo: 'No', astrology: 'Saturn in Libra', upright: 'Heartbreak, deep sorrow, betrayal.', reversed: 'Healing wounds, forgiving.', love: 'Heartbreak caused by betrayal.' },
-    { name: 'Four of Swords', arcana: 'Minor Arcana', number: 4, yesNo: 'Neutral', astrology: 'Jupiter in Libra', upright: 'Deep rest, mental recovery.', reversed: 'Mental burnout.', love: 'Needing cooling-down time.' },
-    { name: 'Five of Swords', arcana: 'Minor Arcana', number: 5, yesNo: 'No', astrology: 'Venus in Aquarius', upright: 'Hollow selfish victories, conflict.', reversed: 'Making peace post-conflict.', love: 'Arguments to win instead of care.' },
-    { name: 'Six of Swords', arcana: 'Minor Arcana', number: 6, yesNo: 'Yes', astrology: 'Mercury in Aquarius', upright: 'Transitioning to calmer shores.', reversed: 'Past issues chasing you.', love: 'Moving past crisis points.' },
-    { name: 'Seven of Swords', arcana: 'Minor Arcana', number: 7, yesNo: 'No', astrology: 'Moon in Aquarius', upright: 'Hidden strategies, cunning, deceit.', reversed: 'Truths uncovered.', love: 'Dishonesty or sketchy behavior.' },
-    { name: 'Eight of Swords', arcana: 'Minor Arcana', number: 8, yesNo: 'No', astrology: 'Jupiter in Gemini', upright: 'Feeling trapped by thoughts.', reversed: 'Mental liberation.', love: 'Constrained in relationship.' },
-    { name: 'Nine of Swords', arcana: 'Minor Arcana', number: 9, yesNo: 'No', astrology: 'Mars in Gemini', upright: 'Acute anxiety, insomnia, guilt.', reversed: 'Anxiety lifting.', love: 'Excessive overthinking.' },
-    { name: 'Ten of Swords', arcana: 'Minor Arcana', number: 10, yesNo: 'No', astrology: 'Sun in Gemini', upright: 'Rock bottom, painful endings.', reversed: 'Rising from ruins.', love: 'Painful relationship ending.' },
-    { name: 'Page of Swords', arcana: 'Minor Arcana', number: 11, yesNo: 'Yes', astrology: 'Earth in Swords', upright: 'Critical thinking, high curiosity.', reversed: 'Cheap gossip, rumors.', love: 'Investigative texts.' },
-    { name: 'Knight of Swords', arcana: 'Minor Arcana', number: 12, yesNo: 'Yes', astrology: 'Fire in Swords', upright: 'Logic-driven swift action.', reversed: 'Verbal aggression.', love: 'Blunt confrontations.' },
-    { name: 'Queen of Swords', arcana: 'Minor Arcana', number: 13, yesNo: 'Yes', astrology: 'Water in Swords', upright: 'Independent, objective, firm boundaries.', reversed: 'Cynical, cold.', love: 'Independent, logical partner.' },
-    { name: 'King of Swords', arcana: 'Minor Arcana', number: 14, yesNo: 'Yes', astrology: 'Air in Swords', upright: 'Intellectual integrity, authority.', reversed: 'Manipulative logic.', love: 'Values absolute rationality.' },
+    {
+        name: 'Ace of Swords', arcana: 'Minor Arcana', number: 1, yesNo: 'Yes', astrology: 'Air Signs',
+        upright: 'Sharp mental clarity, intellectual breakthroughs, truth revealed, and brilliant ideas.',
+        reversed: 'Mental fog, fatal misunderstandings, misguided ideas, or illogical choices.',
+        love: 'Honest, transparent communication free from secrets. Resolving issues logically.'
+    },
+    {
+        name: 'Two of Swords', arcana: 'Minor Arcana', number: 2, yesNo: 'No', astrology: 'Moon in Libra',
+        upright: 'Stalemate, major dilemmas, refusing to face facts, silence, and delayed decisions.',
+        reversed: 'Forced removal of blindfolds, difficult choices finally made, truths uncovered.',
+        love: 'Hesitation in choosing partners or avoiding vital confrontations to maintain fake peace.'
+    },
+    {
+        name: 'Three of Swords', arcana: 'Minor Arcana', number: 3, yesNo: 'No', astrology: 'Saturn in Libra',
+        upright: 'Heartbreak, deep sorrow, betrayal, and sharp, hurtful words.',
+        reversed: 'Healing wounds, beginning to forgive, easing pain post-breakup.',
+        love: 'Heartbreak caused by betrayal, infidelity, or harsh words from loved ones.'
+    },
+    {
+        name: 'Four of Swords', arcana: 'Minor Arcana', number: 4, yesNo: 'Neutral', astrology: 'Jupiter in Libra',
+        upright: 'Deep rest, mental recovery, meditation, stepping back from crowds to heal.',
+        reversed: 'Chronic exhaustion from over-pushing, piled-up stress, mental burnout.',
+        love: 'Needing cooling-down time away from exhausting relationship dynamics.'
+    },
+    {
+        name: 'Five of Swords', arcana: 'Minor Arcana', number: 5, yesNo: 'No', astrology: 'Venus in Aquarius',
+        upright: 'Hollow selfish victories, destructive conflict, feeling defeated, unhealthy friction.',
+        reversed: 'Making peace post-conflict, owning mistakes, repairing broken bonds.',
+        love: 'Arguments where both sides fight to win rather than care for each other’s feelings.'
+    },
+    {
+        name: 'Six of Swords', arcana: 'Minor Arcana', number: 6, yesNo: 'Yes', astrology: 'Mercury in Aquarius',
+        upright: 'Transitioning to calmer shores, leaving hard times behind, recovery journeys.',
+        reversed: 'Past issues chasing you, reluctance to leave toxic spaces, delayed travels.',
+        love: 'Walking together past crisis points toward a far more stable, peaceful romance.'
+    },
+    {
+        name: 'Seven of Swords', arcana: 'Minor Arcana', number: 7, yesNo: 'No', astrology: 'Moon in Aquarius',
+        upright: 'Hidden strategies, cunning, stealing opportunities, deceit, or exposed secrets.',
+        reversed: 'Truths uncovered, haunting guilt, failed sly tactics.',
+        love: 'Dishonesty, hiding things from partners, or suspicions over sketchy behavior.'
+    },
+    {
+        name: 'Eight of Swords', arcana: 'Minor Arcana', number: 8, yesNo: 'No', astrology: 'Jupiter in Gemini',
+        upright: 'Feeling trapped by one’s own thoughts, victim mentality, perceived lack of choices.',
+        reversed: 'Mental liberation, breaking self-imposed limits, empowerment.',
+        love: 'Feeling constrained in a relationship yet lacking courage to break free.'
+    },
+    {
+        name: 'Nine of Swords', arcana: 'Minor Arcana', number: 9, yesNo: 'No', astrology: 'Mars in Gemini',
+        upright: 'Acute anxiety, insomnia from overthinking, guilt, nightmares, and dread.',
+        reversed: 'Anxiety lifting, sharing burdens with others eases mental weight.',
+        love: 'Excessive overthinking regarding relationship futures or fear of loss.'
+    },
+    {
+        name: 'Ten of Swords', arcana: 'Minor Arcana', number: 10, yesNo: 'No', astrology: 'Sun in Gemini',
+        upright: 'Rock bottom, painful endings, outright betrayal, feeling totally ruined.',
+        reversed: 'Rising from ruins, post-crisis recovery, new hopes after major storms.',
+        love: 'The end of a deeply painful relationship. Absolute betrayal closing past chapters.'
+    },
+    {
+        name: 'Page of Swords', arcana: 'Minor Arcana', number: 11, yesNo: 'Yes', astrology: 'Earth in Swords',
+        upright: 'Critical thinking, high curiosity, information-gathering, alertness, and blunt honesty.',
+        reversed: 'Cheap gossip, baseless rumors, spreading fake news, rashness.',
+        love: 'Investigative texts from partners or deep curiosity regarding your crush’s life.'
+    },
+    {
+        name: 'Knight of Swords', arcana: 'Minor Arcana', number: 12, yesNo: 'Yes', astrology: 'Fire in Swords',
+        upright: 'Logic-driven swift action, soaring ambition, blunt speech, high speed.',
+        reversed: 'Recklessness, verbal aggression, hurting feelings through harsh words.',
+        love: 'Blunt, direct confrontations. Overly sharp communication hurting feelings.'
+    },
+    {
+        name: 'Queen of Swords', arcana: 'Minor Arcana', number: 13, yesNo: 'Yes', astrology: 'Water in Swords',
+        upright: 'Independent woman, objective, sharp, setting firm boundaries, truthful.',
+        reversed: 'Emotionally cold, cynical, overly critical, vindictive, closed off to affection.',
+        love: 'An independent, logical partner firm on setting healthy boundaries.'
+    },
+    {
+        name: 'King of Swords', arcana: 'Minor Arcana', number: 14, yesNo: 'Yes', astrology: 'Air in Swords',
+        upright: 'Intellectual integrity, law-based fairness, strategic thinker, strong mental authority.',
+        reversed: 'Abuse of intellect, manipulative logic, coldness, ruthless decisions.',
+        love: 'A partner valuing absolute rationality and intellectual honesty above all.'
+    },
 
     // Suit of Pentacles
-    { name: 'Ace of Pentacles', arcana: 'Minor Arcana', number: 1, yesNo: 'Yes', astrology: 'Earth Signs', upright: 'New financial ventures, stability.', reversed: 'Missed opportunities.', love: 'Grounded in reality.' },
-    { name: 'Two of Pentacles', arcana: 'Minor Arcana', number: 2, yesNo: 'Neutral', astrology: 'Jupiter in Capricorn', upright: 'Juggling life priorities.', reversed: 'Losing life balance.', love: 'Balancing romance and career.' },
-    { name: 'Three of Pentacles', arcana: 'Minor Arcana', number: 3, yesNo: 'Yes', astrology: 'Mars in Capricorn', upright: 'Solid teamwork, collaboration.', reversed: 'Poor team coordination.', love: 'Building shared future together.' },
-    { name: 'Four of Pentacles', arcana: 'Minor Arcana', number: 4, yesNo: 'No', astrology: 'Sun in Capricorn', upright: 'Financial stability, stinginess.', reversed: 'Overspending.', love: 'Possessiveness, fear of hurt.' },
-    { name: 'Five of Pentacles', arcana: 'Minor Arcana', number: 5, yesNo: 'No', astrology: 'Mercury in Taurus', upright: 'Financial hardship, isolation.', reversed: 'Emerging from crisis.', love: 'Feeling neglected, lonely.' },
-    { name: 'Six of Pentacles', arcana: 'Minor Arcana', number: 6, yesNo: 'Yes', astrology: 'Moon in Taurus', upright: 'Generosity, giving and receiving balance.', reversed: 'Strings attached.', love: 'Reciprocal balance in love.' },
-    { name: 'Seven of Pentacles', arcana: 'Minor Arcana', number: 7, yesNo: 'Yes', astrology: 'Saturn in Taurus', upright: 'Assessing long-term investments.', reversed: 'Disappointing yields.', love: 'Reflecting on relationship growth.' },
-    { name: 'Eight of Pentacles', arcana: 'Minor Arcana', number: 8, yesNo: 'Yes', astrology: 'Sun in Virgo', upright: 'High dedication, mastering skills.', reversed: 'Fruitless perfectionism.', love: 'Consistently nurturing quality.' },
-    { name: 'Nine of Pentacles', arcana: 'Minor Arcana', number: 9, yesNo: 'Yes', astrology: 'Venus in Virgo', upright: 'Self-made prosperity, personal luxury.', reversed: 'Financial dependency.', love: 'Flourishing independent single life.' },
-    { name: 'Ten of Pentacles', arcana: 'Minor Arcana', number: 10, yesNo: 'Yes', astrology: 'Mercury in Virgo', upright: 'Generational wealth, long-term security.', reversed: 'Family disputes.', love: 'Blessed by family approval.' },
-    { name: 'Page of Pentacles', arcana: 'Minor Arcana', number: 11, yesNo: 'Yes', astrology: 'Earth in Pentacles', upright: 'Learning new skills, diligence.', reversed: 'Procrastination.', love: 'Sincere small commitments.' },
-    { name: 'Knight of Pentacles', arcana: 'Minor Arcana', number: 12, yesNo: 'Yes', astrology: 'Fire in Pentacles', upright: 'Deeply dependable, consistent.', reversed: 'Trapped in boring routines.', love: 'Loyal, dependable partner.' },
-    { name: 'Queen of Pentacles', arcana: 'Minor Arcana', number: 13, yesNo: 'Yes', astrology: 'Water in Pentacles', upright: 'Nurturing generosity, cozy home.', reversed: 'Overly materialistic.', love: 'Wise, maternal partner.' },
-    { name: 'King of Pentacles', arcana: 'Minor Arcana', number: 14, yesNo: 'Yes', astrology: 'Air in Pentacles', upright: 'Successful entrepreneur, stability.', reversed: 'Greedy materialism.', love: 'Provides total life security.' }
+    {
+        name: 'Ace of Pentacles', arcana: 'Minor Arcana', number: 1, yesNo: 'Yes', astrology: 'Earth Signs',
+        upright: 'New financial ventures, material stability, profitable investments, early prosperity.',
+        reversed: 'Missed opportunities, initial financial losses, poor planning, lavish spending.',
+        love: 'Stability in tangible reality. Romance grounded in both emotional and material readiness.'
+    },
+    {
+        name: 'Two of Pentacles', arcana: 'Minor Arcana', number: 2, yesNo: 'Neutral', astrology: 'Jupiter in Capricorn',
+        upright: 'Juggling life priorities, financial management, adaptability to changes.',
+        reversed: 'Overwhelmed by time/money splits, financial stress, losing life balance.',
+        love: 'Balancing romance, career, and personal life to avoid dropping the ball.'
+    },
+    {
+        name: 'Three of Pentacles', arcana: 'Minor Arcana', number: 3, yesNo: 'Yes', astrology: 'Mars in Capricorn',
+        upright: 'Solid teamwork, successful collaboration, recognized skills, building foundations.',
+        reversed: 'Poor team coordination, unappreciated work, group ego clashes.',
+        love: 'Great cooperation between you and your partner in building a shared future.'
+    },
+    {
+        name: 'Four of Pentacles', arcana: 'Minor Arcana', number: 4, yesNo: 'No', astrology: 'Sun in Capricorn',
+        upright: 'Financial stability, thriftiness, stinginess, fear of losing wealth or control.',
+        reversed: 'Overspending, letting go of financial control, generosity, bad investments.',
+        love: 'Excessive possessiveness, struggling to open up emotionally due to fear of hurt.'
+    },
+    {
+        name: 'Five of Pentacles', arcana: 'Minor Arcana', number: 5, yesNo: 'No', astrology: 'Mercury in Taurus',
+        upright: 'Financial hardship, poverty mindset, isolation, cold difficult times.',
+        reversed: 'Emerging from economic crisis, receiving moral/material aid, recovery.',
+        love: 'Feeling neglected, lonely within relationships, or economic stress triggering tension.'
+    },
+    {
+        name: 'Six of Pentacles', arcana: 'Minor Arcana', number: 6, yesNo: 'Yes', astrology: 'Moon in Taurus',
+        upright: 'Generosity, sharing wealth, giving and receiving balance, acts of charity.',
+        reversed: 'Strings attached to giving, problematic debts, financial unfairness.',
+        love: 'Reciprocal balance in relationships. Supporting each other emotionally and materially.'
+    },
+    {
+        name: 'Seven of Pentacles', arcana: 'Minor Arcana', number: 7, yesNo: 'Yes', astrology: 'Saturn in Taurus',
+        upright: 'Assessing long-term investments, patient harvest waiting, evaluating hard work.',
+        reversed: 'Disappointing yields, frustration over wasted effort, impatience.',
+        love: 'Reflecting on how far the relationship has grown and whether emotional investments paid off.'
+    },
+    {
+        name: 'Eight of Pentacles', arcana: 'Minor Arcana', number: 8, yesNo: 'Yes', astrology: 'Sun in Virgo',
+        upright: 'High dedication, diligent hard work, mastering specific skills, detail focus.',
+        reversed: 'Endless fruitless perfectionism, working without real output, losing interest.',
+        love: 'Committing to consistently nurture and refine relationship quality through effort.'
+    },
+    {
+        name: 'Nine of Pentacles', arcana: 'Minor Arcana', number: 9, yesNo: 'Yes', astrology: 'Venus in Virgo',
+        upright: 'Self-made prosperity, enjoying fruits of labor, personal luxury, life comfort.',
+        reversed: 'Financial dependency on others, overspending to flex social status.',
+        love: 'Enjoying an independent single life flourishing both financially and emotionally.'
+    },
+    {
+        name: 'Ten of Pentacles', arcana: 'Minor Arcana', number: 10, yesNo: 'Yes', astrology: 'Mercury in Virgo',
+        upright: 'Generational wealth, inheritances, long-term security, financial establishment.',
+        reversed: 'Family disputes over inheritances, collapsing financial security.',
+        love: 'Relationships blessed by family approval and fully secured materially for futures.'
+    },
+    {
+        name: 'Page of Pentacles', arcana: 'Minor Arcana', number: 11, yesNo: 'Yes', astrology: 'Earth in Pentacles',
+        upright: 'Learning new skills, promising career beginnings, diligence, good financial news.',
+        reversed: 'Lack of study focus, procrastination, failing to seize golden chances.',
+        love: 'Sincere small commitments to start serious steps in romance.'
+    },
+    {
+        name: 'Knight of Pentacles', arcana: 'Minor Arcana', number: 12, yesNo: 'Yes', astrology: 'Fire in Pentacles',
+        upright: 'Deeply dependable, consistent, true hard worker, patient, slow and steady.',
+        reversed: 'Overly rigid, trapped in boring routines, lazy, stubbornly resisting change.',
+        love: 'A fiercely loyal, dependable partner, though occasionally lacking romance and monotonous.'
+    },
+    {
+        name: 'Queen of Pentacles', arcana: 'Minor Arcana', number: 13, yesNo: 'Yes', astrology: 'Water in Pentacles',
+        upright: 'Nurturing generosity, skilled financial manager, cozy home, practical, caring.',
+        reversed: 'Overly materialistic, sacrificing inner needs for wealth, social vanity.',
+        love: 'A deeply maternal partner curating cozy home comfort and wise with material management.'
+    },
+    {
+        name: 'King of Pentacles', arcana: 'Minor Arcana', number: 14, yesNo: 'Yes', astrology: 'Air in Pentacles',
+        upright: 'Successful entrepreneur, absolute financial establishment, generous family protector.',
+        reversed: 'Greedy, extreme materialism, using wealth to control others.',
+        love: 'A financially secure, stable partner capable of providing total life security.'
+    }
 ];
 
 // ==========================================
-// --- DATA ORACLE CARDS (50 CARDS IN 5 CATEGORIES) ---
+// --- DATA ORACLE CARDS (50 CARDS) ---
 // ==========================================
 const ORACLE_DECK = [
-    // Category 1: Inner Peace & Healing (1 - 10)
-    { id: 1, name: 'Inner Peace', category: 'Inner Peace & Healing', img: '', desc: 'Take a deep breath and reconnect with your inner silence. Peace is found in a quiet mind.', guidance: 'Meditate for 5 minutes today.' },
-    { id: 2, name: 'Self Transformation', category: 'Inner Peace & Healing', img: '', desc: 'You are shedding old layers that no longer serve your growth. Embrace your subtle metamorphosis.', guidance: 'Do not fear changing tides.' },
-    { id: 3, name: 'Sacred Boundaries', category: 'Inner Peace & Healing', img: '', desc: 'Protect your light and energy. Setting clear boundaries is a profound act of self-love.', guidance: 'Politely say no to draining commitments.' },
-    { id: 4, name: 'Emotional Healing', category: 'Inner Peace & Healing', img: '', desc: 'Allow old wounds to breathe so they can finally turn into wisdom.', guidance: 'Journal your unexpressed feelings.' },
-    { id: 5, name: 'Forgiveness', category: 'Inner Peace & Healing', img: '', desc: 'Releasing resentment frees you, not the person who hurt you.', guidance: 'Let go of heavy emotional luggage.' },
-    { id: 6, name: 'Patience & Stillness', category: 'Inner Peace & Healing', img: '', desc: 'In moments of uncertainty, the best action is gentle stillness.', guidance: 'Pause before making big decisions.' },
-    { id: 7, name: 'Nurture Yourself', category: 'Inner Peace & Healing', img: '', desc: 'Treat your body and soul with gentle care today.', guidance: 'Take time for a relaxing bath or rest.' },
-    { id: 8, name: 'Serenity', category: 'Inner Peace & Healing', img: '', desc: 'Find calm in the center of life\'s busy motion.', guidance: 'Breathe slowly when stress arises.' },
-    { id: 9, name: 'Deep Compassion', category: 'Inner Peace & Healing', img: '', desc: 'Extend gentle kindness to yourself and everyone around you.', guidance: 'Be soft in a hard world.' },
-    { id: 10, name: 'Healing Waves', category: 'Inner Peace & Healing', img: '', desc: 'Soothing energy is washing away past emotional strain.', guidance: 'Let yourself heal at your own pace.' },
-
-    // Category 2: Guidance & Wisdom (11 - 20)
-    { id: 11, name: 'Intuitive Clarity', category: 'Guidance & Wisdom', img: '', desc: 'Trust the quiet whispers of your gut instincts over loud logical chatter.', guidance: 'Listen closely to first impressions today.' },
-    { id: 12, name: 'Divine Timing', category: 'Guidance & Wisdom', img: '', desc: 'Everything is unfolding at the exact moment it needs to. Patience is your key.', guidance: 'Release your urge to rush outcomes.' },
-    { id: 13, name: 'Spiritual Alignment', category: 'Guidance & Wisdom', img: '', desc: 'Your mind, body, and spirit are moving in total harmony with the universe.', guidance: 'Stay true to your core values.' },
-    { id: 14, name: 'Higher Purpose', category: 'Guidance & Wisdom', img: '', desc: 'Your life carries a sacred meaning that impacts the world around you.', guidance: 'Align your actions with your passions.' },
-    { id: 15, name: 'Wisdom Within', category: 'Guidance & Wisdom', img: '', desc: 'All the answers you seek are already resting inside your heart.', guidance: 'Spend quiet time in nature.' },
-    { id: 16, name: 'Clarity of Thought', category: 'Guidance & Wisdom', img: '', desc: 'Clear away mental clutter to see your path forward.', guidance: 'Focus on one priority at a time.' },
-    { id: 17, name: 'Spiritual Guidance', category: 'Guidance & Wisdom', img: '', desc: 'Signs and synchronicities are guiding your steps.', guidance: 'Pay attention to repeating numbers or symbols.' },
-    { id: 18, name: 'Truth & Integrity', category: 'Guidance & Wisdom', img: '', desc: 'Speak your truth gently yet firmly.', guidance: 'Honesty breeds lasting freedom.' },
-    { id: 19, name: 'Soul Expansion', category: 'Guidance & Wisdom', img: '', desc: 'Your consciousness is broadening into higher understanding.', guidance: 'Read uplifting or spiritual books.' },
-    { id: 20, name: 'Protection', category: 'Guidance & Wisdom', img: '', desc: 'You are safe and shielded by spiritual warmth.', guidance: 'Visualize a protective bubble around you.' },
-
-    // Category 3: Mindset & Clarity (21 - 30)
-    { id: 21, name: 'Abundance Flow', category: 'Mindset & Clarity', img: '', desc: 'Shift your mindset from scarcity to gratitude and watch prosperity grow.', guidance: 'Count five blessings right now.' },
-    { id: 22, name: 'Release Control', category: 'Mindset & Clarity', img: '', desc: 'Surrender your worries to the universe and let life flow naturally.', guidance: 'Stop forcing things that aren\'t working.' },
-    { id: 23, name: 'Authenticity', category: 'Mindset & Clarity', img: '', desc: 'Strip away expectations and step boldly into your true, unedited self.', guidance: 'Stop seeking external approval.' },
-    { id: 24, name: 'Grace & Gratitude', category: 'Mindset & Clarity', img: '', desc: 'Approach every challenge with grace and a grateful heart.', guidance: 'Thank someone who helped you.' },
-    { id: 25, name: 'Trust the Journey', category: 'Mindset & Clarity', img: '', desc: 'Every detour is teaching you something valuable.', guidance: 'Embrace where you are right now.' },
-    { id: 26, name: 'Release Fear', category: 'Mindset & Clarity', img: '', desc: 'Fear is an illusion constructed by an anxious mind.', guidance: 'Replace worry with quiet trust.' },
-    { id: 27, name: 'Purity of Intent', category: 'Mindset & Clarity', img: '', desc: 'Ensure your motives are rooted in honesty and goodwill.', guidance: 'Act with clean intentions.' },
-    { id: 28, name: 'Self-Acceptance', category: 'Mindset & Clarity', img: '', desc: 'Embrace both your strengths and imperfections wholeheartedly.', guidance: 'Stop comparing yourself to others.' },
-    { id: 29, name: 'Inner Sanctuary', category: 'Mindset & Clarity', img: '', desc: 'Build a quiet mental refuge where peace always reigns.', guidance: 'Retreat inward when overwhelmed.' },
-    { id: 30, name: 'Lightheartedness', category: 'Mindset & Clarity', img: '', desc: 'Laugh freely and lighten heavy thoughts.', guidance: 'Find humor in daily situations.' },
-
-    // Category 4: Soul & Spirit (31 - 40)
-    { id: 31, name: 'Unconditional Love', category: 'Soul & Spirit', img: '', desc: 'Open your heart to give and receive pure affection without keeping score.', guidance: 'Forgive a small past mistake.' },
-    { id: 32, name: 'Boundless Creativity', category: 'Soul & Spirit', img: '', desc: 'Your soul is an endless reservoir of fresh artistic ideas waiting to bloom.', guidance: 'Express yourself through art or writing.' },
-    { id: 33, name: 'Soul Connection', category: 'Soul & Spirit', img: '', desc: 'A meaningful bond is drawing near to elevate your spiritual journey.', guidance: 'Nurture deep relationships.' },
-    { id: 34, name: 'Light Expansion', category: 'Soul & Spirit', img: '', desc: 'Shine your inner light bright enough to inspire others.', guidance: 'Share a gentle smile today.' },
-    { id: 35, name: 'Harmony', category: 'Soul & Spirit', img: '', desc: 'Balance your work, rest, play, and spiritual pursuits.', guidance: 'Adjust areas feeling out of sync.' },
-    { id: 36, name: 'Inner Child', category: 'Soul & Spirit', img: '', desc: 'Connect with the playful wonder inside your soul.', guidance: 'Revisit a childhood hobby.' },
-    { id: 37, name: 'Sacred Union', category: 'Soul & Spirit', img: '', desc: 'A harmonious partnership based on mutual upliftment.', guidance: 'Cultivate healthy teamwork.' },
-    { id: 38, name: 'Grounded Spirit', category: 'Soul & Spirit', img: '', desc: 'Anchor your energy deep into the earth.', guidance: 'Walk barefoot on grass or earth.' },
-    { id: 39, name: 'Renewal', category: 'Soul & Spirit', img: '', desc: 'A fresh wave of energy is restoring your stamina.', guidance: 'Welcome a clean slate.' },
-    { id: 40, name: 'Wholeness', category: 'Soul & Spirit', img: '', desc: 'You are complete, worthy, and enough just as you are.', guidance: 'Rest in total self-fulfillment.' },
-
-    // Category 5: Life Journey & Action (41 - 50)
-    { id: 41, name: 'Inner Strength', category: 'Life Journey & Action', img: '', desc: 'You possess a quiet resilience capable of weathering any storm.', guidance: 'Stand tall in your personal truth.' },
-    { id: 42, name: 'Joyful Expression', category: 'Life Journey & Action', img: '', desc: 'Celebrate small wins and allow spontaneous happiness into your day.', guidance: 'Do something purely for fun.' },
-    { id: 43, name: 'New Horizon', category: 'Life Journey & Action', img: '', desc: 'A fresh chapter is opening before you filled with hope.', guidance: 'Prepare to welcome new chances.' },
-    { id: 44, name: 'Courageous Leap', category: 'Life Journey & Action', img: '', desc: 'Take a step forward even if your knees tremble slightly.', guidance: 'Fear is just excitement without breath.' },
-    { id: 45, name: 'Sacred Rest', category: 'Life Journey & Action', img: '', desc: 'Resting is productive work for your soul.', guidance: 'Allow yourself guilt-free downtime.' },
-    { id: 46, name: 'Manifesting Dreams', category: 'Life Journey & Action', img: '', desc: 'Your thoughts are magnetic seeds planting your tomorrow.', guidance: 'Focus on what you want to build.' },
-    { id: 47, name: 'Transformation', category: 'Life Journey & Action', img: '', desc: 'Welcome shifts that bring you closer to your potential.', guidance: 'Embrace change without resistance.' },
-    { id: 48, name: 'Golden Opportunity', category: 'Life Journey & Action', img: '', desc: 'A rare door is opening for your personal expansion.', guidance: 'Say yes to new invitations.' },
-    { id: 49, name: 'Reclaiming Power', category: 'Life Journey & Action', img: '', desc: 'Take back authority over your life choices.', guidance: 'Stop letting others decide for you.' },
-    { id: 50, name: 'Infinite Possibilities', category: 'Life Journey & Action', img: '', desc: 'Do not limit your visions; the universe is vast.', guidance: 'Dream bigger without self-doubt.' }
+    { id: 1, name: 'Inner Peace', img: '', desc: 'Take a deep breath and reconnect with your inner silence. Peace is found in a quiet mind.', guidance: 'Meditate for 5 minutes today and release any tension holding you back.' },
+    { id: 2, name: 'Self Transformation', img: '', desc: 'You are shedding old layers that no longer serve your growth. Embrace your subtle metamorphosis.', guidance: 'Do not fear changing tides; trust the new version of yourself.' },
+    { id: 3, name: 'Sacred Boundaries', img: '', desc: 'Protect your light and energy. Setting clear boundaries is a profound act of self-love.', guidance: 'Politely say no to commitments that drain your emotional vitality.' },
+    { id: 4, name: 'Intuitive Clarity', img: '', desc: 'Trust the quiet whispers of your gut instincts over loud logical chatter.', guidance: 'Listen closely to first impressions today.' },
+    { id: 5, name: 'Unconditional Love', img: '', desc: 'Open your heart to give and receive pure affection without keeping score.', guidance: 'Forgive a small past mistake and lead with compassion.' },
+    { id: 6, name: 'Divine Timing', img: '', desc: 'Everything is unfolding at the exact moment it needs to. Patience is your key.', guidance: 'Release your urge to rush outcomes.' },
+    { id: 7, name: 'Spiritual Alignment', img: '', desc: 'Your mind, body, and spirit are moving in total harmony with the universe.', guidance: 'Stay true to your core values.' },
+    { id: 8, name: 'Emotional Healing', img: '', desc: 'Allow old wounds to breathe so they can finally turn into wisdom.', guidance: 'Journal your unexpressed feelings.' },
+    { id: 9, name: 'Boundless Creativity', img: '', desc: 'Your soul is an endless reservoir of fresh artistic ideas waiting to bloom.', guidance: 'Express yourself through art or writing today.' },
+    { id: 10, name: 'Forgiveness', img: '', desc: 'Releasing resentment frees you, not the person who hurt you.', guidance: 'Let go of heavy emotional luggage.' },
+    { id: 11, name: 'Inner Strength', img: '', desc: 'You possess a quiet resilience capable of weathering any storm.', guidance: 'Stand tall in your personal truth.' },
+    { id: 12, name: 'Abundance Flow', img: '', desc: 'Shift your mindset from scarcity to gratitude and watch prosperity grow.', guidance: 'Count five blessings right now.' },
+    { id: 13, name: 'Release Control', img: '', desc: 'Surrender your worries to the universe and let life flow naturally.', guidance: 'Stop forcing things that aren\'t working.' },
+    { id: 14, name: 'Joyful Expression', img: '', desc: 'Celebrate small wins and allow spontaneous happiness into your day.', guidance: 'Do something purely for fun.' },
+    { id: 15, name: 'Higher Purpose', img: '', desc: 'Your life carries a sacred meaning that impacts the world around you.', guidance: 'Align your actions with your passions.' },
+    { id: 16, name: 'Patience & Stillness', img: '', desc: 'In moments of uncertainty, the best action is gentle stillness.', guidance: 'Pause before making big decisions.' },
+    { id: 17, name: 'Soul Connection', img: '', desc: 'A meaningful bond is drawing near to elevate your spiritual journey.', guidance: 'Nurture deep relationships.' },
+    { id: 18, name: 'Authenticity', img: '', desc: 'Strip away expectations and step boldly into your true, unedited self.', guidance: 'Stop seeking external approval.' },
+    { id: 19, name: 'Protection', img: '', desc: 'You are safe and shielded by spiritual warmth.', guidance: 'Visualize a protective bubble around you.' },
+    { id: 20, name: 'New Horizon', img: '', desc: 'A fresh chapter is opening before you filled with hope.', guidance: 'Prepare to welcome new chances.' },
+    { id: 21, name: 'Wisdom Within', img: '', desc: 'All the answers you seek are already resting inside your heart.', guidance: 'Spend quiet time in nature.' },
+    { id: 22, name: 'Grace & Gratitude', img: '', desc: 'Approach every challenge with grace and a grateful heart.', guidance: 'Thank someone who helped you.' },
+    { id: 23, name: 'Clarity of Thought', img: '', desc: 'Clear away mental clutter to see your path forward.', guidance: 'Focus on one priority at a time.' },
+    { id: 24, name: 'Nurture Yourself', img: '', desc: 'Treat your body and soul with gentle care today.', guidance: 'Take time for a relaxing bath or rest.' },
+    { id: 25, name: 'Courageous Leap', img: '', desc: 'Take a step forward even if your knees tremble slightly.', guidance: 'Fear is just excitement without breath.' },
+    { id: 26, name: 'Serenity', img: '', desc: 'Find calm in the center of life\'s busy motion.', guidance: 'Breathe slowly when stress arises.' },
+    { id: 27, name: 'Trust the Journey', img: '', desc: 'Every detour is teaching you something valuable.', guidance: 'Embrace where you are right now.' },
+    { id: 28, name: 'Light Expansion', img: '', desc: 'Shine your inner light bright enough to inspire others.', guidance: 'Share a gentle smile today.' },
+    { id: 29, name: 'Sacred Rest', img: '', desc: 'Resting is productive work for your soul.', guidance: 'Allow yourself guilt-free downtime.' },
+    { id: 30, name: 'Deep Compassion', img: '', desc: 'Extend gentle kindness to yourself and everyone around you.', guidance: 'Be soft in a hard world.' },
+    { id: 31, name: 'Manifesting Dreams', img: '', desc: 'Your thoughts are magnetic seeds planting your tomorrow.', guidance: 'Focus on what you want to build.' },
+    { id: 32, name: 'Harmony', img: '', desc: 'Balance your work, rest, play, and spiritual pursuits.', guidance: 'Adjust areas feeling out of sync.' },
+    { id: 33, name: 'Release Fear', img: '', desc: 'Fear is an illusion constructed by an anxious mind.', guidance: 'Replace worry with quiet trust.' },
+    { id: 34, name: 'Inner Child', img: '', desc: 'Connect with the playful wonder inside your soul.', guidance: 'Revisit a childhood hobby.' },
+    { id: 35, name: 'Transformation', img: '', desc: 'Welcome shifts that bring you closer to your potential.', guidance: 'Embrace change without resistance.' },
+    { id: 36, name: 'Spiritual Guidance', img: '', desc: 'Signs and synchronicities are guiding your steps.', guidance: 'Pay attention to repeating numbers or symbols.' },
+    { id: 37, name: 'Purity of Intent', img: '', desc: 'Ensure your motives are rooted in honesty and goodwill.', guidance: 'Act with clean intentions.' },
+    { id: 38, name: 'Self-Acceptance', img: '', desc: 'Embrace both your strengths and imperfections wholeheartedly.', guidance: 'Stop comparing yourself to others.' },
+    { id: 39, name: 'Golden Opportunity', img: '', desc: 'A rare door is opening for your personal expansion.', guidance: 'Say yes to new invitations.' },
+    { id: 40, name: 'Inner Sanctuary', img: '', desc: 'Build a quiet mental refuge where peace always reigns.', guidance: 'Retreat inward when overwhelmed.' },
+    { id: 41, name: 'Truth & Integrity', img: '', desc: 'Speak your truth gently yet firmly.', guidance: 'Honesty breeds lasting freedom.' },
+    { id: 42, name: 'Healing Waves', img: '', desc: 'Soothing energy is washing away past emotional strain.', guidance: 'Let yourself heal at your own pace.' },
+    { id: 43, name: 'Reclaiming Power', img: '', desc: 'Take back authority over your life choices.', guidance: 'Stop letting others decide for you.' },
+    { id: 44, name: 'Soul Expansion', img: '', desc: 'Your consciousness is broadening into higher understanding.', guidance: 'Read uplifting or spiritual books.' },
+    { id: 45, name: 'Sacred Union', img: '', desc: 'A harmonious partnership based on mutual upliftment.', guidance: 'Cultivate healthy teamwork.' },
+    { id: 46, name: 'Grounded Spirit', img: '', desc: 'Anchor your energy deep into the earth.', guidance: 'Walk barefoot on grass or earth.' },
+    { id: 47, name: 'Infinite Possibilities', img: '', desc: 'Do not limit your visions; the universe is vast.', guidance: 'Dream bigger without self-doubt.' },
+    { id: 48, name: 'Lightheartedness', img: '', desc: 'Laugh freely and lighten heavy thoughts.', guidance: 'Find humor in daily situations.' },
+    { id: 49, name: 'Renewal', img: '', desc: 'A fresh wave of energy is restoring your stamina.', guidance: 'Welcome a clean slate.' },
+    { id: 50, name: 'Wholeness', img: '', desc: 'You are complete, worthy, and enough just as you are.', guidance: 'Rest in total self-fulfillment.' }
 ];
 
 // ==========================================
@@ -507,7 +640,7 @@ function toggleOption(opt, val) {
 }
 
 // ==========================================
-// --- DASHBOARD / DRAWER MENU FIX ---
+// --- UI & NAVIGATION FUNCTIONS ---
 // ==========================================
 function toggleMenu() {
     const menu = document.getElementById('drawer-menu');
@@ -526,51 +659,41 @@ function updateDrawerMenu() {
     const drawer = document.getElementById('drawer-menu');
     if (!drawer) return;
     
-    drawer.innerHTML = ''; // Clean completely to remove duplicate sections
-
-    const nav = document.createElement('nav');
-    nav.className = 'flex flex-col space-y-1 p-5 font-cute text-sm font-bold text-gray-700 overflow-y-auto max-h-screen';
+    let nav = drawer.querySelector('nav');
+    if (!nav) {
+        nav = document.createElement('nav');
+        nav.className = 'flex flex-col space-y-1 p-4 font-cute text-sm font-bold text-gray-700';
+        drawer.appendChild(nav);
+    }
     
     nav.innerHTML = `
-        <div class="text-xs uppercase tracking-widest text-pink-400 font-bold mb-2">CuTarot Navigation</div>
-        
         <a href="#" onclick="event.preventDefault(); navigate('home');" class="px-4 py-2.5 hover:bg-pink-50 text-purple-800 rounded-xl transition-colors">Home</a>
-        <a href="#" onclick="event.preventDefault(); navigate('home', 'home-spreads-section');" class="px-4 py-2.5 hover:bg-pink-50 text-purple-800 rounded-xl transition-colors">Spreads</a>
         
-        <!-- All Cards Submenu -->
+        <!-- Submenu All Cards (Tarot Library) -->
         <div class="py-1">
-            <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('All');" class="px-4 py-2 hover:bg-pink-50 text-purple-800 rounded-xl transition-colors block">All Cards</a>
-            <div class="pl-6 space-y-1">
-                <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Major Arcana');" class="block py-1 text-xs text-gray-500 hover:text-purple-800">Major Arcana</a>
-                <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Wands');" class="block py-1 text-xs text-gray-500 hover:text-purple-800">Suit of Wands</a>
-                <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Cups');" class="block py-1 text-xs text-gray-500 hover:text-purple-800">Suit of Cups</a>
-                <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Swords');" class="block py-1 text-xs text-gray-500 hover:text-purple-800">Suit of Swords</a>
-                <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Pentacles');" class="block py-1 text-xs text-gray-500 hover:text-purple-800">Suit of Pentacles</a>
-            </div>
+            <div class="px-4 py-1 text-[10px] uppercase tracking-wider text-pink-400 font-bold">Tarot Library</div>
+            <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('All');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">All Tarot Cards</a>
+            <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Major Arcana');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">Major Arcana</a>
+            <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Wands');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">Suit of Wands</a>
+            <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Cups');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">Suit of Cups</a>
+            <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Swords');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">Suit of Swords</a>
+            <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Pentacles');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">Suit of Pentacles</a>
         </div>
 
-        <!-- Oracle System Main Menu -->
+        <!-- Submenu Oracle -->
         <div class="py-1">
-            <a href="#" onclick="event.preventDefault(); navigate('oracle-draw');" class="px-4 py-2 hover:bg-pink-50 text-purple-800 rounded-xl transition-colors block">Oracle System</a>
-            <div class="pl-6 space-y-1">
-                <a href="#" onclick="event.preventDefault(); navigate('oracle-draw');" class="block py-1 text-xs text-gray-500 hover:text-purple-800">Draw Oracle Cards</a>
-                <a href="#" onclick="event.preventDefault(); toggleDailyOracleCard(); navigate('home', 'home-daily-oracle-section');" class="block py-1 text-xs text-gray-500 hover:text-purple-800">Today's Oracle Card</a>
-                <a href="#" onclick="event.preventDefault(); navigate('oracle-library');" class="block py-1 text-xs text-gray-500 hover:text-purple-800">Oracle Library</a>
-                <a href="#" onclick="event.preventDefault(); navigate('generic', 'About Oracle');" class="block py-1 text-xs text-gray-500 hover:text-purple-800">About Oracle</a>
-            </div>
+            <div class="px-4 py-1 text-[10px] uppercase tracking-wider text-pink-400 font-bold">Oracle System</div>
+            <a href="#" onclick="event.preventDefault(); navigate('oracle-draw');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">Draw Oracle Cards</a>
+            <a href="#" onclick="event.preventDefault(); toggleDailyOracleCard(); navigate('home', 'home-daily-oracle-section');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">Today's Oracle Card</a>
+            <a href="#" onclick="event.preventDefault(); navigate('oracle-library');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">Oracle Library</a>
+            <a href="#" onclick="event.preventDefault(); navigate('generic', 'About Oracle');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">About Oracle</a>
         </div>
 
-        <a href="#" onclick="event.preventDefault(); initBirthCalculatorPage(); navigate('birth-calculator');" class="px-4 py-2.5 hover:bg-pink-50 text-purple-800 rounded-xl transition-colors">Birth Calculator</a>
-        <a href="#" onclick="event.preventDefault(); navigate('home', 'home-zodiac-section');" class="px-4 py-2.5 hover:bg-pink-50 text-purple-800 rounded-xl transition-colors">Zodiac Guides</a>
         <a href="#" onclick="event.preventDefault(); navigate('home', 'home-articles-section');" class="px-4 py-2.5 hover:bg-pink-50 text-purple-800 rounded-xl transition-colors">Articles & Insights</a>
-        <a href="#" onclick="event.preventDefault(); navigate('generic', 'About Tarot');" class="px-4 py-2.5 hover:bg-pink-50 text-purple-800 rounded-xl transition-colors">About Tarot</a>
-        <a href="#" onclick="event.preventDefault(); navigate('generic', 'Personal Reading');" class="px-4 py-2.5 hover:bg-pink-50 text-purple-800 rounded-xl transition-colors">Personal Reading</a>
-        
-        <!-- Shop Now Button -->
-        <a href="#" onclick="event.preventDefault(); navigate('generic', 'Shop Now');" class="px-4 py-3 bg-pink-100 hover:bg-pink-200 text-purple-800 font-bold rounded-xl transition-all mt-4 text-center shadow-sm">Shop Now 🛍️</a>
+        <a href="#" onclick="event.preventDefault(); initBirthCalculatorPage(); navigate('birth-calculator');" class="px-4 py-2.5 hover:bg-pink-50 text-purple-800 rounded-xl transition-colors">Birth Calculator</a>
+        <a href="#" onclick="event.preventDefault(); navigate('home', 'home-zodiac-grid');" class="px-4 py-2.5 hover:bg-pink-50 text-purple-800 rounded-xl transition-colors">Zodiac Guides</a>
+        <a href="#" onclick="event.preventDefault(); navigate('generic', 'Personal Reading');" class="px-4 py-2.5 bg-pink-100 hover:bg-pink-200 text-purple-800 rounded-xl transition-colors mt-2 text-center">Buy CuTarot Deck 🛍️</a>
     `;
-    
-    drawer.appendChild(nav);
 }
 
 function ensureHeaderBuyIcon() {
@@ -581,90 +704,73 @@ function ensureHeaderBuyIcon() {
     const buyBtn = document.createElement('button');
     buyBtn.id = 'header-buy-btn';
     buyBtn.className = 'absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-pink-100 hover:bg-pink-200 text-purple-800 transition-all shadow-sm flex items-center justify-center';
-    buyBtn.title = 'Shop CuTarot Deck';
+    buyBtn.title = 'Buy CuTarot Deck';
     buyBtn.innerHTML = `
         <svg class="w-5 h-5 text-purple-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
         </svg>
     `;
-    buyBtn.onclick = () => navigate('generic', 'Shop Now');
+    buyBtn.onclick = () => navigate('generic', 'Personal Reading');
     
     header.style.position = 'relative';
     header.appendChild(buyBtn);
 }
 
-// ==========================================
-// --- HOMEPAGE SECTION REORDERING ---
-// ==========================================
-function ensureHomepageLayout() {
-    const homeView = document.getElementById('view-home');
-    if (!homeView) return;
-
-    // 1. Spreads Section
-    const spreadsGrid = document.getElementById('home-spreads-grid');
-    let spreadsSection = spreadsGrid?.parentElement;
-    if (spreadsSection) spreadsSection.id = 'home-spreads-section';
-
-    // 2. Oracle Section (Positioned right under Spreads)
-    let oracleSection = document.getElementById('home-oracle-section');
-    if (!oracleSection) {
-        oracleSection = document.createElement('div');
-        oracleSection.id = 'home-oracle-section';
-        oracleSection.className = 'w-full max-w-lg mx-auto mb-8 px-4';
-        oracleSection.innerHTML = `
-            <div class="bg-gradient-to-br from-purple-50 via-pink-50 to-white rounded-3xl border-2 border-pink-200 p-6 shadow-sm text-left relative overflow-hidden">
-                <div class="w-full aspect-[16/9] bg-pink-100 rounded-2xl mb-5 overflow-hidden border border-pink-200 shadow-inner flex items-center justify-center">
-                    <span class="font-cute font-bold text-pink-300 text-sm">Oracle Deck Cover Banner</span>
-                </div>
-                <div class="text-[9px] uppercase tracking-widest text-pink-400 font-bold mb-1 font-cute">Companion Intuitive Deck</div>
-                <h3 class="font-cute font-bold text-2xl text-purple-800 mb-2">CuTarot Oracle Deck</h3>
-                <p class="font-cute text-xs text-gray-600 leading-relaxed mb-6">
-                    Oracle cards provide fluid, direct spiritual affirmations and gentle guidance. Use Oracle cards to set your intention for the day or seek immediate clarity for your heart.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-3">
-                    <button onclick="navigate('oracle-draw')" class="flex-1 bg-purple-700 hover:bg-purple-800 text-white py-3.5 rounded-2xl font-cute font-bold text-xs shadow-md transition-all text-center">
-                        Draw Oracle Cards &rarr;
-                    </button>
-                    <button onclick="navigate('oracle-library')" class="bg-white hover:bg-pink-50 border border-pink-200 text-purple-800 py-3.5 px-5 rounded-2xl font-cute font-bold text-xs transition-colors text-center">
-                        Oracle Library
-                    </button>
-                </div>
-            </div>
-        `;
+function navigate(viewId, anchorOrTitle = null) {
+    document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+    
+    const targetView = document.getElementById('view-' + viewId);
+    if (targetView) targetView.classList.add('active');
+    
+    if (viewId !== 'home' || !anchorOrTitle) {
+        window.scrollTo(0, 0);
+    }
+    
+    const drawer = document.getElementById('drawer-menu');
+    if (drawer && !drawer.classList.contains('-translate-x-full')) {
+        toggleMenu();
     }
 
-    // 3. Birth Calculator Section
-    ensureBirthCalculatorHome();
-    const birthCalcSection = document.getElementById('home-birth-calculator');
-
-    // 4. Zodiac Section
-    const zodiacGrid = document.getElementById('home-zodiac-grid');
-    let zodiacSection = zodiacGrid?.parentElement;
-    if (zodiacSection) zodiacSection.id = 'home-zodiac-section';
-
-    // 5. Articles Section (Positioned below Zodiac)
-    ensureArticlesSection();
-    const articlesSection = document.getElementById('home-articles-section');
-
-    // REORDER IN DOM
-    if (spreadsSection && oracleSection) {
-        spreadsSection.parentNode.insertBefore(oracleSection, spreadsSection.nextSibling);
-    }
-    if (oracleSection && birthCalcSection) {
-        oracleSection.parentNode.insertBefore(birthCalcSection, oracleSection.nextSibling);
-    }
-    if (zodiacSection && articlesSection) {
-        zodiacSection.parentNode.insertBefore(articlesSection, zodiacSection.nextSibling);
+    if (viewId === 'home' && anchorOrTitle) {
+        setTimeout(() => {
+            const el = document.getElementById(anchorOrTitle);
+            if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
+        }, 50);
+    } else if (viewId === 'draw') {
+        setDrawPhase('spread');
+    } else if (viewId === 'generic') {
+        renderGenericPage(anchorOrTitle);
+    } else if (viewId === 'all-cards') {
+        ensureLibrarySearch();
+        filterLibrary('All');
+    } else if (viewId === 'birth-calculator') {
+        initBirthCalculatorPage();
+    } else if (viewId === 'oracle-library') {
+        renderOracleLibrary();
+    } else if (viewId === 'oracle-draw') {
+        renderOracleConfigNumbers();
+        document.getElementById('oracle-step-config')?.classList.remove('hidden');
+        document.getElementById('oracle-step-draw')?.classList.add('hidden');
+        document.getElementById('oracle-step-result')?.classList.add('hidden');
     }
 }
 
-function ensureArticlesSection() {
-    let articlesSection = document.getElementById('home-articles-section');
-    if (articlesSection) return;
+function getTodayDateString() {
+    const now = new Date();
+    return now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
+}
 
-    articlesSection = document.createElement('div');
+// ==========================================
+// --- HOMEPAGE ARTICLES & ANIMATIONS ---
+// ==========================================
+function ensureArticlesSection() {
+    const homeView = document.getElementById('view-home');
+    if (!homeView) return;
+    if (document.getElementById('home-articles-section')) return;
+
+    const articlesSection = document.createElement('div');
     articlesSection.id = 'home-articles-section';
-    articlesSection.className = 'w-full max-w-lg mx-auto mb-8 px-4 text-left font-cute';
+    articlesSection.className = 'w-full max-w-lg mx-auto mb-6 px-4 text-left font-cute';
     
     articlesSection.innerHTML = `
         <div class="flex justify-between items-center mb-3">
@@ -683,11 +789,11 @@ function ensureArticlesSection() {
                 <p class="text-[11px] text-gray-500 mt-1 line-clamp-2">Learn how 15th-century Italian cards evolved into the Rider-Waite system.</p>
             </div>
 
-            <div onclick="navigate('generic', 'About Oracle')" class="snap-center flex-shrink-0 w-64 bg-purple-100 p-4 rounded-2xl border border-purple-100 shadow-sm hover:shadow-md transition-all cursor-pointer">
-                <div class="w-full h-28 bg-purple-200/50 rounded-xl mb-3 flex items-center justify-center text-purple-400 font-bold text-xs">Oracle Guide Cover</div>
-                <span class="px-2 py-0.5 bg-white text-purple-600 text-[9px] font-bold rounded-full">Oracle</span>
+            <div onclick="navigate('generic', 'About Oracle')" class="snap-center flex-shrink-0 w-64 bg-white p-4 rounded-2xl border border-pink-100 shadow-sm hover:shadow-md transition-all cursor-pointer">
+                <div class="w-full h-28 bg-purple-100 rounded-xl mb-3 flex items-center justify-center text-purple-300 font-bold text-xs">Oracle Guide Cover</div>
+                <span class="px-2 py-0.5 bg-purple-50 text-purple-600 text-[9px] font-bold rounded-full">Oracle</span>
                 <h4 class="font-bold text-sm text-purple-800 mt-2 line-clamp-1">Tarot vs Oracle Cards</h4>
-                <p class="text-[11px] text-gray-600 mt-1 line-clamp-2">Understanding the fluid freedom of Oracle decks alongside Tarot.</p>
+                <p class="text-[11px] text-gray-500 mt-1 line-clamp-2">Understanding the fluid freedom of Oracle decks alongside Tarot.</p>
             </div>
 
             <div onclick="navigate('generic', 'Personal Reading')" class="snap-center flex-shrink-0 w-64 bg-white p-4 rounded-2xl border border-pink-100 shadow-sm hover:shadow-md transition-all cursor-pointer">
@@ -698,47 +804,695 @@ function ensureArticlesSection() {
             </div>
         </div>
     `;
+
+    const birthCalcEl = document.getElementById('home-birth-calculator');
+    if (birthCalcEl) {
+        birthCalcEl.parentNode.insertBefore(articlesSection, birthCalcEl);
+    } else {
+        homeView.appendChild(articlesSection);
+    }
+}
+
+function setupScrollAnimations() {
+    const homeSections = document.querySelectorAll('#view-home > div');
+    homeSections.forEach(sec => {
+        sec.classList.remove('mb-10', 'mb-8');
+        sec.classList.add('mb-5');
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.remove('opacity-0', 'translate-y-8');
+                entry.target.classList.add('opacity-100', 'translate-y-0');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    homeSections.forEach(sec => {
+        sec.classList.add('transition-all', 'duration-700', 'ease-out', 'opacity-0', 'translate-y-8');
+        observer.observe(sec);
+    });
 }
 
 // ==========================================
-// --- FOOTER POSITION FIX ---
+// --- DAILY CARD FUNCTIONS ---
 // ==========================================
-function ensureFooterPosition() {
-    const footer = document.getElementById('main-footer') || document.querySelector('footer');
-    if (footer) {
-        document.body.appendChild(footer);
+function renderDailyCardHTML(card, isReversed) {
+    const cardEl = document.getElementById('inline-daily-card');
+    if (!cardEl) return;
+    const descText = isReversed ? card.reversed : card.upright;
+    
+    cardEl.innerHTML = `
+        <div class="w-[120px] mb-6">
+            <div class="w-full aspect-[2/3.3] bg-white border border-pink-100 rounded-xl flex flex-col items-center justify-center p-2 shadow-md relative overflow-hidden">
+                ${card.img 
+                    ? `<img src="${card.img}" alt="${card.name}" class="w-full h-full object-contain rounded-xl" />`
+                    : `<div class="text-[9px] text-pink-400 font-cute font-bold mb-1 uppercase">${card.arcana}</div>
+                       <div class="text-sm font-cute font-bold text-gray-800 leading-tight">${card.name}</div>
+                       <div class="mt-2 text-pink-200 text-xs font-cute">${card.number}</div>`
+                }
+            </div>
+        </div>
+        <h3 class="font-cute font-bold text-2xl text-purple-800 mb-1">${card.name}</h3>
+        <p class="text-xs text-pink-500 italic mb-4 font-cute">${isReversed ? 'Reversed' : 'Upright'}</p>
+        <div class="w-full h-px bg-pink-200/50 mb-4 max-w-[150px]"></div>
+        <p class="text-[10px] uppercase tracking-widest text-pink-400 mb-2 font-bold font-cute">Today's Energy</p>
+        <p class="text-sm text-gray-600 mb-5 font-cute">${descText}</p>
+        <p class="text-[10px] uppercase tracking-widest text-pink-400 mb-2 font-bold font-cute">Love & Relationship</p>
+        <p class="text-sm text-gray-600 italic font-cute">"${card.love}"</p>
+    `;
+    cardEl.classList.remove('hidden');
+    cardEl.classList.add('flex');
+}
+
+function toggleDailyCard() {
+    const btnEl = document.getElementById('btn-daily-card');
+    const todayStr = getTodayDateString();
+    let savedData = localStorage.getItem('cutarot_daily');
+    let dailyData = null;
+
+    if (savedData) {
+        const parsed = JSON.parse(savedData);
+        if (parsed.date === todayStr) { dailyData = parsed; }
+    }
+
+    if (!dailyData) {
+        const randomCard = TAROT_DECK[Math.floor(Math.random() * 78)];
+        dailyData = { date: todayStr, card: randomCard, isReversed: Math.random() > 0.5 };
+        localStorage.setItem('cutarot_daily', JSON.stringify(dailyData));
+    }
+
+    renderDailyCardHTML(dailyData.card, dailyData.isReversed);
+    
+    if (btnEl) {
+        btnEl.innerText = "Card Drawn for Today";
+        btnEl.classList.add('opacity-50', 'bg-pink-50');
+        btnEl.classList.remove('hover:-translate-y-0.5');
+        btnEl.onclick = null;
+    }
+}
+
+function checkDailyCard() {
+    const todayStr = getTodayDateString();
+    let savedData = localStorage.getItem('cutarot_daily');
+    if (savedData) {
+        const parsed = JSON.parse(savedData);
+        if (parsed.date === todayStr) {
+            renderDailyCardHTML(parsed.card, parsed.isReversed);
+            const btnEl = document.getElementById('btn-daily-card');
+            if (btnEl) {
+                btnEl.innerText = "Card Drawn for Today";
+                btnEl.classList.add('opacity-50', 'bg-pink-50');
+                btnEl.classList.remove('hover:-translate-y-0.5');
+                btnEl.onclick = null;
+            }
+        }
     }
 }
 
 // ==========================================
-// --- BIRTH CARD CALCULATOR FIX ---
+// --- DRAW SYSTEM FLOW ---
+// ==========================================
+function ensureQuestionInput() {
+    const drawPhaseEl = document.getElementById('phase-draw');
+    if (!drawPhaseEl) return;
+    
+    let container = document.getElementById('tarot-question-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'tarot-question-container';
+        container.className = 'w-full max-w-md mb-6 px-4';
+        container.innerHTML = `
+            <div class="font-cute text-xs font-bold text-purple-800 mb-2 text-center uppercase tracking-wider">What is on your mind?</div>
+            <input type="text" id="tarot-question-input" 
+                value="${tarotQuestion}" 
+                placeholder="Ask CuTarot" 
+                oninput="tarotQuestion = this.value"
+                class="w-full px-4 py-3 rounded-2xl border-2 border-purple-700/70 focus:border-purple-800 focus:outline-none focus:ring-2 focus:ring-purple-200 font-cute text-sm text-gray-700 bg-white shadow-sm transition-all text-center"
+            />
+        `;
+        drawPhaseEl.insertBefore(container, drawPhaseEl.firstChild);
+    } else {
+        const input = document.getElementById('tarot-question-input');
+        if (input) input.value = tarotQuestion;
+    }
+}
+
+function setDrawPhase(phase) {
+    ['phase-spread', 'phase-config', 'phase-draw', 'phase-result'].forEach(p => {
+        const el = document.getElementById(p);
+        if (el) {
+            el.classList.add('hidden');
+            el.classList.remove('flex');
+        }
+    });
+    
+    const target = document.getElementById('phase-' + phase);
+    if (target) {
+        target.classList.remove('hidden');
+        if(phase === 'draw') {
+            target.classList.add('flex');
+            ensureQuestionInput(); 
+        }
+    }
+    window.scrollTo(0,0);
+    
+    if (phase === 'result') renderResult();
+}
+
+function selectSpread(index) {
+    currentSpread = SPREADS[index];
+    deckCount = currentSpread.count;
+    
+    document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+    document.getElementById('view-draw').classList.add('active');
+    
+    if (currentSpread.id === 'free') {
+        document.getElementById('config-spread-name').innerText = currentSpread.name;
+        renderConfigNumbers();
+        setDrawPhase('config');
+    } else {
+        startDraw(); 
+    }
+}
+
+function renderConfigNumbers() {
+    const grid = document.getElementById('config-numbers-grid');
+    if (!grid) return;
+    let html = '';
+    const maxCards = optMajorOnly ? 22 : 13;
+    if (deckCount > maxCards) deckCount = maxCards;
+
+    for(let i=1; i<=maxCards; i++) {
+        const isActive = deckCount === i;
+        const cls = isActive ? 'bg-pink-300 text-white shadow-md transform scale-110' : 'bg-white text-gray-600 border border-pink-100 hover:border-pink-300 hover:bg-pink-50';
+        html += `<button onclick="updateDeckCount(${i})" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-cute font-bold text-sm transition-all duration-300 ${cls}">${i}</button>`;
+    }
+    grid.innerHTML = html;
+
+    let optionsContainer = document.getElementById('config-options-container');
+    if (!optionsContainer) {
+        const configBox = grid.parentElement;
+        optionsContainer = document.createElement('div');
+        optionsContainer.id = 'config-options-container';
+        optionsContainer.className = 'mt-6 space-y-2.5 text-left font-cute pt-4 border-t border-pink-100';
+        configBox.insertBefore(optionsContainer, configBox.querySelector('button[onclick="startDraw()"]'));
+    }
+
+    optionsContainer.innerHTML = `
+        <div class="text-xs font-bold text-purple-800 mb-2 uppercase tracking-wider text-center">Free Spread Options & Filters</div>
+        <label class="flex items-center space-x-3 cursor-pointer p-2.5 bg-white rounded-xl border border-pink-100 hover:border-pink-300 transition-colors">
+            <input type="checkbox" ${optMajorOnly ? 'checked' : ''} onchange="toggleOption('majorOnly', this.checked); renderConfigNumbers();" class="w-4 h-4 text-pink-500 rounded border-pink-300 focus:ring-pink-400">
+            <span class="text-xs font-bold text-gray-700">Major Arcana Only <span class="font-normal text-pink-400">(22 main cards only)</span></span>
+        </label>
+        <label class="flex items-center space-x-3 cursor-pointer p-2.5 bg-white rounded-xl border border-pink-100 hover:border-pink-300 transition-colors">
+            <input type="checkbox" ${optAutoOpen ? 'checked' : ''} onchange="toggleOption('autoOpen', this.checked)" class="w-4 h-4 text-pink-500 rounded border-pink-300 focus:ring-pink-400">
+            <span class="text-xs font-bold text-gray-700">Open Cards Automatically <span class="font-normal text-pink-400">(Reveal instantly upon selection)</span></span>
+        </label>
+        <label class="flex items-center space-x-3 cursor-pointer p-2.5 bg-white rounded-xl border border-pink-100 hover:border-pink-300 transition-colors">
+            <input type="checkbox" ${optShowDesc ? 'checked' : ''} onchange="toggleOption('showDesc', this.checked)" class="w-4 h-4 text-pink-500 rounded border-pink-300 focus:ring-pink-400">
+            <span class="text-xs font-bold text-gray-700">Show the Description <span class="font-normal text-pink-400">(Display card meaning summaries)</span></span>
+        </label>
+    `;
+}
+
+function updateDeckCount(num) {
+    deckCount = num;
+    renderConfigNumbers();
+}
+
+function startDraw() {
+    let pool = optMajorOnly ? TAROT_DECK.filter(c => c.arcana === 'Major Arcana') : [...TAROT_DECK];
+    if (deckCount > pool.length) deckCount = pool.length;
+
+    let shuffled = [...pool];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    activeDeck = shuffled.map(c => ({...c, isReversed: Math.random() > 0.5, drawn: false}));
+    drawnCards = [];
+    
+    const container = document.getElementById('deck-scroll-area');
+    if (container) {
+        container.innerHTML = '';
+        container.style.width = `${Math.max(800, activeDeck.length * 16 + 100)}px`;
+        
+        activeDeck.forEach((card, idx) => {
+            const distCenter = idx - (activeDeck.length / 2);
+            const arcY = Math.pow(distCenter * 0.15, 2);
+            const rot = distCenter * 0.3;
+            
+            const cardEl = document.createElement('div');
+            cardEl.className = 'tarot-card-item absolute top-0 cursor-pointer';
+            cardEl.style.left = `${idx * 16}px`;
+            cardEl.style.transform = `translateY(${arcY}px) rotate(${rot}deg)`;
+            cardEl.onclick = () => pickCard(idx, cardEl);
+            
+            cardEl.innerHTML = `
+                <div class="w-[80px] h-[135px] bg-pink-100 border border-pink-200 rounded-xl shadow-sm flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-1 border border-pink-200/60 rounded-lg"></div>
+                    <div class="w-6 h-6 rounded-full border border-pink-300 opacity-50"></div>
+                </div>`;
+            container.appendChild(cardEl);
+        });
+    }
+    
+    updateDrawUI();
+    setDrawPhase('draw');
+}
+
+function pickCard(idx, el) {
+    if (drawnCards.length >= deckCount) return;
+    if (activeDeck[idx].drawn) return;
+    
+    activeDeck[idx].drawn = true;
+    drawnCards.push(activeDeck[idx]);
+    el.style.opacity = '0';
+    el.style.pointerEvents = 'none';
+    
+    updateDrawUI();
+    if (drawnCards.length === deckCount) {
+        if (optAutoOpen) {
+            setDrawPhase('result');
+        } else {
+            const btn = document.getElementById('btn-reveal');
+            if (btn) btn.classList.remove('hidden');
+        }
+    }
+}
+
+function updateDrawUI() {
+    const counter = document.getElementById('draw-counter');
+    if (counter) counter.innerText = `${drawnCards.length} / ${deckCount} selected`;
+    
+    const slots = document.getElementById('draw-slots');
+    if (!slots) return;
+    let html = '';
+    for(let i=0; i<deckCount; i++) {
+        if (drawnCards[i]) {
+            html += `
+            <div class="w-[45px] h-[75px] rounded-md bg-white border border-pink-100 flex flex-col items-center justify-center p-1 text-center shadow-sm">
+                <div class="text-[6px] text-pink-400 font-cute font-bold uppercase">${drawnCards[i].arcana}</div>
+                <div class="text-[8px] font-cute font-bold leading-none mt-1">${drawnCards[i].name}</div>
+            </div>`;
+        } else {
+            html += `<div class="w-[45px] h-[75px] border-2 border-dashed border-pink-100 rounded-md"></div>`;
+        }
+    }
+    slots.innerHTML = html;
+}
+
+function renderResult() {
+    const grid = document.getElementById('result-grid');
+    if (!grid) return;
+    let html = '';
+    
+    let questionHtml = '';
+    if (tarotQuestion && tarotQuestion.trim() !== '') {
+        questionHtml = `
+            <div class="w-full max-w-xl mb-6 bg-pink-50/70 border border-pink-200 p-4 rounded-2xl text-center font-cute shadow-sm">
+                <div class="text-[10px] uppercase tracking-widest text-pink-400 font-bold mb-1">Your Question / Intention</div>
+                <p class="text-sm sm:text-base font-bold text-purple-800">"${tarotQuestion}"</p>
+            </div>
+        `;
+    }
+
+    drawnCards.forEach((card, idx) => {
+        const orientationText = card.isReversed ? 'Reversed' : 'Upright';
+        const descText = card.isReversed ? card.reversed : card.upright;
+
+        html += `
+        <div class="flex flex-col items-center w-full" style="animation-delay: ${idx * 100}ms">
+            <div class="w-full max-w-[120px] aspect-[2/3.3] rounded-xl flex flex-col items-center justify-center text-center shadow-md relative overflow-hidden ${card.img ? '' : 'bg-white border border-pink-100 p-2'}">
+                 ${card.img 
+                     ? `<img src="${card.img}" alt="${card.name}" class="w-full h-full object-contain" />`
+                     : `<div class="text-[9px] text-pink-400 font-cute font-bold mb-1 uppercase tracking-widest">${card.arcana}</div>
+                        <div class="text-xs sm:text-sm font-cute font-bold text-gray-800 leading-tight">${card.name}</div>
+                        <div class="mt-2 text-pink-200 text-[10px] font-cute">${card.number}</div>`
+                 }
+            </div>
+            <span class="text-xs sm:text-sm font-cute text-gray-700 mt-3 text-center leading-tight">
+                ${card.name} <br> <span class="text-[10px] text-pink-400 italic">${orientationText}</span>
+            </span>
+            ${optShowDesc ? `
+            <div class="mt-3 bg-pink-50/60 border border-pink-100 p-3 rounded-2xl text-left w-full font-cute shadow-sm">
+                <div class="text-[10px] font-bold text-purple-800 uppercase tracking-wider mb-1 flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-pink-400 mr-2"></span> Summary Meaning</div>
+                <p class="text-[11px] text-gray-600 leading-snug">${descText}</p>
+            </div>` : ''}
+        </div>`;
+    });
+    
+    grid.innerHTML = questionHtml + html;
+}
+
+// ==========================================
+// --- TAROT LIBRARY SYSTEM ---
+// ==========================================
+function ensureLibrarySearch() {
+    const filtersEl = document.getElementById('card-filters');
+    if (!filtersEl) return;
+    let container = document.getElementById('library-search-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'library-search-container';
+        container.className = 'w-full max-w-md mx-auto mb-6 px-4';
+        container.innerHTML = `
+            <input type="text" id="library-search-input" 
+                placeholder="Find CuTarot card" 
+                oninput="filterLibrary(window.currentLibraryFilter || 'All', this.value)"
+                class="w-full px-4 py-3 rounded-2xl border-2 border-pink-200 focus:border-purple-700 focus:outline-none focus:ring-2 focus:ring-pink-100 font-cute text-sm text-gray-700 bg-white shadow-sm transition-all text-center"
+            />
+        `;
+        filtersEl.parentNode.insertBefore(container, filtersEl.nextSibling);
+    }
+}
+
+window.currentLibraryFilter = 'All';
+function filterLibrary(filter, searchTerm = '') {
+    window.currentLibraryFilter = filter;
+    const input = document.getElementById('library-search-input');
+    const term = searchTerm !== '' ? searchTerm : (input ? input.value : '');
+    
+    const filtersEl = document.getElementById('card-filters');
+    if (filtersEl) {
+        const buttons = filtersEl.children;
+        for (let btn of buttons) {
+            if (btn.innerText.includes(filter) || (filter === 'Major Arcana' && btn.innerText === 'Major')) {
+                btn.className = "px-4 py-2 rounded-full border border-pink-200 text-sm font-cute font-bold transition-colors bg-pink-300 text-white shadow-sm";
+            } else {
+                btn.className = "px-4 py-2 rounded-full border border-pink-200 text-sm font-cute font-bold transition-colors bg-white hover:bg-pink-50 text-gray-600";
+            }
+        }
+    }
+    
+    const grid = document.getElementById('library-grid');
+    if (!grid) return;
+    let html = '';
+    TAROT_DECK.forEach((card, index) => {
+        const isMajor = card.arcana === 'Major Arcana';
+        const suit = isMajor ? null : card.name.split(' of ')[1];
+        
+        let isMatchCategory = (filter === 'All') || 
+                              (filter === 'Major Arcana' && isMajor) || 
+                              (filter === suit);
+        
+        let isMatchSearch = term === '' || card.name.toLowerCase().includes(term.toLowerCase());
+        
+        if (isMatchCategory && isMatchSearch) {
+            html += `
+                <div onclick="showCardDetail(${index})" class="cursor-pointer transform transition-transform hover:-translate-y-2">
+                    <div class="w-full aspect-[2/3.3] rounded-xl flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-shadow relative overflow-hidden ${card.img ? '' : 'bg-white border border-pink-100 p-2'}">
+                        ${card.img 
+                            ? `<img src="${card.img}" alt="${card.name}" class="w-full h-full object-contain" />`
+                            : `<div class="text-[9px] text-pink-400 font-cute font-bold mb-1 uppercase tracking-widest">${isMajor ? 'Major' : suit}</div>
+                               <div class="text-xs sm:text-sm font-cute font-bold text-gray-800 leading-tight">${card.name}</div>
+                               <div class="mt-2 text-pink-200 text-[10px] font-cute">${card.number}</div>`
+                        }
+                    </div>
+                </div>
+            `;
+        }
+    });
+    grid.innerHTML = html;
+}
+
+function showCardDetail(index) {
+    const card = TAROT_DECK[index];
+    let yesNoClass = card.yesNo === 'Yes' ? 'text-green-600' : (card.yesNo === 'No' ? 'text-red-500' : 'text-orange-400');
+
+    const detailContent = document.getElementById('card-detail-content');
+    if (!detailContent) return;
+
+    detailContent.innerHTML = `
+        <div class="flex flex-col md:flex-row gap-8 lg:gap-12">
+            <div class="w-full md:w-1/3 flex justify-center">
+                <div class="w-64 md:w-full aspect-[2/3.3] rounded-2xl flex flex-col items-center justify-center shadow-xl relative overflow-hidden group ${card.img ? '' : 'bg-gradient-to-b from-pink-50 to-white border-2 border-pink-100 p-6'}">
+                    ${card.img 
+                        ? `<img src="${card.img}" alt="${card.name}" class="w-full h-full object-contain rounded-2xl" />`
+                        : `<div class="absolute inset-2 border border-pink-200/60 rounded-xl"></div>
+                           <h2 class="font-cute font-bold text-3xl text-center text-purple-800 z-10 leading-tight">${card.name}</h2>
+                           <p class="text-xs text-pink-400 font-cute font-bold uppercase tracking-widest mt-4 z-10">${card.arcana}</p>`
+                    }
+                </div>
+            </div>
+            
+            <div class="w-full md:w-2/3 space-y-6">
+                <div>
+                    <h1 class="font-cute font-bold text-4xl md:text-5xl text-purple-800 mb-2">${card.name}</h1>
+                    <p class="text-sm text-pink-500 font-medium tracking-widest uppercase font-cute">${card.arcana}</p>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-white p-4 rounded-xl border border-pink-100 shadow-sm">
+                        <h4 class="text-[10px] font-bold text-pink-400 uppercase tracking-wider mb-1 font-cute">Yes / No Reading</h4>
+                        <p class="font-cute font-bold text-lg ${yesNoClass}">${card.yesNo}</p>
+                    </div>
+                    <div class="bg-pink-50/50 p-4 rounded-xl border border-pink-100 shadow-sm">
+                        <h4 class="text-[10px] font-bold text-pink-400 uppercase tracking-wider mb-1 font-cute">Astrology / Element</h4>
+                        <p class="font-cute text-sm text-gray-700">${card.astrology}</p>
+                    </div>
+                </div>
+
+                <div class="space-y-5 pt-4">
+                    <div>
+                        <h3 class="font-cute font-bold text-xl text-purple-800 mb-2 flex items-center"><span class="w-2 h-2 rounded-full bg-pink-300 mr-3"></span> Upright Meaning</h3>
+                        <p class="text-gray-600 font-cute text-sm leading-relaxed text-justify">${card.upright}</p>
+                    </div>
+                    <div>
+                        <h3 class="font-cute font-bold text-xl text-purple-800 mb-2 flex items-center"><span class="w-2 h-2 rounded-full bg-gray-400 mr-3"></span> Reversed Meaning</h3>
+                        <p class="text-gray-600 font-cute text-sm leading-relaxed text-justify">${card.reversed}</p>
+                    </div>
+                    <div class="bg-pink-50/30 p-5 rounded-2xl border border-pink-50">
+                        <h3 class="font-cute font-bold text-xl text-purple-800 mb-2 flex items-center"><span class="text-pink-400 mr-3 text-lg">♥</span> Relationship & Love</h3>
+                        <p class="text-gray-600 font-cute text-sm leading-relaxed">${card.love}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+    document.getElementById('view-card-detail').classList.add('active');
+    window.scrollTo(0, 0);
+}
+
+// ==========================================
+// --- ZODIAC & GENERIC PAGES ---
+// ==========================================
+function showZodiac(id) {
+    const z = ZODIAC_DATA.find(item => item.id === id);
+    if (!z) return;
+    
+    const detailContent = document.getElementById('zodiac-detail-content');
+    if (!detailContent) return;
+
+    detailContent.innerHTML = `
+        <div class="text-center mb-8">
+            <div class="text-pink-400 mb-3 w-16 h-16 mx-auto"><svg viewBox="0 0 24 24" class="w-full h-full">${z.svg}</svg></div>
+            <h1 class="font-cute font-bold text-4xl text-purple-800 mb-1">${z.name}</h1>
+            <p class="text-sm text-pink-400 tracking-wider font-cute mb-4">${z.dateRange}</p>
+            <div class="flex justify-center gap-2">
+                <span class="px-3 py-1 bg-pink-100 text-purple-700 text-xs font-cute font-bold rounded-full">${z.element}</span>
+                <span class="px-3 py-1 bg-purple-50 text-purple-600 text-xs font-cute font-bold rounded-full border border-purple-100">Tarot: ${z.tarotMatch}</span>
+            </div>
+        </div>
+        <div class="bg-pink-50/30 p-6 sm:p-8 rounded-3xl border border-pink-100 text-gray-600 font-cute leading-relaxed text-left space-y-4 shadow-sm">
+            <p class="text-base">Welcome to the energy profile of <strong>${z.name}</strong>.</p>
+            <p class="text-sm font-light leading-relaxed">${z.desc}</p>
+            <p class="text-xs text-pink-400 italic pt-2">“Use this zodiac energy as a daily reflective guide in your tarot readings with Mai Collection.”</p>
+        </div>
+    `;
+    
+    document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+    document.getElementById('view-zodiac').classList.add('active');
+    window.scrollTo(0, 0);
+}
+
+function renderGenericPage(title) {
+    const titleEl = document.getElementById('generic-title');
+    if (titleEl) titleEl.innerText = title;
+    
+    const content = document.getElementById('generic-content');
+    if (!content) return;
+    
+    if (title === 'About Tarot') {
+        content.innerHTML = `
+            <div class="space-y-8 text-left">
+                <div class="bg-pink-50/40 p-6 sm:p-8 rounded-3xl border border-pink-100 shadow-sm">
+                    <h3 class="font-cute font-bold text-2xl text-purple-800 mb-3">Discovering the World of Tarot</h3>
+                    <p class="text-gray-600 font-cute text-sm leading-relaxed">
+                        Tarot is not merely a tool for rigid future-telling, but a mirror of the soul reflecting the depths of the subconscious mind, emotions, and human potential. Through rich visual symbolism, tarot helps us navigate life's questions with serene wisdom.
+                    </p>
+                </div>
+                <div class="space-y-3">
+                    <h3 class="font-cute font-bold text-xl text-purple-800 flex items-center">
+                        <span class="w-2 h-2 rounded-full bg-pink-300 mr-3"></span> History and Roots of Tarot
+                    </h3>
+                    <p class="text-gray-600 font-cute text-sm leading-relaxed">
+                        The historical roots of tarot trace back to northern Italy in the 15th century (around the 1430s). Initially, European nobility used these cards for a conventional parlor game called <em>Tarocchi</em>. It was not until the 18th and 19th centuries that historians and occultists recognized the profound esoteric symbolism hidden behind the card imagery.
+                    </p>
+                    <p class="text-gray-600 font-cute text-sm leading-relaxed">
+                        The peak of modern tarot evolution occurred in 1909 when Arthur Edward Waite, a prominent mystic, collaborated with brilliant artist Pamela Colman Smith—both members of the Hermetic Order of the Golden Dawn—to publish the Rider-Waite-Smith deck. This legendary deck defined the aesthetic and golden standard of modern tarot today.
+                    </p>
+                </div>
+            </div>
+        `;
+    } else if (title === 'About Oracle') {
+        content.innerHTML = `
+            <div class="space-y-8 text-left">
+                <div class="bg-pink-50/40 p-6 sm:p-8 rounded-3xl border border-pink-100 shadow-sm">
+                    <h3 class="font-cute font-bold text-2xl text-purple-800 mb-3">Understanding Oracle Cards</h3>
+                    <p class="text-gray-600 font-cute text-sm leading-relaxed">
+                        Unlike traditional Tarot cards which follow a strict 78-card structure and traditional archetypes (Major and Minor Arcana), <strong>Oracle cards are free-form spiritual tools</strong>. They offer direct messages, affirmations, and gentle energetic guidance without complex system rules.
+                    </p>
+                </div>
+                <div class="space-y-4 font-cute text-sm text-gray-600 leading-relaxed">
+                    <h4 class="font-bold text-lg text-purple-800">How to Use Oracle alongside Tarot?</h4>
+                    <p>Oracle cards can be drawn on their own for daily inspiration, or drawn alongside a Tarot reading as a final "advice" card to clarify the overall theme of your reading.</p>
+                </div>
+            </div>
+        `;
+    } else if (title === 'Personal Reading') {
+        content.innerHTML = `
+            <div class="space-y-8 text-left">
+                <div class="text-center mb-8">
+                    <div class="w-20 h-20 bg-pink-100 rounded-full mx-auto mb-4 border-2 border-pink-200 flex items-center justify-center text-purple-800 font-cute font-bold text-xl">M</div>
+                    <h2 class="font-cute font-bold text-3xl text-purple-800">Hi, I'm Mai</h2>
+                    <p class="text-sm text-pink-500 font-['Caveat'] mt-1 tracking-wide">Creator of the CuTarot</p>
+                </div>
+                <div class="space-y-4 text-gray-600 font-cute text-sm leading-relaxed">
+                    <p>CuTarot was initially made for better understanding about what the cards try to speak to me. Rider Waite Smith cards are full of symbolism in every small details. I simply couldn't understand all of them.</p>
+                    <p>So, CuTarot was created. I didn't simplify the image nor the message every card try to convey. I just turned every card into something I could understand. Something that if I look at it in my spreads, I could tell directly the story and the message without having to remember the keywords all along.</p>
+                </div>
+            </div>
+        `;
+    } else {
+        content.innerHTML = `<p>CuTarot by Mai Collection is provided for personal reflection and entertainment purposes.</p>`;
+    }
+}
+
+// ==========================================
+// --- DASHBOARD UNIVERSAL SEARCH SYSTEM ---
+// ==========================================
+function ensureDashboardSearch() {
+    const homeView = document.getElementById('view-home');
+    if (!homeView) return;
+    let container = document.getElementById('dashboard-search-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'dashboard-search-container';
+        container.className = 'w-full max-w-lg mx-auto mb-8 px-4 pt-4';
+        container.innerHTML = `
+            <div class="relative">
+                <input type="text" id="dashboard-search-input" 
+                    placeholder="Explore CuTarot" 
+                    oninput="handleDashboardSearch(this.value)"
+                    class="w-full px-5 py-3.5 rounded-2xl border-2 border-purple-300 focus:border-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-100 font-cute text-sm text-gray-700 bg-white shadow-sm transition-all text-center"
+                />
+                <div id="dashboard-search-results" class="absolute left-0 right-0 mt-2 bg-white rounded-2xl shadow-xl border border-pink-100 max-h-60 overflow-y-auto hidden z-50 p-2 space-y-1 font-cute text-xs text-left"></div>
+            </div>
+        `;
+        homeView.insertBefore(container, homeView.firstChild);
+    }
+}
+
+function handleDashboardSearch(query) {
+    const resultsEl = document.getElementById('dashboard-search-results');
+    if (!resultsEl) return;
+    if (!query || query.trim() === '') {
+        resultsEl.classList.add('hidden');
+        resultsEl.innerHTML = '';
+        return;
+    }
+    const q = query.toLowerCase();
+    let matches = [];
+
+    SPREADS.forEach(s => {
+        if (s.name.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q)) {
+            matches.push({ type: 'Tarot Spread', title: s.name, desc: s.desc, action: () => navigate('draw') });
+        }
+    });
+
+    ZODIAC_DATA.forEach(z => {
+        if (z.name.toLowerCase().includes(q) || z.element.toLowerCase().includes(q)) {
+            matches.push({ type: 'Zodiac', title: z.name, desc: z.dateRange, action: () => showZodiac(z.id) });
+        }
+    });
+
+    TAROT_DECK.forEach((c, idx) => {
+        if (c.name.toLowerCase().includes(q) || c.arcana.toLowerCase().includes(q)) {
+            matches.push({ type: 'Tarot Card', title: c.name, desc: c.arcana, action: () => showCardDetail(idx) });
+        }
+    });
+
+    ORACLE_DECK.forEach((o, idx) => {
+        if (o.name.toLowerCase().includes(q) || o.desc.toLowerCase().includes(q)) {
+            matches.push({ type: 'Oracle Card', title: o.name, desc: 'Oracle Deck', action: () => showOracleDetail(idx) });
+        }
+    });
+
+    const sections = [
+        { name: 'Birth Card Calculator', desc: 'Find your Soul & Personality cards', action: () => { initBirthCalculatorPage(); navigate('birth-calculator'); } },
+        { name: 'Oracle Deck & Draw', desc: 'Fluid intuitive card readings', action: () => navigate('oracle-draw') },
+        { name: 'Oracle Library', desc: 'Browse all 50 Oracle cards', action: () => navigate('oracle-library') },
+        { name: 'About Oracle', desc: 'Learn how to use Oracle cards', action: () => navigate('generic', 'About Oracle') },
+        { name: 'Articles & Guides', desc: 'Read CuTarot articles', action: () => navigate('home', 'home-articles-section') },
+        { name: 'Buy CuTarot Deck', desc: 'Get your physical deck', action: () => navigate('generic', 'Personal Reading') },
+        { name: 'About Tarot', desc: 'History and philosophy of Tarot', action: () => navigate('generic', 'About Tarot') }
+    ];
+
+    sections.forEach(sec => {
+        if (sec.name.toLowerCase().includes(q) || sec.desc.toLowerCase().includes(q)) {
+            matches.push({ type: 'Page / Section', title: sec.name, desc: sec.desc, action: sec.action });
+        }
+    });
+    
+    if (matches.length === 0) {
+        resultsEl.innerHTML = `<div class="p-3 text-center text-pink-400">No results found for "${query}"</div>`;
+    } else {
+        resultsEl.innerHTML = '';
+        matches.slice(0, 8).forEach(m => {
+            const itemEl = document.createElement('div');
+            itemEl.className = 'p-2.5 hover:bg-pink-50 rounded-xl cursor-pointer transition-colors flex justify-between items-center font-cute';
+            itemEl.innerHTML = `
+                <div>
+                    <div class="font-bold text-purple-800">${m.title}</div>
+                    <div class="text-[10px] text-gray-500">${m.desc}</div>
+                </div>
+                <span class="px-2 py-0.5 bg-pink-100 text-purple-700 text-[9px] rounded-full font-bold">${m.type}</span>
+            `;
+            itemEl.onclick = () => {
+                m.action();
+                resultsEl.classList.add('hidden');
+            };
+            resultsEl.appendChild(itemEl);
+        });
+    }
+    resultsEl.classList.remove('hidden');
+}
+
+// ==========================================
+// --- TAROT BIRTH CALCULATOR SYSTEM ---
 // ==========================================
 const BIRTH_CARD_MEANINGS = {
-    0: { p1: "The Fool: Jalur hidup berbasis eksplorasi dan keberanian jiwa muda.", s1: "Jiwa mendambakan kebebasan mutlak dan kepolosan bijak." },
-    1: { p1: "The Magician: Manifestor sejati dengan keterampilan tinggi.", s1: "Koneksi penciptaan ilahi dan penguasaan niat batin." },
-    2: { p1: "The High Priestess: Intuisi tajam dan kebijaksanaan tersembunyi.", s1: "Pemahaman spiritual mendalam dan kedamaian batin." },
-    3: { p1: "The Empress: Kelimpahan, kreativitas, dan energi mengayomi.", s1: "Penciptaan keindahan dan kenyamanan hidup sejati." },
-    4: { p1: "The Emperor: Kepemimpinan, struktur, dan kestabilan fondasi.", s1: "Penguasaan diri dan perlindungan terhadap sesama." },
-    5: { p1: "The Hierophant: Penjaga tradisi dan spiritualitas terstruktur.", s1: "Pencarian nilai kebenaran dan keteladanan moral." },
-    6: { p1: "The Lovers: Pilihan hidup krusial dan hubungan jiwa harmonis.", s1: "Penyatuan dualitas dan cinta murni tanpa syarat." },
-    7: { p1: "The Chariot: Kemenangan melalui tekad dan disiplin tinggi.", s1: "Navigasi emosi menuju tujuan hidup sejati." },
-    8: { p1: "Strength: Keberanian lembut dan kesabaran menaklukkan rasa takut.", s1: "Kekuatan jiwa mengendalikan ego dengan kasih." },
-    9: { p1: "The Hermit: Pencarian kebenaran melalui introspeksi dan kesendirian.", s1: "Cahaya kebijaksanaan batin untuk menerangi sesama." },
-    10: { p1: "Wheel of Fortune: Adaptasi terhadap siklus dan takdir hidup.", s1: "Memahami perubahan sebagai tangga evolusi jiwa." },
-    11: { p1: "Justice: Keseimbangan, kebenaran objektif, dan integritas.", s1: "Kejujuran nurani dan keadilan sejati." },
-    12: { p1: "The Hanged Man: Cara pandang baru melalui kepasrahan bijak.", s1: "Pelepasan ego demi pencerahan jiwa." },
-    13: { p1: "Death: Transformasi radikal dan kelahiran kembali.", s1: "Pelepasan masa lalu menuju kebangkitan diri." },
-    14: { p1: "Temperance: Moderasi, kesabaran, dan sintesis harmonis.", s1: "Kedamaian jiwa dan keseimbangan hidup." },
-    15: { p1: "The Devil: Pembelajaran lepas dari kemelekatan materi dan ketakutan.", s1: "Kebebasan sejati dari ilusi dan manipulasi." },
-    16: { p1: "The Tower: Pencerahan kilat merubuhkan fondasi ilusi.", s1: "Kebangkitan jiwa menemukan kebenaran murni." },
-    17: { p1: "The Star: Harapan abadi, penyembuhan, dan inspirasi suci.", s1: "Iman murni bahwa alam semesta selalu membimbing." },
-    18: { p1: "The Moon: Penjelajahan alam bawah sadar dan misteri intuisi.", s1: "Penguasaan bayangan diri dan intuisi tajam." },
-    19: { p1: "The Sun: Kejelasan mutlak, kebahagiaan, dan vitalitas.", s1: "Kecerahan jiwa dan kehangatan tulus." },
-    20: { p1: "Judgement: Evaluasi diri jujur dan panggilan jiwa sejati.", s1: "Pengampunan dan kebangkitan spiritual." },
-    21: { p1: "The World: Penyelesaian siklus agung dan kepenuhan hidup.", s1: "Kutuhan jiwa menyatu dengan alam semesta." }
+    0: { 
+        p1: "Sebagai Kartu Kepribadian, The Fool menandakan jalan hidup yang didefinisikan oleh eksplorasi tanpa henti dan jiwa muda yang tidak bisa dipatahkan.",
+        p2: "Orang-orang melihatmu sebagai sosok yang berani mengambil risiko dan selalu siap untuk memulai lembaran baru.",
+        s1: "Pada tingkat Jiwa (Soul), inti terdalammu mendambakan kebebasan mutlak dan kebenaran tanpa syarat.",
+        s2: "Tujuan sejatimu adalah menemukan kebijaksanaan yang mendalam di dalam sebuah kepolosan."
+    },
+    1: { 
+        p1: "Sebagai Kartu Kepribadian, The Magician menandakan bahwa kamu adalah seorang manifestor sejati.",
+        p2: "Dalam interaksi sehari-hari, kamu sering kali menjadi pemecah masalah yang andal.",
+        s1: "Pada tingkat Jiwa, kamu memiliki koneksi langsung dengan percikan ilahi dari penciptaan.",
+        s2: "Evolusi batinmu terletak pada penguasaan niat."
+    }
 };
 
 function getBirthCardMeaning(num) {
+    if (num > 21) num = 0;
     return BIRTH_CARD_MEANINGS[num] || BIRTH_CARD_MEANINGS[0];
 }
 
@@ -761,13 +1515,18 @@ function calculateTarotNumerology(mm, dd, yyyy) {
 function ensureBirthCalculatorHome() {
     const homeView = document.getElementById('view-home');
     if (!homeView) return;
+    const zodiacGrid = document.getElementById('home-zodiac-grid');
+    if (!zodiacGrid) return;
     
     let container = document.getElementById('home-birth-calculator');
     if (!container) {
         container = document.createElement('div');
         container.id = 'home-birth-calculator';
-        container.className = 'w-full max-w-lg mx-auto mb-8 px-4 cursor-pointer group';
-        container.onclick = () => navigate('birth-calculator');
+        container.className = 'w-full max-w-lg mx-auto mb-10 px-4 cursor-pointer group';
+        container.onclick = () => {
+            initBirthCalculatorPage(); 
+            navigate('birth-calculator'); 
+        };
         
         container.innerHTML = `
             <div class="flex flex-row items-center bg-white rounded-3xl border border-pink-100 p-4 shadow-sm hover:shadow-md transition-all group-hover:border-pink-300">
@@ -785,49 +1544,50 @@ function ensureBirthCalculatorHome() {
                 </div>
             </div>
         `;
-        homeView.appendChild(container);
+        
+        const zodiacSection = zodiacGrid.parentElement;
+        if (zodiacSection && zodiacSection.parentElement) {
+            zodiacSection.parentElement.insertBefore(container, zodiacSection);
+        }
     }
 }
 
 function initBirthCalculatorPage() {
-    let viewDiv = document.getElementById('view-birth-calculator');
-    if (!viewDiv) {
-        const homeView = document.getElementById('view-home');
-        if (!homeView) return;
-        
-        viewDiv = document.createElement('div');
-        viewDiv.id = 'view-birth-calculator';
-        viewDiv.className = 'view-section pb-24 text-center';
-        homeView.parentNode.appendChild(viewDiv);
-    }
-
+    if (document.getElementById('view-birth-calculator')) return;
+    const homeView = document.getElementById('view-home');
+    if (!homeView) return;
+    
+    const parentContainer = homeView.parentNode; 
+    const viewDiv = document.createElement('div');
+    viewDiv.id = 'view-birth-calculator';
+    viewDiv.className = 'view-section pb-24 text-center';
+    
     viewDiv.innerHTML = `
-        ${renderNavHeaderHTML('Birth Card Calculator')}
-        
-        <div class="w-full max-w-lg mx-auto px-4 mt-2 font-cute">
-            <div class="w-36 aspect-[3/4] mx-auto bg-pink-50 rounded-2xl border-2 border-pink-100 flex items-center justify-center relative mb-6 shadow-sm">
+        <div class="w-full max-w-lg mx-auto px-4 mt-8">
+            <div class="w-40 aspect-[3/4] mx-auto bg-pink-50 rounded-2xl border-2 border-pink-100 flex items-center justify-center relative mb-8 shadow-sm">
                 <div class="absolute inset-2 border border-pink-200/60 rounded-xl"></div>
-                <span class="text-pink-300 font-bold text-xs text-center px-2">Birth Card Calculator</span>
+                <span class="text-pink-300 font-cute font-bold text-xs text-center px-2">Birth Card Calculator Cover</span>
             </div>
             
-            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-pink-200 shadow-md text-center">
-                <h3 class="font-bold text-lg text-purple-800 mb-2">Enter Your Birthday</h3>
-                <p class="text-xs text-gray-500 mb-4">Format: MM/DD/YYYY</p>
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-pink-200 shadow-md">
+                <h3 class="font-cute font-bold text-lg text-purple-800 mb-4">Enter Your Birthday</h3>
                 <input type="text" id="birthdate-input" 
                     placeholder="MM/DD/YYYY" 
                     oninput="handleBirthInput(event)"
-                    class="w-full px-5 py-3.5 rounded-2xl border-2 border-purple-300 focus:border-purple-700 focus:outline-none font-cute text-base text-center text-gray-800 tracking-widest bg-gray-50 shadow-inner mb-6"
+                    class="w-full px-5 py-4 rounded-2xl border-2 border-purple-300 focus:border-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-100 font-cute text-lg text-center text-gray-800 tracking-widest bg-gray-50 shadow-inner transition-all mb-6"
                 />
                 
-                <button id="btn-find-birth-cards" onclick="processBirthCards()" class="w-full bg-purple-700 text-white py-3.5 rounded-xl font-bold text-sm shadow-md transition-all opacity-50 pointer-events-none">
+                <button id="btn-find-birth-cards" onclick="processBirthCards()" class="w-full bg-purple-700 text-white py-4 rounded-xl font-cute font-bold text-sm shadow-md transition-all transform hover:-translate-y-1 opacity-50 pointer-events-none">
                     Find My Cards
                 </button>
-            </div>
 
-            <!-- Inline Result Section -->
-            <div id="birth-cards-output" class="mt-8 hidden space-y-6 text-left"></div>
+                <button id="btn-my-cards-reopen" onclick="showBirthCardsModal()" class="hidden w-full bg-pink-400 hover:bg-pink-500 text-white py-4 rounded-xl font-cute font-bold text-sm shadow-md transition-all transform hover:-translate-y-1">
+                    My Cards
+                </button>
+            </div>
         </div>
     `;
+    parentContainer.appendChild(viewDiv);
 }
 
 function handleBirthInput(e) {
@@ -842,69 +1602,119 @@ function handleBirthInput(e) {
     
     const btn = document.getElementById('btn-find-birth-cards');
     if (btn) {
-        if (val.length === 8) {
-            btn.classList.remove('opacity-50', 'pointer-events-none');
-        } else {
-            btn.classList.add('opacity-50', 'pointer-events-none');
-        }
+        if (val.length === 8) btn.classList.remove('opacity-50', 'pointer-events-none');
+        else btn.classList.add('opacity-50', 'pointer-events-none');
     }
 }
 
 function processBirthCards() {
     const inputEl = document.getElementById('birthdate-input');
     if (!inputEl) return;
-    const parts = inputEl.value.split('/');
+    const input = inputEl.value; 
+    const parts = input.split('/');
     if (parts.length !== 3 || parts[2].length !== 4) return;
     
     const mm = parts[0], dd = parts[1], yyyy = parts[2];
     const { pNum, sNum } = calculateTarotNumerology(mm, dd, yyyy);
     
-    const pCardData = TAROT_DECK.find(c => c.arcana === 'Major Arcana' && c.number === pNum) || TAROT_DECK[0];
-    const sCardData = TAROT_DECK.find(c => c.arcana === 'Major Arcana' && c.number === sNum) || TAROT_DECK[0];
+    const pCardData = TAROT_DECK.find(c => c.arcana === 'Major Arcana' && c.number === pNum);
+    const sCardData = TAROT_DECK.find(c => c.arcana === 'Major Arcana' && c.number === sNum);
     
     const pMeaning = getBirthCardMeaning(pNum);
     const sMeaning = getBirthCardMeaning(sNum);
     
-    const outputContainer = document.getElementById('birth-cards-output');
-    if (!outputContainer) return;
+    const grid = document.getElementById('birth-cards-results-grid');
+    if (!grid) return;
 
-    outputContainer.innerHTML = `
-        <div class="bg-gradient-to-br from-pink-50 to-white p-6 rounded-3xl border border-pink-200 shadow-sm space-y-4">
-            <div class="text-xs uppercase tracking-widest text-pink-400 font-bold text-center">Your Numerology Result</div>
-            
-            <!-- Personality Card -->
-            <div class="bg-white p-4 rounded-2xl border border-pink-100 flex items-center space-x-4 shadow-sm">
-                <div class="w-16 aspect-[2/3.3] rounded-lg border border-pink-100 overflow-hidden flex-shrink-0 bg-pink-50 flex items-center justify-center">
-                    ${pCardData.img ? `<img src="${pCardData.img}" class="w-full h-full object-contain" />` : `<span class="text-[8px] font-bold text-purple-800 p-1 text-center">${pCardData.name}</span>`}
-                </div>
-                <div>
-                    <div class="text-[9px] uppercase tracking-wider text-pink-400 font-bold">Personality Card</div>
-                    <h4 class="font-bold text-base text-purple-800">${pCardData.name}</h4>
-                    <p class="text-xs text-gray-600 mt-1 leading-relaxed">${pMeaning.p1}</p>
-                </div>
-            </div>
-
-            <!-- Soul Card -->
-            <div class="bg-white p-4 rounded-2xl border border-purple-100 flex items-center space-x-4 shadow-sm">
-                <div class="w-16 aspect-[2/3.3] rounded-lg border border-purple-100 overflow-hidden flex-shrink-0 bg-purple-50 flex items-center justify-center">
-                    ${sCardData.img ? `<img src="${sCardData.img}" class="w-full h-full object-contain" />` : `<span class="text-[8px] font-bold text-purple-800 p-1 text-center">${sCardData.name}</span>`}
-                </div>
-                <div>
-                    <div class="text-[9px] uppercase tracking-wider text-purple-400 font-bold">Soul Card</div>
-                    <h4 class="font-bold text-base text-purple-800">${sCardData.name}</h4>
-                    <p class="text-xs text-gray-600 mt-1 leading-relaxed">${sMeaning.s1}</p>
-                </div>
-            </div>
+    grid.innerHTML = `
+        <div class="p-4 bg-pink-50 rounded-2xl font-cute">
+            <h4 class="font-bold text-purple-800">Personality Card: ${pCardData ? pCardData.name : ''}</h4>
+            <p class="text-xs text-gray-600 mt-1">${pMeaning.p1}</p>
+        </div>
+        <div class="p-4 bg-purple-50 rounded-2xl font-cute mt-4">
+            <h4 class="font-bold text-purple-800">Soul Card: ${sCardData ? sCardData.name : ''}</h4>
+            <p class="text-xs text-gray-600 mt-1">${sMeaning.s1}</p>
         </div>
     `;
     
-    outputContainer.classList.remove('hidden');
-    outputContainer.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('btn-find-birth-cards')?.classList.add('hidden');
+    document.getElementById('btn-my-cards-reopen')?.classList.remove('hidden');
+    showBirthCardsModal();
+}
+
+function showBirthCardsModal() {
+    const modal = document.getElementById('birth-cards-modal');
+    if (modal) modal.classList.remove('opacity-0', 'pointer-events-none');
+}
+
+function closeBirthCardsModal() {
+    const modal = document.getElementById('birth-cards-modal');
+    if (modal) modal.classList.add('opacity-0', 'pointer-events-none');
 }
 
 // ==========================================
-// --- ORACLE SYSTEM LOGIC & CATEGORIES ---
+// --- ORACLE SYSTEM LOGIC & UI ---
 // ==========================================
+function ensureOracleHomeSections() {
+    const homeView = document.getElementById('view-home');
+    if (!homeView) return;
+
+    let oracleMainSection = document.getElementById('home-oracle-section');
+    if (!oracleMainSection) {
+        oracleMainSection = document.createElement('div');
+        oracleMainSection.id = 'home-oracle-section';
+        oracleMainSection.className = 'w-full max-w-lg mx-auto mb-10 px-4';
+        oracleMainSection.innerHTML = `
+            <div class="bg-gradient-to-br from-purple-50 via-pink-50 to-white rounded-3xl border-2 border-pink-200 p-6 shadow-sm text-left relative overflow-hidden">
+                <div class="w-full aspect-[16/9] bg-pink-100 rounded-2xl mb-5 overflow-hidden border border-pink-200 shadow-inner flex items-center justify-center">
+                    <span class="font-cute font-bold text-pink-300 text-sm">Oracle Deck Cover Banner</span>
+                </div>
+                <div class="text-[9px] uppercase tracking-widest text-pink-400 font-bold mb-1 font-cute">Companion Intuitive Deck</div>
+                <h3 class="font-cute font-bold text-2xl text-purple-800 mb-2">CuTarot Oracle Deck</h3>
+                <p class="font-cute text-xs text-gray-600 leading-relaxed mb-6">
+                    Oracle cards provide fluid, direct spiritual affirmations and gentle guidance. Use Oracle cards to set your intention for the day or seek immediate clarity for your heart.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <button onclick="navigate('oracle-draw')" class="flex-1 bg-purple-700 hover:bg-purple-800 text-white py-3.5 rounded-2xl font-cute font-bold text-xs shadow-md transition-all text-center">
+                        Draw Oracle Cards &rarr;
+                    </button>
+                    <button onclick="navigate('oracle-library')" class="bg-white hover:bg-pink-50 border border-pink-200 text-purple-800 py-3.5 px-5 rounded-2xl font-cute font-bold text-xs transition-colors text-center">
+                        Oracle Library
+                    </button>
+                </div>
+            </div>
+        `;
+        const birthCalcEl = document.getElementById('home-birth-calculator');
+        if (birthCalcEl) {
+            birthCalcEl.parentNode.insertBefore(oracleMainSection, birthCalcEl);
+        } else {
+            homeView.appendChild(oracleMainSection);
+        }
+    }
+
+    let dailyTarotEl = document.getElementById('inline-daily-card')?.parentElement || document.getElementById('btn-daily-card')?.parentElement;
+    let dailyOracleSection = document.getElementById('home-daily-oracle-section');
+    if (!dailyOracleSection && dailyTarotEl) {
+        dailyOracleSection = document.createElement('div');
+        dailyOracleSection.id = 'home-daily-oracle-section';
+        dailyOracleSection.className = 'w-full max-w-md mx-auto mt-6 pt-6 border-t border-pink-100 text-center font-cute';
+        dailyOracleSection.innerHTML = `
+            <div class="bg-white/80 border border-pink-100 rounded-2xl p-4 shadow-sm">
+                <div class="text-[9px] uppercase tracking-widest text-pink-400 font-bold mb-1">Gentle Affirmation</div>
+                <h4 class="font-bold text-sm text-purple-800 mb-3">Today's Oracle Insight</h4>
+                <div id="inline-oracle-daily" class="hidden flex-col items-center mb-3"></div>
+                <button id="btn-oracle-daily" onclick="toggleDailyOracleCard()" class="bg-pink-100 hover:bg-pink-200 text-purple-800 px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-sm">
+                    Draw Daily Oracle
+                </button>
+                <div class="mt-3">
+                    <span onclick="navigate('generic', 'About Oracle')" class="cursor-pointer text-[10px] text-pink-400 hover:text-pink-600 underline font-bold">What is Oracle & how to use it?</span>
+                </div>
+            </div>
+        `;
+        dailyTarotEl.parentNode.insertBefore(dailyOracleSection, dailyTarotEl.nextSibling);
+    }
+}
+
 function toggleDailyOracleCard() {
     const todayStr = getTodayDateString();
     let savedData = localStorage.getItem('cutarot_oracle_daily');
@@ -946,121 +1756,85 @@ function checkDailyOracleCard() {
     let savedData = localStorage.getItem('cutarot_oracle_daily');
     if (savedData) {
         const parsed = JSON.parse(savedData);
-        if (parsed.date === todayStr) toggleDailyOracleCard();
+        if (parsed.date === todayStr) {
+            toggleDailyOracleCard();
+        }
     }
 }
 
 function initOracleViews() {
+    if (document.getElementById('view-oracle-library')) return;
     const homeView = document.getElementById('view-home');
     if (!homeView) return;
     const parentContainer = homeView.parentNode;
 
-    // 1. Oracle Library View
-    if (!document.getElementById('view-oracle-library')) {
-        const libView = document.createElement('div');
-        libView.id = 'view-oracle-library';
-        libView.className = 'view-section pb-24 text-center';
-        libView.innerHTML = `
-            ${renderNavHeaderHTML('Oracle Library')}
-            <div class="w-full max-w-4xl mx-auto px-4 mt-2 font-cute">
-                <h1 class="font-bold text-3xl text-purple-800 mb-4">Oracle Library</h1>
-                
-                <!-- 5 Oracle Categories Filter Tabs -->
-                <div id="oracle-category-filters" class="flex flex-wrap justify-center gap-2 mb-6"></div>
+    const libView = document.createElement('div');
+    libView.id = 'view-oracle-library';
+    libView.className = 'view-section pb-24 text-center';
+    libView.innerHTML = `
+        <div class="w-full max-w-4xl mx-auto px-4 mt-6">
+            <span onclick="navigate('home')" class="cursor-pointer text-xs font-cute text-pink-400 hover:text-pink-600">&larr; Back to Home</span>
+            <h1 class="font-cute font-bold text-3xl text-purple-800 mt-2 mb-6">Oracle Library</h1>
+            <div id="oracle-library-grid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4"></div>
+        </div>
+    `;
+    parentContainer.appendChild(libView);
 
-                <div id="oracle-library-grid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4"></div>
+    const drawView = document.createElement('div');
+    drawView.id = 'view-oracle-draw';
+    drawView.className = 'view-section pb-24 text-center';
+    drawView.innerHTML = `
+        <div class="w-full max-w-lg mx-auto px-4 mt-6">
+            <span onclick="navigate('home')" class="cursor-pointer text-xs font-cute text-pink-400 hover:text-pink-600">&larr; Back to Home</span>
+            <h1 class="font-cute font-bold text-3xl text-purple-800 mt-2 mb-4">Draw Oracle Cards</h1>
+            
+            <div id="oracle-step-config" class="bg-white p-6 rounded-3xl border border-pink-100 shadow-sm mb-6">
+                <div class="text-xs font-bold text-purple-800 font-cute mb-3">Select How Many Cards (1-10)</div>
+                <div id="oracle-num-selector" class="flex flex-wrap justify-center gap-2 mb-6"></div>
+                <button onclick="startOracleDrawProcess()" class="w-full bg-purple-700 text-white py-3.5 rounded-xl font-cute font-bold text-sm shadow-md">
+                    Start Drawing
+                </button>
             </div>
-        `;
-        parentContainer.appendChild(libView);
-    }
 
-    // 2. Oracle Draw View
-    if (!document.getElementById('view-oracle-draw')) {
-        const drawView = document.createElement('div');
-        drawView.id = 'view-oracle-draw';
-        drawView.className = 'view-section pb-24 text-center';
-        drawView.innerHTML = `
-            ${renderNavHeaderHTML('Draw Oracle')}
-            <div class="w-full max-w-lg mx-auto px-4 mt-2 font-cute">
-                <h1 class="font-bold text-3xl text-purple-800 mb-4">Draw Oracle Cards</h1>
-                
-                <div id="oracle-step-config" class="bg-white p-6 rounded-3xl border border-pink-100 shadow-sm mb-6">
-                    <div class="text-xs font-bold text-purple-800 mb-3">Select How Many Cards (1-10)</div>
-                    <div id="oracle-num-selector" class="flex flex-wrap justify-center gap-2 mb-6"></div>
-                    <button onclick="startOracleDrawProcess()" class="w-full bg-purple-700 text-white py-3.5 rounded-xl font-bold text-sm shadow-md">
-                        Start Drawing
-                    </button>
-                </div>
-
-                <div id="oracle-step-draw" class="hidden flex-col items-center">
-                    <div id="oracle-deck-cards" class="flex justify-center gap-2 my-8 flex-wrap"></div>
-                    <button id="btn-oracle-reveal" onclick="renderOracleResult()" class="hidden bg-pink-400 text-white px-8 py-3 rounded-xl font-bold text-sm shadow-md">
-                        Reveal Oracle Reading
-                    </button>
-                </div>
-
-                <div id="oracle-step-result" class="hidden flex-col items-center space-y-6"></div>
+            <div id="oracle-step-draw" class="hidden flex-col items-center">
+                <div id="oracle-deck-cards" class="flex justify-center gap-2 my-8 flex-wrap"></div>
+                <button id="btn-oracle-reveal" onclick="renderOracleResult()" class="hidden bg-pink-400 text-white px-8 py-3 rounded-xl font-cute font-bold text-sm shadow-md">
+                    Reveal Oracle Reading
+                </button>
             </div>
-        `;
-        parentContainer.appendChild(drawView);
-    }
 
-    // 3. Oracle Detail View
-    if (!document.getElementById('view-oracle-detail')) {
-        const detailView = document.createElement('div');
-        detailView.id = 'view-oracle-detail';
-        detailView.className = 'view-section pb-24 text-center';
-        detailView.innerHTML = `
-            ${renderNavHeaderHTML('Oracle Detail')}
-            <div class="w-full max-w-xl mx-auto px-4 mt-2">
-                <div id="oracle-detail-content" class="text-left"></div>
-            </div>
-        `;
-        parentContainer.appendChild(detailView);
-    }
+            <div id="oracle-step-result" class="hidden flex-col items-center space-y-6"></div>
+        </div>
+    `;
+    parentContainer.appendChild(drawView);
+
+    const detailView = document.createElement('div');
+    detailView.id = 'view-oracle-detail';
+    detailView.className = 'view-section pb-24 text-center';
+    detailView.innerHTML = `
+        <div class="w-full max-w-xl mx-auto px-4 mt-6">
+            <span onclick="navigate('oracle-library')" class="cursor-pointer text-xs font-cute text-pink-400 hover:text-pink-600">&larr; Back to Oracle Library</span>
+            <div id="oracle-detail-content" class="mt-6 text-left"></div>
+        </div>
+    `;
+    parentContainer.appendChild(detailView);
 }
 
-let activeOracleCategory = 'All';
-function renderOracleLibrary(category = 'All') {
-    activeOracleCategory = category;
-    
-    const categories = [
-        'All',
-        'Inner Peace & Healing',
-        'Guidance & Wisdom',
-        'Mindset & Clarity',
-        'Soul & Spirit',
-        'Life Journey & Action'
-    ];
-
-    const filterContainer = document.getElementById('oracle-category-filters');
-    if (filterContainer) {
-        let filterHtml = '';
-        categories.forEach(cat => {
-            const active = activeOracleCategory === cat ? 'bg-purple-700 text-white shadow-sm' : 'bg-pink-50 text-purple-800 border border-pink-100 hover:bg-pink-100';
-            filterHtml += `<button onclick="renderOracleLibrary('${cat}')" class="px-3.5 py-1.5 rounded-full text-xs font-bold transition-all ${active}">${cat}</button>`;
-        });
-        filterContainer.innerHTML = filterHtml;
-    }
-
+function renderOracleLibrary() {
     const grid = document.getElementById('oracle-library-grid');
     if (!grid) return;
     let html = '';
-    
     ORACLE_DECK.forEach((card, idx) => {
-        if (activeOracleCategory === 'All' || card.category === activeOracleCategory) {
-            html += `
-                <div onclick="showOracleDetail(${idx})" class="cursor-pointer transform transition-transform hover:-translate-y-1">
-                    <div class="w-full aspect-[2/3.3] rounded-xl border border-pink-100 bg-white flex flex-col items-center justify-center p-2 text-center shadow-sm overflow-hidden relative">
-                        ${card.img 
-                            ? `<img src="${card.img}" class="w-full h-full object-contain" />` 
-                            : `<div class="text-[10px] font-bold text-purple-800 leading-tight">${card.name}</div>
-                               <div class="text-[8px] text-pink-400 mt-1">${card.category.split(' ')[0]}</div>`
-                        }
-                    </div>
+        html += `
+            <div onclick="showOracleDetail(${idx})" class="cursor-pointer transform transition-transform hover:-translate-y-1">
+                <div class="w-full aspect-[2/3.3] rounded-xl border border-pink-100 bg-white flex flex-col items-center justify-center p-2 text-center shadow-sm overflow-hidden relative">
+                    ${card.img 
+                        ? `<img src="${card.img}" class="w-full h-full object-contain" />` 
+                        : `<div class="text-xs font-cute font-bold text-purple-800">${card.name}</div>`
+                    }
                 </div>
-            `;
-        }
+            </div>
+        `;
     });
     grid.innerHTML = html;
 }
@@ -1075,10 +1849,7 @@ function showOracleDetail(idx) {
             <div class="w-48 aspect-[2/3.3] mx-auto rounded-2xl border border-pink-100 overflow-hidden shadow-md flex items-center justify-center bg-pink-50">
                 ${card.img ? `<img src="${card.img}" class="w-full h-full object-contain" />` : `<span class="font-bold text-purple-800">${card.name}</span>`}
             </div>
-            <div class="text-center">
-                <span class="px-3 py-1 bg-pink-100 text-pink-600 text-[10px] font-bold rounded-full">${card.category}</span>
-                <h2 class="text-2xl font-bold text-purple-800 mt-2">${card.name}</h2>
-            </div>
+            <h2 class="text-2xl font-bold text-purple-800 text-center">${card.name}</h2>
             <div class="p-4 bg-pink-50/50 rounded-2xl border border-pink-100">
                 <h4 class="text-xs font-bold text-pink-500 uppercase tracking-wider mb-1">Oracle Affirmation</h4>
                 <p class="text-sm text-gray-700 leading-relaxed">${card.desc}</p>
@@ -1147,7 +1918,7 @@ function renderOracleResult() {
         html += `
             <div class="bg-white p-5 rounded-3xl border border-pink-100 shadow-sm w-full text-left font-cute space-y-2">
                 <div class="w-24 aspect-[2/3.3] rounded-xl border border-pink-100 overflow-hidden mb-2 shadow-sm flex items-center justify-center bg-pink-50 mx-auto">
-                    ${card.img ? `<img src="${card.img}" class="w-full h-full object-contain" />` : `<span class="text-xs font-bold text-purple-800 text-center">${card.name}</span>`}
+                    ${card.img ? `<img src="${card.img}" class="w-full h-full object-contain" />` : `<span class="text-xs font-bold text-purple-800">${card.name}</span>`}
                 </div>
                 <h4 class="font-bold text-lg text-purple-800 text-center">${card.name}</h4>
                 <p class="text-xs text-gray-600 leading-relaxed text-center">${card.desc}</p>
@@ -1159,298 +1930,6 @@ function renderOracleResult() {
 }
 
 // ==========================================
-// --- GENERIC PAGES & SHOP NOW PAGE ---
-// ==========================================
-function renderGenericPage(title) {
-    const titleEl = document.getElementById('generic-title');
-    if (titleEl) titleEl.innerText = title;
-    
-    const content = document.getElementById('generic-content');
-    if (!content) return;
-    
-    let htmlHeader = renderNavHeaderHTML(title);
-
-    if (title === 'Shop Now' || title === 'Buy CuTarot Deck') {
-        content.innerHTML = `
-            ${htmlHeader}
-            <div class="space-y-6 text-left font-cute max-w-xl mx-auto">
-                <div class="bg-gradient-to-br from-pink-100 via-purple-50 to-white p-6 sm:p-8 rounded-3xl border border-pink-200 shadow-md text-center">
-                    <div class="w-48 aspect-[3/4] mx-auto bg-pink-200/60 rounded-2xl mb-4 border-2 border-pink-300 flex items-center justify-center shadow-inner">
-                        <span class="font-bold text-purple-800 text-sm">CuTarot Physical Deck Box</span>
-                    </div>
-                    <h2 class="font-bold text-2xl text-purple-800">CuTarot Deck Edition</h2>
-                    <p class="text-xs text-pink-500 font-bold mt-1">Include 78 Tarot Cards + 50 Oracle Cards + Guidebook</p>
-                    
-                    <div class="mt-6 space-y-3">
-                        <a href="https://shopee.co.id" target="_blank" class="block w-full bg-purple-700 hover:bg-purple-800 text-white py-3.5 rounded-2xl font-bold text-sm shadow-md text-center transition-all">
-                            Order on Shopee
-                        </a>
-                        <a href="https://tokopedia.com" target="_blank" class="block w-full bg-white hover:bg-pink-50 border-2 border-pink-200 text-purple-800 py-3.5 rounded-2xl font-bold text-sm text-center transition-all">
-                            Order on Tokopedia
-                        </a>
-                    </div>
-                </div>
-            </div>
-        `;
-    } else if (title === 'About Tarot') {
-        content.innerHTML = `
-            ${htmlHeader}
-            <div class="space-y-6 text-left font-cute max-w-xl mx-auto">
-                <div class="bg-pink-50/40 p-6 sm:p-8 rounded-3xl border border-pink-100 shadow-sm">
-                    <h3 class="font-bold text-2xl text-purple-800 mb-3">Discovering the World of Tarot</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">
-                        Tarot is a mirror of the soul reflecting the depths of the subconscious mind, emotions, and human potential through visual symbolism.
-                    </p>
-                </div>
-            </div>
-        `;
-    } else if (title === 'About Oracle') {
-        content.innerHTML = `
-            ${htmlHeader}
-            <div class="space-y-6 text-left font-cute max-w-xl mx-auto">
-                <div class="bg-pink-50/40 p-6 sm:p-8 rounded-3xl border border-pink-100 shadow-sm">
-                    <h3 class="font-bold text-2xl text-purple-800 mb-3">Understanding Oracle Cards</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">
-                        Oracle cards are fluid, direct spiritual tools without rigid system rules. They offer affirmations and gentle daily guidance.
-                    </p>
-                </div>
-            </div>
-        `;
-    } else if (title === 'Personal Reading') {
-        content.innerHTML = `
-            ${htmlHeader}
-            <div class="space-y-6 text-left font-cute max-w-xl mx-auto">
-                <div class="text-center mb-6">
-                    <div class="w-20 h-20 bg-pink-100 rounded-full mx-auto mb-3 border-2 border-pink-200 flex items-center justify-center text-purple-800 font-bold text-xl">M</div>
-                    <h2 class="font-bold text-2xl text-purple-800">Hi, I'm Mai</h2>
-                    <p class="text-xs text-pink-500 font-bold">Creator of CuTarot</p>
-                </div>
-                <p class="text-sm text-gray-600 leading-relaxed">
-                    CuTarot was created to make Rider Waite Smith symbolism friendly, intuitive, and easy to understand for everyone.
-                </p>
-            </div>
-        `;
-    }
-}
-
-// ==========================================
-// --- DASHBOARD SEARCH SYSTEM ---
-// ==========================================
-function ensureDashboardSearch() {
-    const homeView = document.getElementById('view-home');
-    if (!homeView) return;
-    let container = document.getElementById('dashboard-search-container');
-    if (!container) {
-        container = document.createElement('div');
-        container.id = 'dashboard-search-container';
-        container.className = 'w-full max-w-lg mx-auto mb-6 px-4 pt-4';
-        container.innerHTML = `
-            <div class="relative font-cute">
-                <input type="text" id="dashboard-search-input" 
-                    placeholder="Explore CuTarot cards, spreads, sections..." 
-                    oninput="handleDashboardSearch(this.value)"
-                    class="w-full px-5 py-3 rounded-2xl border-2 border-purple-200 focus:border-purple-700 focus:outline-none font-cute text-sm text-gray-700 bg-white shadow-sm transition-all text-center"
-                />
-                <div id="dashboard-search-results" class="absolute left-0 right-0 mt-2 bg-white rounded-2xl shadow-xl border border-pink-100 max-h-60 overflow-y-auto hidden z-50 p-2 space-y-1 text-xs text-left"></div>
-            </div>
-        `;
-        homeView.insertBefore(container, homeView.firstChild);
-    }
-}
-
-function handleDashboardSearch(query) {
-    const resultsEl = document.getElementById('dashboard-search-results');
-    if (!resultsEl) return;
-    if (!query || query.trim() === '') {
-        resultsEl.classList.add('hidden');
-        resultsEl.innerHTML = '';
-        return;
-    }
-    const q = query.toLowerCase();
-    let matches = [];
-
-    SPREADS.forEach(s => {
-        if (s.name.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q)) {
-            matches.push({ type: 'Spread', title: s.name, desc: s.desc, action: () => navigate('draw') });
-        }
-    });
-
-    ZODIAC_DATA.forEach(z => {
-        if (z.name.toLowerCase().includes(q) || z.element.toLowerCase().includes(q)) {
-            matches.push({ type: 'Zodiac', title: z.name, desc: z.dateRange, action: () => showZodiac(z.id) });
-        }
-    });
-
-    TAROT_DECK.forEach((c, idx) => {
-        if (c.name.toLowerCase().includes(q) || c.arcana.toLowerCase().includes(q)) {
-            matches.push({ type: 'Tarot Card', title: c.name, desc: c.arcana, action: () => showCardDetail(idx) });
-        }
-    });
-
-    ORACLE_DECK.forEach((o, idx) => {
-        if (o.name.toLowerCase().includes(q) || o.category.toLowerCase().includes(q)) {
-            matches.push({ type: 'Oracle Card', title: o.name, desc: o.category, action: () => showOracleDetail(idx) });
-        }
-    });
-
-    const sections = [
-        { name: 'Birth Card Calculator', desc: 'Find Soul & Personality cards', action: () => navigate('birth-calculator') },
-        { name: 'Oracle Deck & Draw', desc: 'Fluid intuitive card readings', action: () => navigate('oracle-draw') },
-        { name: 'Oracle Library', desc: 'Browse all 50 Oracle cards', action: () => navigate('oracle-library') },
-        { name: 'Articles & Guides', desc: 'Read CuTarot articles', action: () => navigate('home', 'home-articles-section') },
-        { name: 'Shop Now', desc: 'Get physical CuTarot deck', action: () => navigate('generic', 'Shop Now') }
-    ];
-
-    sections.forEach(sec => {
-        if (sec.name.toLowerCase().includes(q) || sec.desc.toLowerCase().includes(q)) {
-            matches.push({ type: 'Section', title: sec.name, desc: sec.desc, action: sec.action });
-        }
-    });
-    
-    if (matches.length === 0) {
-        resultsEl.innerHTML = `<div class="p-3 text-center text-pink-400">No results found for "${query}"</div>`;
-    } else {
-        resultsEl.innerHTML = '';
-        matches.slice(0, 8).forEach(m => {
-            const itemEl = document.createElement('div');
-            itemEl.className = 'p-2.5 hover:bg-pink-50 rounded-xl cursor-pointer transition-colors flex justify-between items-center font-cute';
-            itemEl.innerHTML = `
-                <div>
-                    <div class="font-bold text-purple-800">${m.title}</div>
-                    <div class="text-[10px] text-gray-500">${m.desc}</div>
-                </div>
-                <span class="px-2 py-0.5 bg-pink-100 text-purple-700 text-[9px] rounded-full font-bold">${m.type}</span>
-            `;
-            itemEl.onclick = () => {
-                m.action();
-                resultsEl.classList.add('hidden');
-            };
-            resultsEl.appendChild(itemEl);
-        });
-    }
-    resultsEl.classList.remove('hidden');
-}
-
-// ==========================================
-// --- TAROT LIBRARY & CARD DETAILS ---
-// ==========================================
-function ensureLibrarySearch() {
-    const filtersEl = document.getElementById('card-filters');
-    if (!filtersEl) return;
-    let container = document.getElementById('library-search-container');
-    if (!container) {
-        container = document.createElement('div');
-        container.id = 'library-search-container';
-        container.className = 'w-full max-w-md mx-auto mb-6 px-4';
-        container.innerHTML = `
-            <input type="text" id="library-search-input" 
-                placeholder="Find CuTarot card" 
-                oninput="filterLibrary(window.currentLibraryFilter || 'All', this.value)"
-                class="w-full px-4 py-3 rounded-2xl border-2 border-pink-200 focus:border-purple-700 focus:outline-none font-cute text-sm text-gray-700 bg-white shadow-sm transition-all text-center"
-            />
-        `;
-        filtersEl.parentNode.insertBefore(container, filtersEl.nextSibling);
-    }
-}
-
-window.currentLibraryFilter = 'All';
-function filterLibrary(filter, searchTerm = '') {
-    window.currentLibraryFilter = filter;
-    const input = document.getElementById('library-search-input');
-    const term = searchTerm !== '' ? searchTerm : (input ? input.value : '');
-    
-    const grid = document.getElementById('library-grid');
-    if (!grid) return;
-    let html = '';
-    TAROT_DECK.forEach((card, index) => {
-        const isMajor = card.arcana === 'Major Arcana';
-        const suit = isMajor ? null : card.name.split(' of ')[1];
-        
-        let isMatchCategory = (filter === 'All') || 
-                              (filter === 'Major Arcana' && isMajor) || 
-                              (filter === suit);
-        
-        let isMatchSearch = term === '' || card.name.toLowerCase().includes(term.toLowerCase());
-        
-        if (isMatchCategory && isMatchSearch) {
-            html += `
-                <div onclick="showCardDetail(${index})" class="cursor-pointer transform transition-transform hover:-translate-y-1">
-                    <div class="w-full aspect-[2/3.3] rounded-xl flex flex-col items-center justify-center text-center shadow-sm relative overflow-hidden ${card.img ? '' : 'bg-white border border-pink-100 p-2'}">
-                        ${card.img 
-                            ? `<img src="${card.img}" alt="${card.name}" class="w-full h-full object-contain" />`
-                            : `<div class="text-[9px] text-pink-400 font-cute font-bold uppercase mb-1">${isMajor ? 'Major' : suit}</div>
-                               <div class="text-xs font-cute font-bold text-gray-800 leading-tight">${card.name}</div>`
-                        }
-                    </div>
-                </div>
-            `;
-        }
-    });
-    grid.innerHTML = html;
-}
-
-function showCardDetail(index) {
-    const card = TAROT_DECK[index];
-    const detailContent = document.getElementById('card-detail-content');
-    if (!detailContent) return;
-
-    detailContent.innerHTML = `
-        ${renderNavHeaderHTML(card.name)}
-        <div class="flex flex-col md:flex-row gap-8 lg:gap-12 font-cute max-w-2xl mx-auto">
-            <div class="w-full md:w-1/3 flex justify-center">
-                <div class="w-48 md:w-full aspect-[2/3.3] rounded-2xl flex flex-col items-center justify-center shadow-md relative overflow-hidden bg-pink-50 border border-pink-100">
-                    ${card.img 
-                        ? `<img src="${card.img}" alt="${card.name}" class="w-full h-full object-contain rounded-2xl" />`
-                        : `<h2 class="font-bold text-2xl text-purple-800 text-center p-4">${card.name}</h2>`
-                    }
-                </div>
-            </div>
-            
-            <div class="w-full md:w-2/3 space-y-4 text-left">
-                <div>
-                    <h1 class="font-bold text-3xl text-purple-800">${card.name}</h1>
-                    <p class="text-xs text-pink-500 font-bold uppercase tracking-wider">${card.arcana}</p>
-                </div>
-
-                <div class="p-4 bg-pink-50/50 rounded-2xl border border-pink-100 space-y-2">
-                    <h3 class="font-bold text-sm text-purple-800">Upright Meaning</h3>
-                    <p class="text-xs text-gray-600 leading-relaxed">${card.upright}</p>
-                </div>
-
-                <div class="p-4 bg-gray-50 rounded-2xl border border-gray-100 space-y-2">
-                    <h3 class="font-bold text-sm text-gray-700">Reversed Meaning</h3>
-                    <p class="text-xs text-gray-600 leading-relaxed">${card.reversed}</p>
-                </div>
-            </div>
-        </div>
-    `;
-    
-    navigate('card-detail');
-}
-
-function showZodiac(id) {
-    const z = ZODIAC_DATA.find(item => item.id === id);
-    if (!z) return;
-    
-    const detailContent = document.getElementById('zodiac-detail-content');
-    if (!detailContent) return;
-
-    detailContent.innerHTML = `
-        ${renderNavHeaderHTML(z.name)}
-        <div class="text-center font-cute max-w-xl mx-auto">
-            <div class="text-pink-400 mb-2 w-12 h-12 mx-auto"><svg viewBox="0 0 24 24" class="w-full h-full">${z.svg}</svg></div>
-            <h1 class="font-bold text-3xl text-purple-800 mb-1">${z.name}</h1>
-            <p class="text-xs text-pink-400 font-bold mb-4">${z.dateRange}</p>
-            <div class="bg-pink-50/40 p-6 rounded-3xl border border-pink-100 text-gray-600 text-sm leading-relaxed text-left space-y-3">
-                <p>${z.desc}</p>
-            </div>
-        </div>
-    `;
-    
-    navigate('zodiac');
-}
-
-// ==========================================
 // --- INITIALIZATION ---
 // ==========================================
 window.onload = function() {
@@ -1458,14 +1937,16 @@ window.onload = function() {
     ensureHeaderBuyIcon();
     
     initOracleViews();
-    ensureHomepageLayout();
+    ensureOracleHomeSections();
+    ensureArticlesSection();
+    ensureBirthCalculatorHome(); 
     
     updateDrawerMenu();
     checkDailyOracleCard();
     checkDailyCard();
     
     const spreadsGrid = document.getElementById('home-spreads-grid');
-    if (spreadsGrid) {
+    if(spreadsGrid) {
         let spreadHtml = '';
         SPREADS.forEach((s, i) => {
             spreadHtml += `
@@ -1475,10 +1956,12 @@ window.onload = function() {
                 </div>`;
         });
         spreadsGrid.innerHTML = spreadHtml;
+        const drawSpreadsGrid = document.getElementById('draw-spreads-grid');
+        if (drawSpreadsGrid) drawSpreadsGrid.innerHTML = spreadHtml;
     }
 
     const zodiacGrid = document.getElementById('home-zodiac-grid');
-    if (zodiacGrid) {
+    if(zodiacGrid) {
         let zodiacHtml = '';
         ZODIAC_DATA.forEach(z => {
             zodiacHtml += `
@@ -1491,5 +1974,5 @@ window.onload = function() {
         zodiacGrid.innerHTML = zodiacHtml;
     }
 
-    ensureFooterPosition();
+    setTimeout(setupScrollAnimations, 100);
 };
