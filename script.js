@@ -1264,6 +1264,7 @@ function ensureDashboardSearch() {
 }
 
 function handleDashboardSearch(query) {
+function handleDashboardSearch(query) {
     const resultsEl = document.getElementById('dashboard-search-results');
     if (!resultsEl) return;
     if (!query || query.trim() === '') {
@@ -1273,46 +1274,76 @@ function handleDashboardSearch(query) {
     }
     const q = query.toLowerCase();
     let matches = [];
+
+    // 1. Search Spreads
     SPREADS.forEach(s => {
         if (s.name.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q)) {
-            matches.push({ type: 'Spread', title: s.name, desc: s.desc, actionType: 'spread' });
+            matches.push({ type: 'Tarot Spread', title: s.name, desc: s.desc, action: () => navigate('draw') });
         }
     });
+
+    // 2. Search Zodiac
     ZODIAC_DATA.forEach(z => {
         if (z.name.toLowerCase().includes(q) || z.element.toLowerCase().includes(q)) {
-            matches.push({ type: 'Zodiac', title: z.name, desc: z.dateRange, id: z.id, actionType: 'zodiac' });
+            matches.push({ type: 'Zodiac', title: z.name, desc: z.dateRange, action: () => showZodiac(z.id) });
         }
     });
+
+    // 3. Search Tarot Cards
     TAROT_DECK.forEach((c, idx) => {
         if (c.name.toLowerCase().includes(q) || c.arcana.toLowerCase().includes(q)) {
-            matches.push({ type: 'Tarot Card', title: c.name, desc: c.arcana, index: idx, actionType: 'card' });
+            matches.push({ type: 'Tarot Card', title: c.name, desc: c.arcana, action: () => showCardDetail(idx) });
+        }
+    });
+
+    // 4. Search Oracle Cards
+    ORACLE_DECK.forEach((o, idx) => {
+        if (o.name.toLowerCase().includes(q) || o.desc.toLowerCase().includes(q)) {
+            matches.push({ type: 'Oracle Card', title: o.name, desc: 'Oracle Deck', action: () => showOracleDetail(idx) });
+        }
+    });
+
+    // 5. Search Web Sections & Pages
+    const sections = [
+        { name: 'Birth Card Calculator', desc: 'Find your Soul & Personality cards', action: () => { initBirthCalculatorPage(); navigate('birth-calculator'); } },
+        { name: 'Oracle Deck & Draw', desc: 'Fluid intuitive card readings', action: () => navigate('oracle-draw') },
+        { name: 'Oracle Library', desc: 'Browse all 50 Oracle cards', action: () => navigate('oracle-library') },
+        { name: 'About Oracle', desc: 'Learn how to use Oracle cards', action: () => navigate('generic', 'About Oracle') },
+        { name: 'Articles & Guides', desc: 'Read CuTarot articles', action: () => navigate('home', 'home-articles-section') },
+        { name: 'Buy CuTarot Deck', desc: 'Get your physical deck', action: () => navigate('generic', 'Personal Reading') },
+        { name: 'About Tarot', desc: 'History and philosophy of Tarot', action: () => navigate('generic', 'About Tarot') }
+    ];
+
+    sections.forEach(sec => {
+        if (sec.name.toLowerCase().includes(q) || sec.desc.toLowerCase().includes(q)) {
+            matches.push({ type: 'Page / Section', title: sec.name, desc: sec.desc, action: sec.action });
         }
     });
     
     if (matches.length === 0) {
         resultsEl.innerHTML = `<div class="p-3 text-center text-pink-400">No results found for "${query}"</div>`;
     } else {
-        let html = '';
-        matches.slice(0, 8).forEach(m => {
-            let clickAttr = '';
-            if (m.actionType === 'card') clickAttr = `showCardDetail(${m.index})`;
-            else if (m.actionType === 'zodiac') clickAttr = `showZodiac('${m.id}')`;
-            else if (m.actionType === 'spread') clickAttr = `navigate('draw')`;
-
-            html += `
-                <div onclick="${clickAttr}; document.getElementById('dashboard-search-results').classList.add('hidden');" class="p-2.5 hover:bg-pink-50 rounded-xl cursor-pointer transition-colors flex justify-between items-center">
-                    <div>
-                        <div class="font-bold text-purple-800">${m.title}</div>
-                        <div class="text-[10px] text-gray-500">${m.desc}</div>
-                    </div>
-                    <span class="px-2 py-0.5 bg-pink-100 text-purple-700 text-[9px] rounded-full font-bold">${m.type}</span>
+        resultsEl.innerHTML = '';
+        matches.slice(0, 8).forEach((m, i) => {
+            const itemEl = document.createElement('div');
+            itemEl.className = 'p-2.5 hover:bg-pink-50 rounded-xl cursor-pointer transition-colors flex justify-between items-center font-cute';
+            itemEl.innerHTML = `
+                <div>
+                    <div class="font-bold text-purple-800">${m.title}</div>
+                    <div class="text-[10px] text-gray-500">${m.desc}</div>
                 </div>
+                <span class="px-2 py-0.5 bg-pink-100 text-purple-700 text-[9px] rounded-full font-bold">${m.type}</span>
             `;
+            itemEl.onclick = () => {
+                m.action();
+                resultsEl.classList.add('hidden');
+            };
+            resultsEl.appendChild(itemEl);
         });
-        resultsEl.innerHTML = html;
     }
     resultsEl.classList.remove('hidden');
 }
+
 
 // ==========================================
 // --- TAROT BIRTH CALCULATOR SYSTEM ---
