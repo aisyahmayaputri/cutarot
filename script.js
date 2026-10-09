@@ -82,10 +82,9 @@ const SPREADS = [
 // --- COMPLETE 78 TRADITIONAL TAROT DECK ---
 // ==========================================
 const TAROT_DECK = [
-    // Major Arcana (0 - 21)
     {
         name: 'The Fool', arcana: 'Major Arcana', number: 0, yesNo: 'Yes', astrology: 'Uranus',
-        img: '[https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg](https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg)',
+        img: 'https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg',
         upright: 'New beginnings, innocence, spontaneity, a leap of faith into the unknown, and taking a bold first step on a grand adventure.',
         reversed: 'Recklessness, risk-taking without foresight, hesitation, folly, or holding back out of unwarranted fear.',
         love: 'A fresh, exciting romance filled with spontaneity. For singles, expect unexpected new romantic potentials.'
@@ -641,7 +640,7 @@ function toggleOption(opt, val) {
 }
 
 // ==========================================
-// --- CORE FUNCTIONS ---
+// --- UI & NAVIGATION FUNCTIONS ---
 // ==========================================
 function toggleMenu() {
     const menu = document.getElementById('drawer-menu');
@@ -654,6 +653,67 @@ function toggleMenu() {
         menu.classList.remove('-translate-x-full');
         overlay.classList.remove('opacity-0', 'pointer-events-none');
     }
+}
+
+function updateDrawerMenu() {
+    const drawer = document.getElementById('drawer-menu');
+    if (!drawer) return;
+    
+    let nav = drawer.querySelector('nav');
+    if (!nav) {
+        nav = document.createElement('nav');
+        nav.className = 'flex flex-col space-y-1 p-4 font-cute text-sm font-bold text-gray-700';
+        drawer.appendChild(nav);
+    }
+    
+    nav.innerHTML = `
+        <a href="#" onclick="event.preventDefault(); navigate('home');" class="px-4 py-2.5 hover:bg-pink-50 text-purple-800 rounded-xl transition-colors">Home</a>
+        
+        <!-- Submenu All Cards (Tarot Library) -->
+        <div class="py-1">
+            <div class="px-4 py-1 text-[10px] uppercase tracking-wider text-pink-400 font-bold">Tarot Library</div>
+            <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('All');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">All Tarot Cards</a>
+            <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Major Arcana');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">Major Arcana</a>
+            <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Wands');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">Suit of Wands</a>
+            <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Cups');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">Suit of Cups</a>
+            <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Swords');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">Suit of Swords</a>
+            <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Pentacles');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">Suit of Pentacles</a>
+        </div>
+
+        <!-- Submenu Oracle -->
+        <div class="py-1">
+            <div class="px-4 py-1 text-[10px] uppercase tracking-wider text-pink-400 font-bold">Oracle System</div>
+            <a href="#" onclick="event.preventDefault(); navigate('oracle-draw');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">Draw Oracle Cards</a>
+            <a href="#" onclick="event.preventDefault(); toggleDailyOracleCard(); navigate('home', 'home-daily-oracle-section');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">Today's Oracle Card</a>
+            <a href="#" onclick="event.preventDefault(); navigate('oracle-library');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">Oracle Library</a>
+            <a href="#" onclick="event.preventDefault(); navigate('generic', 'About Oracle');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">About Oracle</a>
+        </div>
+
+        <a href="#" onclick="event.preventDefault(); navigate('home', 'home-articles-section');" class="px-4 py-2.5 hover:bg-pink-50 text-purple-800 rounded-xl transition-colors">Articles & Insights</a>
+        <a href="#" onclick="event.preventDefault(); initBirthCalculatorPage(); navigate('birth-calculator');" class="px-4 py-2.5 hover:bg-pink-50 text-purple-800 rounded-xl transition-colors">Birth Calculator</a>
+        <a href="#" onclick="event.preventDefault(); navigate('home', 'home-zodiac-grid');" class="px-4 py-2.5 hover:bg-pink-50 text-purple-800 rounded-xl transition-colors">Zodiac Guides</a>
+        <a href="#" onclick="event.preventDefault(); navigate('generic', 'Personal Reading');" class="px-4 py-2.5 bg-pink-100 hover:bg-pink-200 text-purple-800 rounded-xl transition-colors mt-2 text-center">Buy CuTarot Deck 🛍️</a>
+    `;
+}
+
+function ensureHeaderBuyIcon() {
+    const header = document.querySelector('header') || document.getElementById('main-header');
+    if (!header) return;
+    if (document.getElementById('header-buy-btn')) return;
+
+    const buyBtn = document.createElement('button');
+    buyBtn.id = 'header-buy-btn';
+    buyBtn.className = 'absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-pink-100 hover:bg-pink-200 text-purple-800 transition-all shadow-sm flex items-center justify-center';
+    buyBtn.title = 'Buy CuTarot Deck';
+    buyBtn.innerHTML = `
+        <svg class="w-5 h-5 text-purple-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+        </svg>
+    `;
+    buyBtn.onclick = () => navigate('generic', 'Personal Reading');
+    
+    header.style.position = 'relative';
+    header.appendChild(buyBtn);
 }
 
 function navigate(viewId, anchorOrTitle = null) {
@@ -681,20 +741,17 @@ function navigate(viewId, anchorOrTitle = null) {
     } else if (viewId === 'generic') {
         renderGenericPage(anchorOrTitle);
     } else if (viewId === 'all-cards') {
-        if(typeof ensureLibrarySearch === 'function') ensureLibrarySearch();
-        if(typeof filterLibrary === 'function') filterLibrary('All');
+        ensureLibrarySearch();
+        filterLibrary('All');
     } else if (viewId === 'birth-calculator') {
         initBirthCalculatorPage();
     } else if (viewId === 'oracle-library') {
         renderOracleLibrary();
     } else if (viewId === 'oracle-draw') {
         renderOracleConfigNumbers();
-        const cfg = document.getElementById('oracle-step-config');
-        const drw = document.getElementById('oracle-step-draw');
-        const res = document.getElementById('oracle-step-result');
-        if (cfg) cfg.classList.remove('hidden');
-        if (drw) drw.classList.add('hidden');
-        if (res) res.classList.add('hidden');
+        document.getElementById('oracle-step-config')?.classList.remove('hidden');
+        document.getElementById('oracle-step-draw')?.classList.add('hidden');
+        document.getElementById('oracle-step-result')?.classList.add('hidden');
     }
 }
 
@@ -703,6 +760,84 @@ function getTodayDateString() {
     return now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
 }
 
+// ==========================================
+// --- HOMEPAGE ARTICLES & ANIMATIONS ---
+// ==========================================
+function ensureArticlesSection() {
+    const homeView = document.getElementById('view-home');
+    if (!homeView) return;
+    if (document.getElementById('home-articles-section')) return;
+
+    const articlesSection = document.createElement('div');
+    articlesSection.id = 'home-articles-section';
+    articlesSection.className = 'w-full max-w-lg mx-auto mb-6 px-4 text-left font-cute';
+    
+    articlesSection.innerHTML = `
+        <div class="flex justify-between items-center mb-3">
+            <div>
+                <div class="text-[9px] uppercase tracking-widest text-pink-400 font-bold">CuTarot Reads</div>
+                <h3 class="font-bold text-xl text-purple-800">Articles & Guides</h3>
+            </div>
+            <span class="text-[10px] text-pink-400 font-bold">Swipe &rarr;</span>
+        </div>
+
+        <div class="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-3 scrollbar-none">
+            <div onclick="navigate('generic', 'About Tarot')" class="snap-center flex-shrink-0 w-64 bg-white p-4 rounded-2xl border border-pink-100 shadow-sm hover:shadow-md transition-all cursor-pointer">
+                <div class="w-full h-28 bg-pink-100 rounded-xl mb-3 flex items-center justify-center text-pink-300 font-bold text-xs">Tarot History Cover</div>
+                <span class="px-2 py-0.5 bg-pink-50 text-pink-500 text-[9px] font-bold rounded-full">Guide</span>
+                <h4 class="font-bold text-sm text-purple-800 mt-2 line-clamp-1">The Roots of Modern Tarot</h4>
+                <p class="text-[11px] text-gray-500 mt-1 line-clamp-2">Learn how 15th-century Italian cards evolved into the Rider-Waite system.</p>
+            </div>
+
+            <div onclick="navigate('generic', 'About Oracle')" class="snap-center flex-shrink-0 w-64 bg-white p-4 rounded-2xl border border-pink-100 shadow-sm hover:shadow-md transition-all cursor-pointer">
+                <div class="w-full h-28 bg-purple-100 rounded-xl mb-3 flex items-center justify-center text-purple-300 font-bold text-xs">Oracle Guide Cover</div>
+                <span class="px-2 py-0.5 bg-purple-50 text-purple-600 text-[9px] font-bold rounded-full">Oracle</span>
+                <h4 class="font-bold text-sm text-purple-800 mt-2 line-clamp-1">Tarot vs Oracle Cards</h4>
+                <p class="text-[11px] text-gray-500 mt-1 line-clamp-2">Understanding the fluid freedom of Oracle decks alongside Tarot.</p>
+            </div>
+
+            <div onclick="navigate('generic', 'Personal Reading')" class="snap-center flex-shrink-0 w-64 bg-white p-4 rounded-2xl border border-pink-100 shadow-sm hover:shadow-md transition-all cursor-pointer">
+                <div class="w-full h-28 bg-pink-50 rounded-xl mb-3 flex items-center justify-center text-pink-300 font-bold text-xs">CuTarot Story</div>
+                <span class="px-2 py-0.5 bg-pink-50 text-pink-500 text-[9px] font-bold rounded-full">Behind Deck</span>
+                <h4 class="font-bold text-sm text-purple-800 mt-2 line-clamp-1">Why CuTarot Was Created</h4>
+                <p class="text-[11px] text-gray-500 mt-1 line-clamp-2">A personal journey turning complex symbols into intuitive art.</p>
+            </div>
+        </div>
+    `;
+
+    const birthCalcEl = document.getElementById('home-birth-calculator');
+    if (birthCalcEl) {
+        birthCalcEl.parentNode.insertBefore(articlesSection, birthCalcEl);
+    } else {
+        homeView.appendChild(articlesSection);
+    }
+}
+
+function setupScrollAnimations() {
+    const homeSections = document.querySelectorAll('#view-home > div');
+    homeSections.forEach(sec => {
+        sec.classList.remove('mb-10', 'mb-8');
+        sec.classList.add('mb-5');
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.remove('opacity-0', 'translate-y-8');
+                entry.target.classList.add('opacity-100', 'translate-y-0');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    homeSections.forEach(sec => {
+        sec.classList.add('transition-all', 'duration-700', 'ease-out', 'opacity-0', 'translate-y-8');
+        observer.observe(sec);
+    });
+}
+
+// ==========================================
+// --- DAILY CARD FUNCTIONS ---
+// ==========================================
 function renderDailyCardHTML(card, isReversed) {
     const cardEl = document.getElementById('inline-daily-card');
     if (!cardEl) return;
@@ -744,7 +879,7 @@ function toggleDailyCard() {
 
     if (!dailyData) {
         const randomCard = TAROT_DECK[Math.floor(Math.random() * 78)];
-        dailyData = { date: todayStr, card: randomCard, isReversed: Math.random() > 0.8 };
+        dailyData = { date: todayStr, card: randomCard, isReversed: Math.random() > 0.5 };
         localStorage.setItem('cutarot_daily', JSON.stringify(dailyData));
     }
 
@@ -1239,7 +1374,7 @@ function renderGenericPage(title) {
 }
 
 // ==========================================
-// --- DASHBOARD SEARCH SYSTEM ---
+// --- DASHBOARD UNIVERSAL SEARCH SYSTEM ---
 // ==========================================
 function ensureDashboardSearch() {
     const homeView = document.getElementById('view-home');
@@ -1264,7 +1399,6 @@ function ensureDashboardSearch() {
 }
 
 function handleDashboardSearch(query) {
-function handleDashboardSearch(query) {
     const resultsEl = document.getElementById('dashboard-search-results');
     if (!resultsEl) return;
     if (!query || query.trim() === '') {
@@ -1275,35 +1409,30 @@ function handleDashboardSearch(query) {
     const q = query.toLowerCase();
     let matches = [];
 
-    // 1. Search Spreads
     SPREADS.forEach(s => {
         if (s.name.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q)) {
             matches.push({ type: 'Tarot Spread', title: s.name, desc: s.desc, action: () => navigate('draw') });
         }
     });
 
-    // 2. Search Zodiac
     ZODIAC_DATA.forEach(z => {
         if (z.name.toLowerCase().includes(q) || z.element.toLowerCase().includes(q)) {
             matches.push({ type: 'Zodiac', title: z.name, desc: z.dateRange, action: () => showZodiac(z.id) });
         }
     });
 
-    // 3. Search Tarot Cards
     TAROT_DECK.forEach((c, idx) => {
         if (c.name.toLowerCase().includes(q) || c.arcana.toLowerCase().includes(q)) {
             matches.push({ type: 'Tarot Card', title: c.name, desc: c.arcana, action: () => showCardDetail(idx) });
         }
     });
 
-    // 4. Search Oracle Cards
     ORACLE_DECK.forEach((o, idx) => {
         if (o.name.toLowerCase().includes(q) || o.desc.toLowerCase().includes(q)) {
             matches.push({ type: 'Oracle Card', title: o.name, desc: 'Oracle Deck', action: () => showOracleDetail(idx) });
         }
     });
 
-    // 5. Search Web Sections & Pages
     const sections = [
         { name: 'Birth Card Calculator', desc: 'Find your Soul & Personality cards', action: () => { initBirthCalculatorPage(); navigate('birth-calculator'); } },
         { name: 'Oracle Deck & Draw', desc: 'Fluid intuitive card readings', action: () => navigate('oracle-draw') },
@@ -1324,7 +1453,7 @@ function handleDashboardSearch(query) {
         resultsEl.innerHTML = `<div class="p-3 text-center text-pink-400">No results found for "${query}"</div>`;
     } else {
         resultsEl.innerHTML = '';
-        matches.slice(0, 8).forEach((m, i) => {
+        matches.slice(0, 8).forEach(m => {
             const itemEl = document.createElement('div');
             itemEl.className = 'p-2.5 hover:bg-pink-50 rounded-xl cursor-pointer transition-colors flex justify-between items-center font-cute';
             itemEl.innerHTML = `
@@ -1343,7 +1472,6 @@ function handleDashboardSearch(query) {
     }
     resultsEl.classList.remove('hidden');
 }
-
 
 // ==========================================
 // --- TAROT BIRTH CALCULATOR SYSTEM ---
@@ -1422,32 +1550,6 @@ function ensureBirthCalculatorHome() {
             zodiacSection.parentElement.insertBefore(container, zodiacSection);
         }
     }
-}
-
-function ensureBirthCalculatorMenu() {
-    const drawer = document.getElementById('drawer-menu');
-    if (!drawer) return;
-    if (document.getElementById('menu-birth-calc')) return;
-    
-    const menuLink = document.createElement('a');
-    menuLink.id = 'menu-birth-calc';
-    menuLink.href = '#';
-    menuLink.className = 'flex items-center px-4 py-3 text-pink-500 font-cute font-bold hover:bg-pink-50 hover:text-pink-600 rounded-xl transition-colors text-left mt-1 mb-1';
-    menuLink.innerHTML = `
-        <svg class="w-5 h-5 mr-3 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-        </svg>
-        Birth Calculator
-    `;
-    
-    menuLink.onclick = (e) => {
-        e.preventDefault();
-        initBirthCalculatorPage(); 
-        navigate('birth-calculator'); 
-    };
-    
-    const nav = drawer.querySelector('nav') || drawer;
-    nav.appendChild(menuLink);
 }
 
 function initBirthCalculatorPage() {
@@ -1832,13 +1934,15 @@ function renderOracleResult() {
 // ==========================================
 window.onload = function() {
     ensureDashboardSearch();
-    ensureBirthCalculatorHome(); 
-    ensureBirthCalculatorMenu(); 
+    ensureHeaderBuyIcon();
     
     initOracleViews();
     ensureOracleHomeSections();
+    ensureArticlesSection();
+    ensureBirthCalculatorHome(); 
+    
+    updateDrawerMenu();
     checkDailyOracleCard();
-
     checkDailyCard();
     
     const spreadsGrid = document.getElementById('home-spreads-grid');
@@ -1869,4 +1973,6 @@ window.onload = function() {
         });
         zodiacGrid.innerHTML = zodiacHtml;
     }
+
+    setTimeout(setupScrollAnimations, 100);
 };
