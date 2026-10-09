@@ -561,6 +561,31 @@ const TAROT_DECK = [
         love: 'A financially secure, stable partner capable of providing total life security.'
     }
 ];
+// ==========================================
+// --- DATA 50 ORACLE CARDS DECK ---
+// ==========================================
+const ORACLE_DECK = [
+    {
+        id: 1, name: 'Inner Peace', 
+        img: 'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?w=500', 
+        desc: 'Take a deep breath and reconnect with your inner silence. Peace is not found in the absence of noise, but in your quiet mind.',
+        guidance: 'Meditate for 5 minutes today and release any tension holding you back.'
+    },
+    {
+        id: 2, name: 'Self Transformation', 
+        img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500', 
+        desc: 'You are shedding old layers that no longer serve your growth. Embrace the subtle metamorphosis taking place in your spirit.',
+        guidance: 'Do not fear the changing tides; trust the new version of yourself emerging.'
+    },
+    {
+        id: 3, name: 'Sacred Boundaries', 
+        img: '', 
+        desc: 'Protect your light and energy. Setting clear boundaries is a profound act of self-love and spiritual dignity.',
+        guidance: 'Politely say no to commitments that drain your emotional vitality.'
+    }
+    // Kamu bisa terus melengkapi hingga 50 kartu Oracle di sini dengan format yang sama
+];
+
 
 // ==========================================
 // --- STATE ---
@@ -1155,6 +1180,23 @@ function renderGenericPage(title) {
                 </div>
             </div>
         `;
+            } else if (title === 'About Oracle') {
+        content.innerHTML = `
+            <div class="space-y-8 text-left">
+                <div class="bg-pink-50/40 p-6 sm:p-8 rounded-3xl border border-pink-100 shadow-sm">
+                    <h3 class="font-cute font-bold text-2xl text-purple-800 mb-3">Understanding Oracle Cards</h3>
+                    <p class="text-gray-600 font-cute text-sm leading-relaxed">
+                        Unlike traditional Tarot cards which follow a strict 78-card structure and traditional archetypes (Major and Minor Arcana), <strong>Oracle cards are free-form spiritual tools</strong>. They offer direct messages, affirmations, and gentle energetic guidance without complex system rules.
+                    </p>
+                </div>
+                <div class="space-y-4 font-cute text-sm text-gray-600 leading-relaxed">
+                    <h4 class="font-bold text-lg text-purple-800">How to Use Oracle alongside Tarot?</h4>
+                    <p>Oracle cards can be drawn on their own for daily inspiration, or drawn alongside a Tarot reading as a final "advice" card to clarify the overall theme of your reading.</p>
+                </div>
+            </div>
+        `;
+    }
+
     } else {
         content.innerHTML = `<p>CuTarot by Mai Collection is provided for personal reflection and entertainment purposes.</p>`;
     }
@@ -1628,6 +1670,283 @@ function resetBirthCalculator() {
     document.getElementById('btn-find-birth-cards').classList.remove('hidden');
     document.getElementById('btn-find-birth-cards').classList.add('opacity-50', 'pointer-events-none');
     document.getElementById('btn-my-cards-reopen').classList.add('hidden');
+}
+// ==========================================
+// --- ORACLE SYSTEM LOGIC & UI INJECTION ---
+// ==========================================
+let oracleDrawCount = 3;
+let activeOracleDeck = [];
+let drawnOracleCards = [];
+
+function ensureOracleHomeSections() {
+    const homeView = document.getElementById('view-home');
+    if (!homeView) return;
+
+    // 1. Injeksi Section Oracle Utama (Di taruh SEBELUM Birth Card Calculator)
+    let oracleMainSection = document.getElementById('home-oracle-section');
+    if (!oracleMainSection) {
+        oracleMainSection = document.createElement('div');
+        oracleMainSection.id = 'home-oracle-section';
+        oracleMainSection.className = 'w-full max-w-lg mx-auto mb-10 px-4';
+        oracleMainSection.innerHTML = `
+            <div class="bg-gradient-to-br from-purple-50 via-pink-50 to-white rounded-3xl border-2 border-pink-200 p-6 shadow-sm text-left relative overflow-hidden">
+                <div class="w-full aspect-[16/9] bg-pink-100 rounded-2xl mb-5 overflow-hidden border border-pink-200 shadow-inner flex items-center justify-center">
+                    <span class="font-cute font-bold text-pink-300 text-sm">Oracle Deck Cover Banner</span>
+                </div>
+                <div class="text-[9px] uppercase tracking-widest text-pink-400 font-bold mb-1 font-cute">Companion Intuitive Deck</div>
+                <h3 class="font-cute font-bold text-2xl text-purple-800 mb-2">CuTarot Oracle Deck</h3>
+                <p class="font-cute text-xs text-gray-600 leading-relaxed mb-6">
+                    Oracle cards provide fluid, direct spiritual affirmations and gentle guidance. Use Oracle cards to set your intention for the day or seek immediate clarity for your heart.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <button onclick="navigate('oracle-draw')" class="flex-1 bg-purple-700 hover:bg-purple-800 text-white py-3.5 rounded-2xl font-cute font-bold text-xs shadow-md transition-all text-center">
+                        Draw Oracle Cards &rarr;
+                    </button>
+                    <button onclick="navigate('oracle-library')" class="bg-white hover:bg-pink-50 border border-pink-200 text-purple-800 py-3.5 px-5 rounded-2xl font-cute font-bold text-xs transition-colors text-center">
+                        Oracle Library
+                    </button>
+                </div>
+            </div>
+        `;
+        const birthCalcEl = document.getElementById('home-birth-calculator');
+        if (birthCalcEl) {
+            birthCalcEl.parentNode.insertBefore(oracleMainSection, birthCalcEl);
+        } else {
+            homeView.appendChild(oracleMainSection);
+        }
+    }
+
+    // 2. Injeksi Daily Oracle Card (Lebih kecil, di bawah Tarot Daily Card)
+    let dailyTarotEl = document.getElementById('inline-daily-card')?.parentElement || document.getElementById('btn-daily-card')?.parentElement;
+    let dailyOracleSection = document.getElementById('home-daily-oracle-section');
+    if (!dailyOracleSection && dailyTarotEl) {
+        dailyOracleSection = document.createElement('div');
+        dailyOracleSection.id = 'home-daily-oracle-section';
+        dailyOracleSection.className = 'w-full max-w-md mx-auto mt-6 pt-6 border-t border-pink-100 text-center font-cute';
+        dailyOracleSection.innerHTML = `
+            <div class="bg-white/80 border border-pink-100 rounded-2xl p-4 shadow-sm">
+                <div class="text-[9px] uppercase tracking-widest text-pink-400 font-bold mb-1">Gentle Affirmation</div>
+                <h4 class="font-bold text-sm text-purple-800 mb-3">Today's Oracle Insight</h4>
+                <div id="inline-oracle-daily" class="hidden flex-col items-center mb-3"></div>
+                <button id="btn-oracle-daily" onclick="toggleDailyOracleCard()" class="bg-pink-100 hover:bg-pink-200 text-purple-800 px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-sm">
+                    Draw Daily Oracle
+                </button>
+                <div class="mt-3">
+                    <span onclick="navigate('generic', 'About Oracle')" class="cursor-pointer text-[10px] text-pink-400 hover:text-pink-600 underline font-bold">What is Oracle & how to use it?</span>
+                </div>
+            </div>
+        `;
+        dailyTarotEl.parentNode.insertBefore(dailyOracleSection, dailyTarotEl.nextSibling);
+    }
+}
+
+// Daily Oracle Functionality
+function toggleDailyOracleCard() {
+    const todayStr = getTodayDateString();
+    let savedData = localStorage.getItem('cutarot_oracle_daily');
+    let dailyData = null;
+
+    if (savedData) {
+        const parsed = JSON.parse(savedData);
+        if (parsed.date === todayStr) dailyData = parsed;
+    }
+
+    if (!dailyData) {
+        const randomCard = ORACLE_DECK[Math.floor(Math.random() * ORACLE_DECK.length)];
+        dailyData = { date: todayStr, card: randomCard };
+        localStorage.setItem('cutarot_oracle_daily', JSON.stringify(dailyData));
+    }
+
+    const container = document.getElementById('inline-oracle-daily');
+    container.innerHTML = `
+        <div class="w-[80px] aspect-[2/3.3] rounded-lg border border-pink-100 overflow-hidden mb-2 shadow-sm flex items-center justify-center bg-pink-50">
+            ${dailyData.card.img ? `<img src="${dailyData.card.img}" class="w-full h-full object-contain" />` : `<span class="text-[9px] font-bold text-purple-800 p-1">${dailyData.card.name}</span>`}
+        </div>
+        <div class="font-bold text-xs text-purple-800">${dailyData.card.name}</div>
+        <p class="text-[11px] text-gray-600 italic mt-1 max-w-xs">"${dailyData.card.desc}"</p>
+    `;
+    container.classList.remove('hidden');
+    container.classList.add('flex');
+
+    const btn = document.getElementById('btn-oracle-daily');
+    if (btn) {
+        btn.innerText = "Oracle Card Drawn";
+        btn.classList.add('opacity-50', 'pointer-events-none');
+    }
+}
+
+function checkDailyOracleCard() {
+    const todayStr = getTodayDateString();
+    let savedData = localStorage.getItem('cutarot_oracle_daily');
+    if (savedData) {
+        const parsed = JSON.parse(savedData);
+        if (parsed.date === todayStr) {
+            toggleDailyOracleCard();
+        }
+    }
+}
+
+// Injeksi Halaman-Halaman Baru Oracle
+function initOracleViews() {
+    if (document.getElementById('view-oracle-library')) return;
+    const parentContainer = document.getElementById('view-home').parentNode;
+
+    // 1. Oracle Library View
+    const libView = document.createElement('div');
+    libView.id = 'view-oracle-library';
+    libView.className = 'view-section pb-24 text-center';
+    libView.innerHTML = `
+        <div class="w-full max-w-4xl mx-auto px-4 mt-6">
+            <span onclick="navigate('home')" class="cursor-pointer text-xs font-cute text-pink-400 hover:text-pink-600">&larr; Back to Home</span>
+            <h1 class="font-cute font-bold text-3xl text-purple-800 mt-2 mb-6">Oracle Library</h1>
+            <div id="oracle-library-grid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4"></div>
+        </div>
+    `;
+    parentContainer.appendChild(libView);
+
+    // 2. Oracle Draw View
+    const drawView = document.createElement('div');
+    drawView.id = 'view-oracle-draw';
+    drawView.className = 'view-section pb-24 text-center';
+    drawView.innerHTML = `
+        <div class="w-full max-w-lg mx-auto px-4 mt-6">
+            <span onclick="navigate('home')" class="cursor-pointer text-xs font-cute text-pink-400 hover:text-pink-600">&larr; Back to Home</span>
+            <h1 class="font-cute font-bold text-3xl text-purple-800 mt-2 mb-4">Draw Oracle Cards</h1>
+            
+            <div id="oracle-step-config" class="bg-white p-6 rounded-3xl border border-pink-100 shadow-sm mb-6">
+                <div class="text-xs font-bold text-purple-800 font-cute mb-3">Select How Many Cards (1-10)</div>
+                <div id="oracle-num-selector" class="flex flex-wrap justify-center gap-2 mb-6"></div>
+                <button onclick="startOracleDrawProcess()" class="w-full bg-purple-700 text-white py-3.5 rounded-xl font-cute font-bold text-sm shadow-md">
+                    Start Drawing
+                </button>
+            </div>
+
+            <div id="oracle-step-draw" class="hidden flex-col items-center">
+                <div id="oracle-deck-cards" class="flex justify-center gap-2 my-8 flex-wrap"></div>
+                <button id="btn-oracle-reveal" onclick="renderOracleResult()" class="hidden bg-pink-400 text-white px-8 py-3 rounded-xl font-cute font-bold text-sm shadow-md">
+                    Reveal Oracle Reading
+                </button>
+            </div>
+
+            <div id="oracle-step-result" class="hidden flex-col items-center space-y-6"></div>
+        </div>
+    `;
+    parentContainer.appendChild(drawView);
+
+    // 3. Oracle Detail View
+    const detailView = document.createElement('div');
+    detailView.id = 'view-oracle-detail';
+    detailView.className = 'view-section pb-24 text-center';
+    detailView.innerHTML = `
+        <div class="w-full max-w-xl mx-auto px-4 mt-6">
+            <span onclick="navigate('oracle-library')" class="cursor-pointer text-xs font-cute text-pink-400 hover:text-pink-600">&larr; Back to Oracle Library</span>
+            <div id="oracle-detail-content" class="mt-6 text-left"></div>
+        </div>
+    `;
+    parentContainer.appendChild(detailView);
+}
+
+function renderOracleLibrary() {
+    const grid = document.getElementById('oracle-library-grid');
+    if (!grid) return;
+    let html = '';
+    ORACLE_DECK.forEach((card, idx) => {
+        html += `
+            <div onclick="showOracleDetail(${idx})" class="cursor-pointer transform transition-transform hover:-translate-y-1">
+                <div class="w-full aspect-[2/3.3] rounded-xl border border-pink-100 bg-white flex flex-col items-center justify-center p-2 text-center shadow-sm overflow-hidden relative">
+                    ${card.img 
+                        ? `<img src="${card.img}" class="w-full h-full object-contain" />` 
+                        : `<div class="text-xs font-cute font-bold text-purple-800">${card.name}</div>`
+                    }
+                </div>
+            </div>
+        `;
+    });
+    grid.innerHTML = html;
+}
+
+function showOracleDetail(idx) {
+    const card = ORACLE_DECK[idx];
+    const content = document.getElementById('oracle-detail-content');
+    content.innerHTML = `
+        <div class="bg-white p-6 rounded-3xl border border-pink-100 shadow-sm space-y-4 font-cute">
+            <div class="w-48 aspect-[2/3.3] mx-auto rounded-2xl border border-pink-100 overflow-hidden shadow-md flex items-center justify-center bg-pink-50">
+                ${card.img ? `<img src="${card.img}" class="w-full h-full object-contain" />` : `<span class="font-bold text-purple-800">${card.name}</span>`}
+            </div>
+            <h2 class="text-2xl font-bold text-purple-800 text-center">${card.name}</h2>
+            <div class="p-4 bg-pink-50/50 rounded-2xl border border-pink-100">
+                <h4 class="text-xs font-bold text-pink-500 uppercase tracking-wider mb-1">Oracle Affirmation</h4>
+                <p class="text-sm text-gray-700 leading-relaxed">${card.desc}</p>
+            </div>
+            ${card.guidance ? `
+            <div class="p-4 bg-purple-50/50 rounded-2xl border border-purple-100">
+                <h4 class="text-xs font-bold text-purple-700 uppercase tracking-wider mb-1">Spiritual Guidance</h4>
+                <p class="text-sm text-gray-700 leading-relaxed">${card.guidance}</p>
+            </div>` : ''}
+        </div>
+    `;
+    navigate('oracle-detail');
+}
+
+function renderOracleConfigNumbers() {
+    const container = document.getElementById('oracle-num-selector');
+    if (!container) return;
+    let html = '';
+    for (let i = 1; i <= 10; i++) {
+        const active = oracleDrawCount === i ? 'bg-purple-700 text-white' : 'bg-pink-50 text-gray-700 border border-pink-100';
+        html += `<button onclick="oracleDrawCount=${i}; renderOracleConfigNumbers();" class="w-10 h-10 rounded-full font-cute font-bold text-xs transition-all ${active}">${i}</button>`;
+    }
+    container.innerHTML = html;
+}
+
+function startOracleDrawProcess() {
+    document.getElementById('oracle-step-config').classList.add('hidden');
+    const drawStep = document.getElementById('oracle-step-draw');
+    drawStep.classList.remove('hidden');
+    drawStep.classList.add('flex');
+
+    let shuffled = [...ORACLE_DECK].sort(() => Math.random() - 0.5);
+    activeOracleDeck = shuffled.slice(0, oracleDrawCount);
+    drawnOracleCards = [];
+
+    const container = document.getElementById('oracle-deck-cards');
+    container.innerHTML = '';
+    activeOracleDeck.forEach((card, idx) => {
+        const cardEl = document.createElement('div');
+        cardEl.className = 'w-16 h-28 bg-pink-100 border border-pink-200 rounded-xl shadow-sm cursor-pointer hover:-translate-y-1 transition-transform flex items-center justify-center';
+        cardEl.innerHTML = `<span class="text-xs text-pink-300 font-bold">Oracle</span>`;
+        cardEl.onclick = () => {
+            if (drawnOracleCards.includes(card)) return;
+            drawnOracleCards.push(card);
+            cardEl.classList.add('opacity-40', 'pointer-events-none');
+            if (drawnOracleCards.length === oracleDrawCount) {
+                document.getElementById('btn-oracle-reveal').classList.remove('hidden');
+            }
+        };
+        container.appendChild(cardEl);
+    });
+}
+
+function renderOracleResult() {
+    document.getElementById('oracle-step-draw').classList.add('hidden');
+    const resStep = document.getElementById('oracle-step-result');
+    resStep.classList.remove('hidden');
+    resStep.classList.add('flex');
+
+    let html = '<h3 class="font-cute font-bold text-2xl text-purple-800 mb-2">Your Oracle Reading</h3>';
+    drawnOracleCards.forEach(card => {
+        html += `
+            <div class="bg-white p-5 rounded-3xl border border-pink-100 shadow-sm w-full text-left font-cute space-y-2">
+                <div class="w-24 aspect-[2/3.3] rounded-xl border border-pink-100 overflow-hidden mb-2 shadow-sm flex items-center justify-center bg-pink-50 mx-auto">
+                    ${card.img ? `<img src="${card.img}" class="w-full h-full object-contain" />` : `<span class="text-xs font-bold text-purple-800">${card.name}</span>`}
+                </div>
+                <h4 class="font-bold text-lg text-purple-800 text-center">${card.name}</h4>
+                <p class="text-xs text-gray-600 leading-relaxed text-center">${card.desc}</p>
+            </div>
+        `;
+    });
+    html += `<button onclick="navigate('oracle-draw')" class="bg-purple-700 text-white px-6 py-3 rounded-xl font-cute font-bold text-xs">Draw Again</button>`;
+    resStep.innerHTML = html;
 }
 
 // ==========================================
