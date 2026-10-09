@@ -85,6 +85,7 @@ const TAROT_DECK = [
     // Major Arcana (0 - 21)
     {
         name: 'The Fool', arcana: 'Major Arcana', number: 0, yesNo: 'Yes', astrology: 'Uranus',
+        img: '[https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg](https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg)',
         upright: 'New beginnings, innocence, spontaneity, a leap of faith into the unknown, and taking a bold first step on a grand adventure.',
         reversed: 'Recklessness, risk-taking without foresight, hesitation, folly, or holding back out of unwarranted fear.',
         love: 'A fresh, exciting romance filled with spontaneity. For singles, expect unexpected new romantic potentials.'
@@ -97,7 +98,6 @@ const TAROT_DECK = [
     },
     {
         name: 'The High Priestess', arcana: 'Major Arcana', number: 2, yesNo: 'Yes (Intuitive)', astrology: 'Moon',
-        img : 'the-high-priestes.png',
         upright: 'Deep intuition, mystery, the subconscious mind, hidden wisdom, and honoring your inner voice.',
         reversed: 'Secrets exposed, ignoring gut feelings, gossip, inner anxiety, or emotional detachment.',
         love: 'A potent, mysterious spiritual bond. A relationship rooted in silent mutual understanding.'
@@ -561,31 +561,62 @@ const TAROT_DECK = [
         love: 'A financially secure, stable partner capable of providing total life security.'
     }
 ];
+
 // ==========================================
-// --- DATA 50 ORACLE CARDS DECK ---
+// --- DATA ORACLE CARDS (50 CARDS) ---
 // ==========================================
 const ORACLE_DECK = [
-    {
-        id: 1, name: 'Inner Peace', 
-        img: 'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?w=500', 
-        desc: 'Take a deep breath and reconnect with your inner silence. Peace is not found in the absence of noise, but in your quiet mind.',
-        guidance: 'Meditate for 5 minutes today and release any tension holding you back.'
-    },
-    {
-        id: 2, name: 'Self Transformation', 
-        img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500', 
-        desc: 'You are shedding old layers that no longer serve your growth. Embrace the subtle metamorphosis taking place in your spirit.',
-        guidance: 'Do not fear the changing tides; trust the new version of yourself emerging.'
-    },
-    {
-        id: 3, name: 'Sacred Boundaries', 
-        img: '', 
-        desc: 'Protect your light and energy. Setting clear boundaries is a profound act of self-love and spiritual dignity.',
-        guidance: 'Politely say no to commitments that drain your emotional vitality.'
-    }
-    // Kamu bisa terus melengkapi hingga 50 kartu Oracle di sini dengan format yang sama
+    { id: 1, name: 'Inner Peace', img: '', desc: 'Take a deep breath and reconnect with your inner silence. Peace is found in a quiet mind.', guidance: 'Meditate for 5 minutes today and release any tension holding you back.' },
+    { id: 2, name: 'Self Transformation', img: '', desc: 'You are shedding old layers that no longer serve your growth. Embrace your subtle metamorphosis.', guidance: 'Do not fear changing tides; trust the new version of yourself.' },
+    { id: 3, name: 'Sacred Boundaries', img: '', desc: 'Protect your light and energy. Setting clear boundaries is a profound act of self-love.', guidance: 'Politely say no to commitments that drain your emotional vitality.' },
+    { id: 4, name: 'Intuitive Clarity', img: '', desc: 'Trust the quiet whispers of your gut instincts over loud logical chatter.', guidance: 'Listen closely to first impressions today.' },
+    { id: 5, name: 'Unconditional Love', img: '', desc: 'Open your heart to give and receive pure affection without keeping score.', guidance: 'Forgive a small past mistake and lead with compassion.' },
+    { id: 6, name: 'Divine Timing', img: '', desc: 'Everything is unfolding at the exact moment it needs to. Patience is your key.', guidance: 'Release your urge to rush outcomes.' },
+    { id: 7, name: 'Spiritual Alignment', img: '', desc: 'Your mind, body, and spirit are moving in total harmony with the universe.', guidance: 'Stay true to your core values.' },
+    { id: 8, name: 'Emotional Healing', img: '', desc: 'Allow old wounds to breathe so they can finally turn into wisdom.', guidance: 'Journal your unexpressed feelings.' },
+    { id: 9, name: 'Boundless Creativity', img: '', desc: 'Your soul is an endless reservoir of fresh artistic ideas waiting to bloom.', guidance: 'Express yourself through art or writing today.' },
+    { id: 10, name: 'Forgiveness', img: '', desc: 'Releasing resentment frees you, not the person who hurt you.', guidance: 'Let go of heavy emotional luggage.' },
+    { id: 11, name: 'Inner Strength', img: '', desc: 'You possess a quiet resilience capable of weathering any storm.', guidance: 'Stand tall in your personal truth.' },
+    { id: 12, name: 'Abundance Flow', img: '', desc: 'Shift your mindset from scarcity to gratitude and watch prosperity grow.', guidance: 'Count five blessings right now.' },
+    { id: 13, name: 'Release Control', img: '', desc: 'Surrender your worries to the universe and let life flow naturally.', guidance: 'Stop forcing things that aren\'t working.' },
+    { id: 14, name: 'Joyful Expression', img: '', desc: 'Celebrate small wins and allow spontaneous happiness into your day.', guidance: 'Do something purely for fun.' },
+    { id: 15, name: 'Higher Purpose', img: '', desc: 'Your life carries a sacred meaning that impacts the world around you.', guidance: 'Align your actions with your passions.' },
+    { id: 16, name: 'Patience & Stillness', img: '', desc: 'In moments of uncertainty, the best action is gentle stillness.', guidance: 'Pause before making big decisions.' },
+    { id: 17, name: 'Soul Connection', img: '', desc: 'A meaningful bond is drawing near to elevate your spiritual journey.', guidance: 'Nurture deep relationships.' },
+    { id: 18, name: 'Authenticity', img: '', desc: 'Strip away expectations and step boldly into your true, unedited self.', guidance: 'Stop seeking external approval.' },
+    { id: 19, name: 'Protection', img: '', desc: 'You are safe and shielded by spiritual warmth.', guidance: 'Visualize a protective bubble around you.' },
+    { id: 20, name: 'New Horizon', img: '', desc: 'A fresh chapter is opening before you filled with hope.', guidance: 'Prepare to welcome new chances.' },
+    { id: 21, name: 'Wisdom Within', img: '', desc: 'All the answers you seek are already resting inside your heart.', guidance: 'Spend quiet time in nature.' },
+    { id: 22, name: 'Grace & Gratitude', img: '', desc: 'Approach every challenge with grace and a grateful heart.', guidance: 'Thank someone who helped you.' },
+    { id: 23, name: 'Clarity of Thought', img: '', desc: 'Clear away mental clutter to see your path forward.', guidance: 'Focus on one priority at a time.' },
+    { id: 24, name: 'Nurture Yourself', img: '', desc: 'Treat your body and soul with gentle care today.', guidance: 'Take time for a relaxing bath or rest.' },
+    { id: 25, name: 'Courageous Leap', img: '', desc: 'Take a step forward even if your knees tremble slightly.', guidance: 'Fear is just excitement without breath.' },
+    { id: 26, name: 'Serenity', img: '', desc: 'Find calm in the center of life\'s busy motion.', guidance: 'Breathe slowly when stress arises.' },
+    { id: 27, name: 'Trust the Journey', img: '', desc: 'Every detour is teaching you something valuable.', guidance: 'Embrace where you are right now.' },
+    { id: 28, name: 'Light Expansion', img: '', desc: 'Shine your inner light bright enough to inspire others.', guidance: 'Share a gentle smile today.' },
+    { id: 29, name: 'Sacred Rest', img: '', desc: 'Resting is productive work for your soul.', guidance: 'Allow yourself guilt-free downtime.' },
+    { id: 30, name: 'Deep Compassion', img: '', desc: 'Extend gentle kindness to yourself and everyone around you.', guidance: 'Be soft in a hard world.' },
+    { id: 31, name: 'Manifesting Dreams', img: '', desc: 'Your thoughts are magnetic seeds planting your tomorrow.', guidance: 'Focus on what you want to build.' },
+    { id: 32, name: 'Harmony', img: '', desc: 'Balance your work, rest, play, and spiritual pursuits.', guidance: 'Adjust areas feeling out of sync.' },
+    { id: 33, name: 'Release Fear', img: '', desc: 'Fear is an illusion constructed by an anxious mind.', guidance: 'Replace worry with quiet trust.' },
+    { id: 34, name: 'Inner Child', img: '', desc: 'Connect with the playful wonder inside your soul.', guidance: 'Revisit a childhood hobby.' },
+    { id: 35, name: 'Transformation', img: '', desc: 'Welcome shifts that bring you closer to your potential.', guidance: 'Embrace change without resistance.' },
+    { id: 36, name: 'Spiritual Guidance', img: '', desc: 'Signs and synchronicities are guiding your steps.', guidance: 'Pay attention to repeating numbers or symbols.' },
+    { id: 37, name: 'Purity of Intent', img: '', desc: 'Ensure your motives are rooted in honesty and goodwill.', guidance: 'Act with clean intentions.' },
+    { id: 38, name: 'Self-Acceptance', img: '', desc: 'Embrace both your strengths and imperfections wholeheartedly.', guidance: 'Stop comparing yourself to others.' },
+    { id: 39, name: 'Golden Opportunity', img: '', desc: 'A rare door is opening for your personal expansion.', guidance: 'Say yes to new invitations.' },
+    { id: 40, name: 'Inner Sanctuary', img: '', desc: 'Build a quiet mental refuge where peace always reigns.', guidance: 'Retreat inward when overwhelmed.' },
+    { id: 41, name: 'Truth & Integrity', img: '', desc: 'Speak your truth gently yet firmly.', guidance: 'Honesty breeds lasting freedom.' },
+    { id: 42, name: 'Healing Waves', img: '', desc: 'Soothing energy is washing away past emotional strain.', guidance: 'Let yourself heal at your own pace.' },
+    { id: 43, name: 'Reclaiming Power', img: '', desc: 'Take back authority over your life choices.', guidance: 'Stop letting others decide for you.' },
+    { id: 44, name: 'Soul Expansion', img: '', desc: 'Your consciousness is broadening into higher understanding.', guidance: 'Read uplifting or spiritual books.' },
+    { id: 45, name: 'Sacred Union', img: '', desc: 'A harmonious partnership based on mutual upliftment.', guidance: 'Cultivate healthy teamwork.' },
+    { id: 46, name: 'Grounded Spirit', img: '', desc: 'Anchor your energy deep into the earth.', guidance: 'Walk barefoot on grass or earth.' },
+    { id: 47, name: 'Infinite Possibilities', img: '', desc: 'Do not limit your visions; the universe is vast.', guidance: 'Dream bigger without self-doubt.' },
+    { id: 48, name: 'Lightheartedness', img: '', desc: 'Laugh freely and lighten heavy thoughts.', guidance: 'Find humor in daily situations.' },
+    { id: 49, name: 'Renewal', img: '', desc: 'A fresh wave of energy is restoring your stamina.', guidance: 'Welcome a clean slate.' },
+    { id: 50, name: 'Wholeness', img: '', desc: 'You are complete, worthy, and enough just as you are.', guidance: 'Rest in total self-fulfillment.' }
 ];
-
 
 // ==========================================
 // --- STATE ---
@@ -598,6 +629,10 @@ let optMajorOnly = false;
 let optAutoOpen = false;
 let optShowDesc = false;
 let tarotQuestion = '';
+
+let oracleDrawCount = 3;
+let activeOracleDeck = [];
+let drawnOracleCards = [];
 
 function toggleOption(opt, val) {
     if (opt === 'majorOnly') optMajorOnly = val;
@@ -623,13 +658,16 @@ function toggleMenu() {
 
 function navigate(viewId, anchorOrTitle = null) {
     document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-    document.getElementById('view-' + viewId).classList.add('active');
+    
+    const targetView = document.getElementById('view-' + viewId);
+    if (targetView) targetView.classList.add('active');
     
     if (viewId !== 'home' || !anchorOrTitle) {
         window.scrollTo(0, 0);
     }
     
-    if (!document.getElementById('drawer-menu').classList.contains('-translate-x-full')) {
+    const drawer = document.getElementById('drawer-menu');
+    if (drawer && !drawer.classList.contains('-translate-x-full')) {
         toggleMenu();
     }
 
@@ -647,16 +685,17 @@ function navigate(viewId, anchorOrTitle = null) {
         if(typeof filterLibrary === 'function') filterLibrary('All');
     } else if (viewId === 'birth-calculator') {
         initBirthCalculatorPage();
-            // Tambahkan kondisi berikut di fungsi navigate:
-    else if (viewId === 'oracle-library') {
+    } else if (viewId === 'oracle-library') {
         renderOracleLibrary();
     } else if (viewId === 'oracle-draw') {
         renderOracleConfigNumbers();
-        document.getElementById('oracle-step-config')?.classList.remove('hidden');
-        document.getElementById('oracle-step-draw')?.classList.add('hidden');
-        document.getElementById('oracle-step-result')?.classList.add('hidden');
+        const cfg = document.getElementById('oracle-step-config');
+        const drw = document.getElementById('oracle-step-draw');
+        const res = document.getElementById('oracle-step-result');
+        if (cfg) cfg.classList.remove('hidden');
+        if (drw) drw.classList.add('hidden');
+        if (res) res.classList.add('hidden');
     }
-
 }
 
 function getTodayDateString() {
@@ -666,13 +705,14 @@ function getTodayDateString() {
 
 function renderDailyCardHTML(card, isReversed) {
     const cardEl = document.getElementById('inline-daily-card');
+    if (!cardEl) return;
     const descText = isReversed ? card.reversed : card.upright;
     
     cardEl.innerHTML = `
         <div class="w-[120px] mb-6">
-            <div class="w-full aspect-[2/3.3] bg-white border border-pink-100 rounded-xl flex flex-col items-center justify-center p-2 shadow-md relative overflow-hidden ${card.img ? '' : ''}">
+            <div class="w-full aspect-[2/3.3] bg-white border border-pink-100 rounded-xl flex flex-col items-center justify-center p-2 shadow-md relative overflow-hidden">
                 ${card.img 
-                    ? `<img src="${card.img}" alt="${card.name}" class="w-full h-full object-cover rounded-xl" />`
+                    ? `<img src="${card.img}" alt="${card.name}" class="w-full h-full object-contain rounded-xl" />`
                     : `<div class="text-[9px] text-pink-400 font-cute font-bold mb-1 uppercase">${card.arcana}</div>
                        <div class="text-sm font-cute font-bold text-gray-800 leading-tight">${card.name}</div>
                        <div class="mt-2 text-pink-200 text-xs font-cute">${card.number}</div>`
@@ -766,15 +806,20 @@ function ensureQuestionInput() {
 
 function setDrawPhase(phase) {
     ['phase-spread', 'phase-config', 'phase-draw', 'phase-result'].forEach(p => {
-        document.getElementById(p).classList.add('hidden');
-        document.getElementById(p).classList.remove('flex');
+        const el = document.getElementById(p);
+        if (el) {
+            el.classList.add('hidden');
+            el.classList.remove('flex');
+        }
     });
     
     const target = document.getElementById('phase-' + phase);
-    target.classList.remove('hidden');
-    if(phase === 'draw') {
-        target.classList.add('flex');
-        ensureQuestionInput(); 
+    if (target) {
+        target.classList.remove('hidden');
+        if(phase === 'draw') {
+            target.classList.add('flex');
+            ensureQuestionInput(); 
+        }
     }
     window.scrollTo(0,0);
     
@@ -799,6 +844,7 @@ function selectSpread(index) {
 
 function renderConfigNumbers() {
     const grid = document.getElementById('config-numbers-grid');
+    if (!grid) return;
     let html = '';
     const maxCards = optMajorOnly ? 22 : 13;
     if (deckCount > maxCards) deckCount = maxCards;
@@ -854,27 +900,29 @@ function startDraw() {
     drawnCards = [];
     
     const container = document.getElementById('deck-scroll-area');
-    container.innerHTML = '';
-    container.style.width = `${Math.max(800, activeDeck.length * 16 + 100)}px`;
-    
-    activeDeck.forEach((card, idx) => {
-        const distCenter = idx - (activeDeck.length / 2);
-        const arcY = Math.pow(distCenter * 0.15, 2);
-        const rot = distCenter * 0.3;
+    if (container) {
+        container.innerHTML = '';
+        container.style.width = `${Math.max(800, activeDeck.length * 16 + 100)}px`;
         
-        const cardEl = document.createElement('div');
-        cardEl.className = 'tarot-card-item absolute top-0 cursor-pointer';
-        cardEl.style.left = `${idx * 16}px`;
-        cardEl.style.transform = `translateY(${arcY}px) rotate(${rot}deg)`;
-        cardEl.onclick = () => pickCard(idx, cardEl);
-        
-        cardEl.innerHTML = `
-            <div class="w-[80px] h-[135px] bg-pink-100 border border-pink-200 rounded-xl shadow-sm flex items-center justify-center relative overflow-hidden">
-                <div class="absolute inset-1 border border-pink-200/60 rounded-lg"></div>
-                <div class="w-6 h-6 rounded-full border border-pink-300 opacity-50"></div>
-            </div>`;
-        container.appendChild(cardEl);
-    });
+        activeDeck.forEach((card, idx) => {
+            const distCenter = idx - (activeDeck.length / 2);
+            const arcY = Math.pow(distCenter * 0.15, 2);
+            const rot = distCenter * 0.3;
+            
+            const cardEl = document.createElement('div');
+            cardEl.className = 'tarot-card-item absolute top-0 cursor-pointer';
+            cardEl.style.left = `${idx * 16}px`;
+            cardEl.style.transform = `translateY(${arcY}px) rotate(${rot}deg)`;
+            cardEl.onclick = () => pickCard(idx, cardEl);
+            
+            cardEl.innerHTML = `
+                <div class="w-[80px] h-[135px] bg-pink-100 border border-pink-200 rounded-xl shadow-sm flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-1 border border-pink-200/60 rounded-lg"></div>
+                    <div class="w-6 h-6 rounded-full border border-pink-300 opacity-50"></div>
+                </div>`;
+            container.appendChild(cardEl);
+        });
+    }
     
     updateDrawUI();
     setDrawPhase('draw');
@@ -894,14 +942,18 @@ function pickCard(idx, el) {
         if (optAutoOpen) {
             setDrawPhase('result');
         } else {
-            document.getElementById('btn-reveal').classList.remove('hidden');
+            const btn = document.getElementById('btn-reveal');
+            if (btn) btn.classList.remove('hidden');
         }
     }
 }
 
 function updateDrawUI() {
-    document.getElementById('draw-counter').innerText = `${drawnCards.length} / ${deckCount} selected`;
+    const counter = document.getElementById('draw-counter');
+    if (counter) counter.innerText = `${drawnCards.length} / ${deckCount} selected`;
+    
     const slots = document.getElementById('draw-slots');
+    if (!slots) return;
     let html = '';
     for(let i=0; i<deckCount; i++) {
         if (drawnCards[i]) {
@@ -917,9 +969,9 @@ function updateDrawUI() {
     slots.innerHTML = html;
 }
 
-// === STEP 3 (A): DUKUNGAN GAMBAR PADA HASIL DRAW ===
 function renderResult() {
     const grid = document.getElementById('result-grid');
+    if (!grid) return;
     let html = '';
     
     let questionHtml = '';
@@ -982,23 +1034,26 @@ function ensureLibrarySearch() {
     }
 }
 
-// === STEP 3 (B): DUKUNGAN GAMBAR PADA LIBRARY (ALL CARDS) ===
 window.currentLibraryFilter = 'All';
 function filterLibrary(filter, searchTerm = '') {
     window.currentLibraryFilter = filter;
     const input = document.getElementById('library-search-input');
     const term = searchTerm !== '' ? searchTerm : (input ? input.value : '');
     
-    const buttons = document.getElementById('card-filters').children;
-    for (let btn of buttons) {
-        if (btn.innerText.includes(filter) || (filter === 'Major Arcana' && btn.innerText === 'Major')) {
-            btn.className = "px-4 py-2 rounded-full border border-pink-200 text-sm font-cute font-bold transition-colors bg-pink-300 text-white shadow-sm";
-        } else {
-            btn.className = "px-4 py-2 rounded-full border border-pink-200 text-sm font-cute font-bold transition-colors bg-white hover:bg-pink-50 text-gray-600";
+    const filtersEl = document.getElementById('card-filters');
+    if (filtersEl) {
+        const buttons = filtersEl.children;
+        for (let btn of buttons) {
+            if (btn.innerText.includes(filter) || (filter === 'Major Arcana' && btn.innerText === 'Major')) {
+                btn.className = "px-4 py-2 rounded-full border border-pink-200 text-sm font-cute font-bold transition-colors bg-pink-300 text-white shadow-sm";
+            } else {
+                btn.className = "px-4 py-2 rounded-full border border-pink-200 text-sm font-cute font-bold transition-colors bg-white hover:bg-pink-50 text-gray-600";
+            }
         }
     }
     
     const grid = document.getElementById('library-grid');
+    if (!grid) return;
     let html = '';
     TAROT_DECK.forEach((card, index) => {
         const isMajor = card.arcana === 'Major Arcana';
@@ -1028,12 +1083,14 @@ function filterLibrary(filter, searchTerm = '') {
     grid.innerHTML = html;
 }
 
-// === STEP 3 (C): DUKUNGAN GAMBAR PADA DETAIL KARTU ===
 function showCardDetail(index) {
     const card = TAROT_DECK[index];
     let yesNoClass = card.yesNo === 'Yes' ? 'text-green-600' : (card.yesNo === 'No' ? 'text-red-500' : 'text-orange-400');
 
-    document.getElementById('card-detail-content').innerHTML = `
+    const detailContent = document.getElementById('card-detail-content');
+    if (!detailContent) return;
+
+    detailContent.innerHTML = `
         <div class="flex flex-col md:flex-row gap-8 lg:gap-12">
             <div class="w-full md:w-1/3 flex justify-center">
                 <div class="w-64 md:w-full aspect-[2/3.3] rounded-2xl flex flex-col items-center justify-center shadow-xl relative overflow-hidden group ${card.img ? '' : 'bg-gradient-to-b from-pink-50 to-white border-2 border-pink-100 p-6'}">
@@ -1093,7 +1150,10 @@ function showZodiac(id) {
     const z = ZODIAC_DATA.find(item => item.id === id);
     if (!z) return;
     
-    document.getElementById('zodiac-detail-content').innerHTML = `
+    const detailContent = document.getElementById('zodiac-detail-content');
+    if (!detailContent) return;
+
+    detailContent.innerHTML = `
         <div class="text-center mb-8">
             <div class="text-pink-400 mb-3 w-16 h-16 mx-auto"><svg viewBox="0 0 24 24" class="w-full h-full">${z.svg}</svg></div>
             <h1 class="font-cute font-bold text-4xl text-purple-800 mb-1">${z.name}</h1>
@@ -1116,8 +1176,11 @@ function showZodiac(id) {
 }
 
 function renderGenericPage(title) {
-    document.getElementById('generic-title').innerText = title;
+    const titleEl = document.getElementById('generic-title');
+    if (titleEl) titleEl.innerText = title;
+    
     const content = document.getElementById('generic-content');
+    if (!content) return;
     
     if (title === 'About Tarot') {
         content.innerHTML = `
@@ -1141,55 +1204,7 @@ function renderGenericPage(title) {
                 </div>
             </div>
         `;
-    } else if (title === 'Personal Reading') {
-        content.innerHTML = `
-            <div class="space-y-8 text-left">
-                <!-- Creator Header -->
-                <div class="text-center mb-8">
-                    <div class="w-20 h-20 bg-pink-100 rounded-full mx-auto mb-4 border-2 border-pink-200 flex items-center justify-center text-purple-800 font-cute font-bold text-xl">M</div>
-                    <h2 class="font-cute font-bold text-3xl text-purple-800">Hi, I'm Mai</h2>
-                    <p class="text-sm text-pink-500 font-['Caveat'] mt-1 tracking-wide">Creator of the CuTarot</p>
-                    
-                    <div class="mt-4 inline-flex items-center space-x-2 bg-pink-50/80 px-4 py-2 rounded-full border border-pink-100 shadow-sm">
-                        <svg class="w-4 h-4 text-pink-500" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.148-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-                        <a href="#" class="text-xs font-cute font-bold text-pink-500 hover:text-pink-600 transition-colors">Find me for a free reading here</a>
-                    </div>
-                </div>
-
-                <div class="space-y-4 text-gray-600 font-cute text-sm leading-relaxed">
-                    <p>CuTarot was initially made for better understanding about what the cards try to speak to me. Rider Waite Smith cards are full of symbolism in every small details. I simply couldn't understand all of them.</p>
-                    <p>So, that, CuTarot was created. I didn't simplify the image nor the message every card try to convey. I just turned every card into something I could understand. Something that if I look at it in my spreads, I could tell directly the story and the message without having to remember the keywords all along.</p>
-                    <p>Alongside the creation of CuTarot, I could finally feel the bond with my own deck. I made it cute, yes, but the understanding ran deeper than reading basic RWS imagery.</p>
-                </div>
-                <div class="w-full h-px bg-pink-100 my-6"></div>
-                <div class="space-y-4 text-gray-600 font-cute text-sm leading-relaxed">
-                    <p>I realized that tarot could be a way to understand our life and its path along the way. It is never a sentence that things will eventually turn out just like what the card said. It is like a guidance, like a small lantern in the middle of the dark.</p>
-                    <p>The analogy is simple. Tarot acts like the lantern—it gives you reassurance, a little certain vision about what's in front of you, a 'there is something ahead and or behind you' type of message. It tells you what you don't know, what you deny, what will happen to some part of your life, what you better do, what you should prepare, what you should be careful of, and so many more.</p>
-                    <p>But it never decides where your real path takes you. Tarot could tell you, "You're going to A, here's 15 lists of stuff you should blah blah blah." Whether you make it there in the end, it's on you.</p>
-                    <p>Tarot is guidance, a teacher, a warning sign, a comfort. But only you can eventually decide how your life's going. Your step is the one who turns the wheel of your life. Tarot makes it clear for you to read the roadmap ahead and what had passed.</p>
-                    <p>And to think about Tarot this way, it sounds less like 'Tarot is a life verdict cards and certainly will change your whole life'. It's more like 'Tarot is the company your mind and soul needs to seek more clarity in every step of your life'. That is the difference. Tarot is a friend, not a verdict.</p>
-                </div>
-                <div class="w-full h-px bg-pink-100 my-6"></div>
-                <div class="space-y-4 text-gray-600 font-cute text-sm leading-relaxed">
-                    <p>I manage to create CuTarot as my company, a little guide for my road. And I hope, the deck could help you, too, to find answer for what your soul and mind is asking right now.</p>
-                    <p>You can bring this deck home and to wherever you are—physically and digitally. An exclusive, cute designed RWS for better understanding, yet still hold the answer for your question.</p>
-                </div>
-                <div class="w-full h-px bg-pink-100 my-6"></div>
-                <div class="bg-pink-50/50 p-6 sm:p-8 rounded-3xl border border-pink-100 text-center space-y-4 shadow-sm">
-                    <p class="font-cute text-sm text-gray-700 leading-relaxed font-bold">
-                        Buy this deck for only $50 USD / Rp. 759.000 (tax and shipping fee isn't included).<br>
-                        Printed only for you.<br>
-                        It will come with a guide book, far more complete than this website, and is written by me—result of deep research everywhere.
-                    </p>
-                    <div class="pt-2">
-                        <a href="#" class="inline-block bg-purple-700 hover:bg-purple-800 text-white px-8 py-3.5 rounded-2xl font-cute font-bold text-sm shadow-md transition-all transform hover:-translate-y-0.5">
-                            Click me here to buy this deck and bond with the cards
-                        </a>
-                    </div>
-                </div>
-            </div>
-        `;
-            } else if (title === 'About Oracle') {
+    } else if (title === 'About Oracle') {
         content.innerHTML = `
             <div class="space-y-8 text-left">
                 <div class="bg-pink-50/40 p-6 sm:p-8 rounded-3xl border border-pink-100 shadow-sm">
@@ -1204,8 +1219,20 @@ function renderGenericPage(title) {
                 </div>
             </div>
         `;
-    }
-
+    } else if (title === 'Personal Reading') {
+        content.innerHTML = `
+            <div class="space-y-8 text-left">
+                <div class="text-center mb-8">
+                    <div class="w-20 h-20 bg-pink-100 rounded-full mx-auto mb-4 border-2 border-pink-200 flex items-center justify-center text-purple-800 font-cute font-bold text-xl">M</div>
+                    <h2 class="font-cute font-bold text-3xl text-purple-800">Hi, I'm Mai</h2>
+                    <p class="text-sm text-pink-500 font-['Caveat'] mt-1 tracking-wide">Creator of the CuTarot</p>
+                </div>
+                <div class="space-y-4 text-gray-600 font-cute text-sm leading-relaxed">
+                    <p>CuTarot was initially made for better understanding about what the cards try to speak to me. Rider Waite Smith cards are full of symbolism in every small details. I simply couldn't understand all of them.</p>
+                    <p>So, CuTarot was created. I didn't simplify the image nor the message every card try to convey. I just turned every card into something I could understand. Something that if I look at it in my spreads, I could tell directly the story and the message without having to remember the keywords all along.</p>
+                </div>
+            </div>
+        `;
     } else {
         content.innerHTML = `<p>CuTarot by Mai Collection is provided for personal reflection and entertainment purposes.</p>`;
     }
@@ -1238,6 +1265,7 @@ function ensureDashboardSearch() {
 
 function handleDashboardSearch(query) {
     const resultsEl = document.getElementById('dashboard-search-results');
+    if (!resultsEl) return;
     if (!query || query.trim() === '') {
         resultsEl.classList.add('hidden');
         resultsEl.innerHTML = '';
@@ -1291,136 +1319,16 @@ function handleDashboardSearch(query) {
 // ==========================================
 const BIRTH_CARD_MEANINGS = {
     0: { 
-        p1: "Sebagai Kartu Kepribadian, The Fool menandakan jalan hidup yang didefinisikan oleh eksplorasi tanpa henti dan jiwa muda yang tidak bisa dipatahkan. Kamu hadir di dunia ini untuk mendobrak batasan, menantang hal-hal konvensional, dan merangkul ketidakpastian dengan tangan terbuka.",
-        p2: "Orang-orang melihatmu sebagai sosok yang berani mengambil risiko dan selalu siap untuk memulai lembaran baru. Energi luar kamu memancarkan optimisme dan pengingat bagi orang lain bahwa hidup adalah petualangan besar yang tidak perlu terlalu ditakuti.",
-        s1: "Pada tingkat Jiwa (Soul), inti terdalammu mendambakan kebebasan mutlak dan kebenaran tanpa syarat. Perjalanan spiritualmu menuntutmu untuk memercayai alam semesta sepenuhnya, melepaskan kebutuhan untuk mengontrol setiap hasil dari tindakanmu.",
-        s2: "Tujuan sejatimu adalah menemukan kebijaksanaan yang mendalam di dalam sebuah kepolosan. Kamu ditakdirkan untuk tetap memiliki rasa ingin tahu yang murni, menemukan pencerahan justru ketika kamu berani melompat ke tempat yang sama sekali tidak kamu ketahui."
+        p1: "Sebagai Kartu Kepribadian, The Fool menandakan jalan hidup yang didefinisikan oleh eksplorasi tanpa henti dan jiwa muda yang tidak bisa dipatahkan.",
+        p2: "Orang-orang melihatmu sebagai sosok yang berani mengambil risiko dan selalu siap untuk memulai lembaran baru.",
+        s1: "Pada tingkat Jiwa (Soul), inti terdalammu mendambakan kebebasan mutlak dan kebenaran tanpa syarat.",
+        s2: "Tujuan sejatimu adalah menemukan kebijaksanaan yang mendalam di dalam sebuah kepolosan."
     },
     1: { 
-        p1: "Sebagai Kartu Kepribadian, The Magician menandakan bahwa kamu adalah seorang manifestor sejati. Kamu dianugerahi kecerdasan tajam, tekad yang luar biasa, dan kemampuan unik untuk mengubah ide-ide abstrak menjadi kenyataan materi.",
-        p2: "Dalam interaksi sehari-hari, kamu sering kali menjadi pemecah masalah yang andal. Jalan hidup eksternalmu adalah tentang memanfaatkan segala sumber daya yang ada—pikiran, tubuh, dan lingkungan—untuk menciptakan dunia yang kamu inginkan secara presisi.",
-        s1: "Pada tingkat Jiwa, kamu memiliki koneksi langsung dengan percikan ilahi dari penciptaan. Jiwamu berfungsi sebagai saluran ajaib yang menghubungkan alam spiritual dengan realitas fisik, membawa pencerahan dari atas ke bumi.",
-        s2: "Evolusi batinmu terletak pada penguasaan niat. Semakin dalam kamu menyelaraskan fokusmu dengan tujuan tertinggi, semakin besar keajaiban penyembuhan dan transformasi yang dapat kamu berikan kepada dirimu sendiri dan orang-orang di sekitarmu."
-    },
-    2: { 
-        p1: "Sebagai Kartu Kepribadian, The High Priestess memproyeksikan aura misteri, kedalaman emosional, dan intuisi yang sangat kuat. Orang lain sering kali merasa bahwa kamu mengetahui rahasia-rahasia tersembunyi tanpa perlu diucapkan.",
-        p2: "Kamu tidak mudah terpengaruh oleh keramaian dunia luar; sebaliknya, kamu memantulkan energi orang lain bagai cermin yang tenang. Pendekatan hidupmu sangat observatif, selalu membaca yang tersirat sebelum mengambil tindakan apa pun.",
-        s1: "Pada tingkat Jiwa, tujuan utamamu adalah mendengarkan dan memercayai suara batinmu di atas segalanya. Jiwamu adalah sebuah kuil kebijaksanaan kuno yang menyimpan pemahaman tentang siklus alam dan rahasia alam bawah sadar.",
-        s2: "Perjalanan sejatimu bukanlah tentang mencari jawaban dari luar, melainkan menyelami keheningan batinmu. Kamu ditakdirkan untuk menjadi pembimbing spiritual, membawa pencerahan bagi mereka yang tersesat di dalam kegelapan emosional mereka sendiri."
-    },
-    3: { 
-        p1: "Sebagai Kartu Kepribadian, The Empress menandakan bahwa hidupmu dipenuhi dengan tema pengasuhan, kreativitas, dan penciptaan keindahan. Kamu memiliki daya tarik alami yang hangat dan membuat siapa saja merasa betah di dekatmu.",
-        p2: "Secara eksternal, kamu sangat terhubung dengan kelimpahan, seni, dan kenyamanan duniawi. Kamu adalah pelindung bagi orang lain, memastikan harmoni mekar di sekitarmu.",
-        s1: "Pada tingkat Jiwa, kamu membawa esensi dari 'Ibu Bumi'. Tujuan terdalam jiwamu adalah untuk mencintai tanpa syarat dan mengajarkan dunia bagaimana menerima cinta serta kelimpahan tanpa rasa bersalah.",
-        s2: "Evolusi batinmu tercapai ketika kamu menyadari bahwa kamu tidak hanya wajib memelihara orang lain, tetapi juga memelihara dirimu sendiri. Kamu membuktikan kelembutan adalah bentuk kekuatan sejati."
-    },
-    4: { 
-        p1: "Sebagai Kartu Kepribadian, The Emperor menjadikanmu arsitek dari struktur dan stabilitas. Kamu memancarkan otoritas, kepemimpinan yang teguh, dan kemampuan untuk membawa ketertiban ke dalam situasi yang kacau.",
-        p2: "Orang-orang secara alami mengandalkanmu karena visi jangka panjangmu yang realistis. Kamu melindungi apa yang menjadi hakmu dan membangun fondasi solid untuk masa depan.",
-        s1: "Pada tingkat Jiwa, perjalanan spiritualmu adalah tentang menguasai diri sendiri (self-mastery). Jiwamu ditugaskan untuk mengubah kekuatan mentah menjadi otoritas yang bijaksana.",
-        s2: "Panggilan sejatimu adalah memadukan ketegasan dengan welas asih. Ketika kamu berhasil memimpin dengan hati dan logika, kamu menciptakan warisan spiritual yang melindungi banyak generasi."
-    },
-    5: { 
-        p1: "Sebagai Kartu Kepribadian, The Hierophant menunjukkan bahwa kamu adalah sosok pencari kebenaran, tradisi, dan nilai-nilai fundamental. Kamu sangat menghargai struktur moral dan pendidikan.",
-        p2: "Dalam masyarakat, kamu sering bertindak sebagai mentor atau penasihat yang bijak. Kamu memberikan rasa aman dengan mempertahankan tradisi yang menyatukan komunitas.",
-        s1: "Pada tingkat Jiwa, panggilan utamamu adalah menjembatani kearifan spiritual kuno dengan pemahaman modern. Jiwamu mencari keyakinan yang lebih besar dari diri sendiri.",
-        s2: "Evolusi batinmu terjadi ketika kamu tidak hanya mengikuti aturan secara membabi buta, tetapi menemukan inti spiritual universal bahwa hukum alam didasarkan pada cinta."
-    },
-    6: { 
-        p1: "Sebagai Kartu Kepribadian, The Lovers membawa tema harmoni, kemitraan, dan persimpangan pilihan. Kamu memiliki pesona yang sangat magnetis dan kemampuan menyatukan perbedaan.",
-        p2: "Kehidupan luar kamu sering kali diwarnai oleh hubungan emosional yang mendalam dan keputusan-keputusan besar yang menguji nilai pribadimu.",
-        s1: "Pada tingkat Jiwa, kamu membawa misi tentang integrasi dualitas—cahaya dan bayangan, maskulin dan feminin. Jiwamu mencari 'keseutuhan' mutlak di dalam diri.",
-        s2: "Pemahaman spiritualmu akan datang ketika kamu menyadari bahwa pilihan yang dibuat dari ruang cinta selalu lebih kuat daripada pilihan yang dibuat dari rasa takut."
-    },
-    7: { 
-        p1: "Sebagai Kartu Kepribadian, The Chariot menandakan tekad baja, ambisi yang tak terhentikan, dan fokus pada kemenangan. Tidak ada halangan duniawi yang dapat memperlambatmu.",
-        p2: "Kamu memproyeksikan citra kendali penuh atas hidup. Di dalam mungkin ada gejolak, tetapi kamu sangat ahli dalam mengarahkan berbagai emosi menjadi bahan bakar kemajuan.",
-        s1: "Pada tingkat Jiwa, perjalananmu adalah tentang kemenangan spiritual dan penguasaan ego. Jiwamu ditantang menunggangi kehidupan tanpa membiarkan insting mengendalikan arahmu.",
-        s2: "Kemenangan sejati bukan tentang mengalahkan orang lain, melainkan menaklukkan bayangan di dalam dirimu sendiri. Kamu adalah pejuang spiritual yang membawa cahaya melewati pertempuran."
-    },
-    8: { 
-        p1: "Sebagai Kartu Kepribadian, Strength memancarkan aura keberanian yang tenang dan ketahanan luar biasa. Kamu tidak menyelesaikan masalah dengan kekerasan, melainkan dengan empati dan kesabaran.",
-        p2: "Orang lain sering kali berlindung di balik ketangguhan mentalmu. Kamu mampu menjinakkan situasi liar hanya dengan kehadiran tulusmu.",
-        s1: "Pada tingkat Jiwa, tujuan terbesarmu adalah mengubah rasa takut menjadi kekuatan batin. Monster sejati bukanlah yang ada di luar, melainkan keraguan di dalam diri.",
-        s2: "Evolusi spiritualmu tercapai ketika kamu merangkul semua sisi terang dan gelapmu dengan cinta. Kelembutan adalah kekuatan kosmik yang paling tak tertandingi."
-    },
-    9: { 
-        p1: "Sebagai Kartu Kepribadian, The Hermit menunjukkan jiwa introspektif, mandiri, dan pencari kebenaran. Kamu membutuhkan waktu menyendiri untuk memproses dunia.",
-        p2: "Orang melihatmu sebagai mercusuar kebijaksanaan, tempat mereka meminta nasihat mendalam, objektif, dan jujur di tengah kebisingan hidup.",
-        s1: "Pada tingkat Jiwa, panggilan utamamu adalah pencarian pencerahan (enlightenment). Kamu harus masuk ke dalam kegelapan batinmu untuk menemukan cahaya murni.",
-        s2: "Misi batinmu bukan untuk mengasingkan diri, tetapi membawa kembali lentera kebijaksanaan yang menyala guna menerangi jalan bagi mereka yang tersesat."
-    },
-    10: { 
-        p1: "Sebagai Kartu Kepribadian, Wheel of Fortune menandakan hidup yang penuh siklus, keberuntungan tak terduga, dan adaptabilitas yang tinggi.",
-        p2: "Kamu memiliki pemahaman luar biasa bahwa tak ada yang abadi. Fleksibilitasmu membuat orang kagum pada caramu menunggangi gelombang takdir dengan senyuman.",
-        s1: "Pada tingkat Jiwa, kamu adalah pengamat roda karma. Jiwamu sangat selaras dengan ritme alam semesta dan hukum sebab-akibat lintas waktu.",
-        s2: "Panggilan spiritualmu adalah menemukan ketenangan absolut di poros roda. Alih-alih diombang-ambingkan badai, kamu ditugaskan menjadi pusat gravitasi yang tenang."
-    },
-    11: { 
-        p1: "Sebagai Kartu Kepribadian, Justice menonjolkan integritas, objektivitas, dan pencarian keadilan. Kamu memiliki kompas moral yang tajam untuk mengungkap kebenaran.",
-        p2: "Orang menghargai kejujuranmu meskipun kata-katamu terasa dingin. Kamu selalu berusaha menyeimbangkan timbangan di dalam semua aspek kehidupan.",
-        s1: "Pada tingkat Jiwa, kamu bertugas menyelaraskan karma kosmik. Jiwamu menuntut akuntabilitas secara brutal terhadap dirimu sendiri di atas segalanya.",
-        s2: "Evolusi batinmu terjadi saat kamu menyadari bahwa keadilan sejati berjalan beriringan dengan kasih sayang; kebenaran harus diucapkan untuk menyembuhkan, bukan menghancurkan."
-    },
-    12: { 
-        p1: "Sebagai Kartu Kepribadian, The Hanged Man membuatmu bersedia menunda kepuasan dan mengorbankan ego demi mencapai pemahaman yang lebih besar.",
-        p2: "Kamu tidak takut memutar balik caramu melihat dunia saat logika biasa menemui jalan buntu. Posisi 'menunggu' seringkali adalah strategimu.",
-        s1: "Pada tingkat Jiwa, perjalananmu adalah tentang penyerahan diri spiritual (surrender). Pencerahan sering datang dari membiarkan alam semesta bekerja.",
-        s2: "Misi sejatimu adalah menemukan kedamaian dalam jeda, mengubah pengorbanan kecil menjadi mukjizat visi batin yang sangat tajam."
-    },
-    13: { 
-        p1: "Sebagai Kartu Kepribadian, Death menunjukkan hidup yang dipenuhi tema transformasi radikal, regenerasi, dan penemuan kembali diri.",
-        p2: "Kamu adalah agen perubahan bagi sekitarmu. Kamu memahami bahwa setiap akhir adalah pemicu untuk sebuah awal yang lebih besar.",
-        s1: "Pada tingkat Jiwa, kamu adalah saluran kebangkitan (rebirth). Membersihkan energi lama untuk memberi ruang kehidupan rohani yang baru.",
-        s2: "Penerimaan mutlak terhadap sifat ketidakkekalan adalah kunci. Dari abu kehancuran paling gelap, kebangkitan siap mengambil tempat."
-    },
-    14: { 
-        p1: "Sebagai Kartu Kepribadian, Temperance menjadikanmu sang alkemis kehidupan. Kamu berbakat memadukan hal ekstrem menjadi harmoni damai.",
-        p2: "Pendekatanmu terhadap hidup tenang dan menyembuhkan. Kehadiranmu menetralkan ketegangan yang ada dalam ruangan.",
-        s1: "Pada tingkat Jiwa, kamu bekerja keras menyeimbangkan dunia material dan spiritual untuk menciptakan sintesis sempurna di dalam dirimu.",
-        s2: "Panggilan tertinggimu adalah menjadi saluran kedamaian alam semesta, menyembuhkan luka-luka masa lalu milikmu sendiri maupun kolektif."
-    },
-    15: { 
-        p1: "Sebagai Kartu Kepribadian, The Devil menandakan intensitas magnetis dan ambisi material yang kuat. Kamu terhubung dengan keinginan duniawi.",
-        p2: "Kehadiranmu provokatif. Kamu ahli menavigasi dunia fisik, menikmati kemewahan, dan memahami kedalaman bayangan psikologis manusia.",
-        s1: "Pada tingkat Jiwa, ini adalah panggilan pembebasan luar biasa. Kamu harus mengenali dan membebaskan diri dari rantai materialisme.",
-        s2: "Pencerahanmu datang melalui pemahaman gelap-terang, menaklukkan ketakutan naluriah untuk mencapai kebebasan rohani tertinggi."
-    },
-    16: { 
-        p1: "Sebagai Kartu Kepribadian, The Tower membuatmu menjadi pendobrak struktur yang usang. Kamu selalu membawa kebenaran yang menyengat namun diperlukan.",
-        p2: "Kamu sangat otentik dan menghancurkan apa yang pada akhirnya merugikan orang-orang, layaknya petir pembebas.",
-        s1: "Pada tingkat Jiwa, kamu adalah katalisator kebangkitan massal. Terhubung langsung dengan kebenaran kosmik yang tak mentolerir ilusi egois.",
-        s2: "Evolusi sejatimu adalah mengajarkan bahwa ketika menara kesombongan runtuh, reruntuhannya adalah tanah subur untuk pencerahan sejati."
-    },
-    17: { 
-        p1: "Sebagai Kartu Kepribadian, The Star memancarkan harapan murni, optimisme, dan inspirasi penyembuhan bagi banyak orang setelah masa sulit.",
-        p2: "Energi luarmu sangat lembut dan artistik. Kamu senantiasa dikelilingi oleh keajaiban karena kamu percaya pada masa depan yang lebih baik.",
-        s1: "Pada tingkat Jiwa, kamu adalah saluran rahmat ilahi yang bertugas menuangkan air penyembuhan kembali ke bumi yang tandus.",
-        s2: "Iman sejatimu kepada alam semesta pada akhirnya akan memulihkan jiwa yang paling hancur sekalipun tanpa keraguan."
-    },
-    18: { 
-        p1: "Sebagai Kartu Kepribadian, The Moon menandakan hidup yang selaras dengan intuisi, seni, dan dunia mimpi bawah sadar. Kehadiranmu misterius dan puitis.",
-        p2: "Kamu berjalan di tepi realitas fisik dan imajinasi magis, menjadikanmu sosok yang sangat empatik terhadap energi tak terlihat.",
-        s1: "Pada tingkat Jiwa, kamu ditugaskan menyelami ketakutan terdalam alam bawah sadar, menjaga kebijaksanaan leluhur mistis.",
-        s2: "Evolusi spiritualmu terjadi saat kamu berhenti takut pada kegelapan batin, mengubah mimpi buruk menjadi bimbingan ilahi."
-    },
-    19: { 
-        p1: "Sebagai Kartu Kepribadian, The Sun membuatmu memancarkan kebahagiaan mutlak dan vitalitas murni layaknya anak kecil.",
-        p2: "Pendekatanmu hidupmu optimis. Kamu membuat masalah besar terlihat kecil hanya dengan memberikan kehangatan senyumanmu.",
-        s1: "Pada tingkat Jiwa, kamu adalah percikan cahaya murni. Bergetar dengan frekuensi kegembiraan dan realisasi diri tanpa hambatan.",
-        s2: "Tujuan agungmu adalah merayakan kehidupan dan membakar habis kesedihan orang lain dengan hanya menjadi dirimu yang otentik."
-    },
-    20: { 
-        p1: "Sebagai Kartu Kepribadian, Judgement menandakan hidupmu dipandu panggilan yang lebih tinggi. Kamu ahli mengevaluasi hidup dengan kejujuran mutlak.",
-        p2: "Orang menghormatimu yang telah 'terbangun', dan bersedia mengampuni masa lalu demi fase baru yang bermakna.",
-        s1: "Pada tingkat Jiwa, kamu melepaskan segala sisa karma lama dan rasa bersalah menuju pembebasan spiritual terakhir.",
-        s2: "Kamu ada untuk membuktikan bahwa tidak peduli seberapa dalam seseorang terkubur dalam kesalahan, selalu ada pintu terlahir kembali menjadi cahaya."
-    },
-    21: { 
-        p1: "Sebagai Kartu Kepribadian, The World menjadikanmu sosok utuh yang berwawasan luas. Kamu selalu berhasil menyelesaikan siklus dengan sempurna.",
-        p2: "Kamu memproyeksikan citra kepuasan hidup. Contoh kehidupan yang telah mencapai puncak dalam keseimbangan materi dan harmoni.",
-        s1: "Pada tingkat Jiwa, jiwamu telah mengumpulkan seluruh pelajaran, mencapai kedamaian dan keutuhan kosmik yang absolut.",
-        s2: "Tugas sejatimu adalah merayakan tarian alam semesta dan menjadi penghubung antara dunia fisik dan spiritual yang tak terhingga."
+        p1: "Sebagai Kartu Kepribadian, The Magician menandakan bahwa kamu adalah seorang manifestor sejati.",
+        p2: "Dalam interaksi sehari-hari, kamu sering kali menjadi pemecah masalah yang andal.",
+        s1: "Pada tingkat Jiwa, kamu memiliki koneksi langsung dengan percikan ilahi dari penciptaan.",
+        s2: "Evolusi batinmu terletak pada penguasaan niat."
     }
 };
 
@@ -1470,7 +1378,7 @@ function ensureBirthCalculatorHome() {
                 <div class="w-2/3 pl-5 text-left flex flex-col justify-center">
                     <div class="text-[9px] uppercase tracking-widest text-pink-400 font-bold mb-1 font-cute">Numerology & Astrology</div>
                     <h3 class="font-cute font-bold text-xl text-purple-800 mb-2 leading-tight">Tarot Birth Calculator</h3>
-                    <p class="font-cute text-xs text-gray-500 leading-relaxed mb-3">Discover your Soul and Personality cards based on your birth date. Reveal the esoteric path you are destined to walk.</p>
+                    <p class="font-cute text-xs text-gray-500 leading-relaxed mb-3">Discover your Soul and Personality cards based on your birth date.</p>
                     <div>
                         <span class="inline-block px-3 py-1 bg-pink-50 text-pink-500 text-[10px] font-bold rounded-full font-cute border border-pink-100 group-hover:bg-pink-100 transition-colors">Calculate Yours &rarr;</span>
                     </div>
@@ -1490,13 +1398,6 @@ function ensureBirthCalculatorMenu() {
     if (!drawer) return;
     if (document.getElementById('menu-birth-calc')) return;
     
-    const menuItems = drawer.querySelectorAll('a, button, div, li');
-    let zodiacItem = null;
-    menuItems.forEach(item => {
-        if (item.getAttribute('onclick') && item.getAttribute('onclick').includes('zodiac')) zodiacItem = item;
-        else if (item.innerText && item.innerText.trim().includes('Zodiac') && !zodiacItem) zodiacItem = item;
-    });
-    
     const menuLink = document.createElement('a');
     menuLink.id = 'menu-birth-calc';
     menuLink.href = '#';
@@ -1514,12 +1415,8 @@ function ensureBirthCalculatorMenu() {
         navigate('birth-calculator'); 
     };
     
-    if (zodiacItem && zodiacItem.parentNode) {
-        zodiacItem.parentNode.insertBefore(menuLink, zodiacItem);
-    } else {
-        const nav = drawer.querySelector('nav') || drawer;
-        nav.appendChild(menuLink);
-    }
+    const nav = drawer.querySelector('nav') || drawer;
+    nav.appendChild(menuLink);
 }
 
 function initBirthCalculatorPage() {
@@ -1539,12 +1436,6 @@ function initBirthCalculatorPage() {
                 <span class="text-pink-300 font-cute font-bold text-xs text-center px-2">Birth Card Calculator Cover</span>
             </div>
             
-            <div class="text-left space-y-4 mb-8 bg-pink-50/40 p-6 rounded-3xl border border-pink-100 shadow-sm font-cute text-sm text-gray-600 leading-relaxed">
-                <p>Welcome to the esoteric realm of Numerology and Astrology. The Tarot Birth Card Calculator unveils the energetic blueprint of your life's journey through the Major Arcana.</p>
-                <p>Your <strong>Personality Card</strong> represents how you interact with the world, the overarching themes of your external life, and the lessons you project outward. It is your worldly armor and guiding star in daily interactions.</p>
-                <p>Your <strong>Soul Card</strong> dives into your deepest core. It reflects your hidden spiritual purpose, your internal desires, and the quiet inner voice that guides your ultimate evolution. Together, they form the compass of your destiny.</p>
-            </div>
-            
             <div class="bg-white p-6 sm:p-8 rounded-3xl border border-pink-200 shadow-md">
                 <h3 class="font-cute font-bold text-lg text-purple-800 mb-4">Enter Your Birthday</h3>
                 <input type="text" id="birthdate-input" 
@@ -1561,34 +1452,9 @@ function initBirthCalculatorPage() {
                     My Cards
                 </button>
             </div>
-
-            <div class="mt-8">
-                <span onclick="resetBirthCalculator()" class="cursor-pointer text-xs font-cute font-bold text-pink-400 hover:text-pink-600 underline transition-colors">Enter Your Birthday Again</span>
-            </div>
         </div>
     `;
     parentContainer.appendChild(viewDiv);
-    
-    if (!document.getElementById('birth-cards-modal')) {
-        const modalDiv = document.createElement('div');
-        modalDiv.id = 'birth-cards-modal';
-        modalDiv.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-purple-900/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300';
-        modalDiv.onclick = (e) => { if(e.target === modalDiv) closeBirthCardsModal(); };
-        
-        modalDiv.innerHTML = `
-            <div id="birth-cards-modal-content" class="bg-white w-full max-w-xl rounded-3xl p-6 sm:p-8 border-2 border-pink-200 shadow-2xl transform scale-95 transition-transform duration-500 max-h-[90vh] overflow-y-auto" style="transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);">
-                <div class="text-center mb-6">
-                    <h2 class="font-cute font-bold text-3xl text-purple-800 leading-none">Your Destiny Cards</h2>
-                    <p class="text-[10px] uppercase tracking-widest text-pink-400 font-bold mt-2 font-cute">Numerology Insight</p>
-                </div>
-                
-                <div id="birth-cards-results-grid" class="space-y-10 text-left"></div>
-                
-                <button onclick="closeBirthCardsModal()" class="w-full mt-8 bg-pink-100 text-purple-800 py-4 rounded-xl font-cute font-bold text-sm shadow-sm hover:bg-pink-200 transition-colors">Close</button>
-            </div>
-        `;
-        document.body.appendChild(modalDiv);
-    }
 }
 
 function handleBirthInput(e) {
@@ -1602,12 +1468,16 @@ function handleBirthInput(e) {
     e.target.value = formatted;
     
     const btn = document.getElementById('btn-find-birth-cards');
-    if (val.length === 8) btn.classList.remove('opacity-50', 'pointer-events-none');
-    else btn.classList.add('opacity-50', 'pointer-events-none');
+    if (btn) {
+        if (val.length === 8) btn.classList.remove('opacity-50', 'pointer-events-none');
+        else btn.classList.add('opacity-50', 'pointer-events-none');
+    }
 }
 
 function processBirthCards() {
-    const input = document.getElementById('birthdate-input').value; 
+    const inputEl = document.getElementById('birthdate-input');
+    if (!inputEl) return;
+    const input = inputEl.value; 
     const parts = input.split('/');
     if (parts.length !== 3 || parts[2].length !== 4) return;
     
@@ -1621,77 +1491,41 @@ function processBirthCards() {
     const sMeaning = getBirthCardMeaning(sNum);
     
     const grid = document.getElementById('birth-cards-results-grid');
-    const renderModalCard = (title, cardObj, para1, para2, tagColor) => `
-        <div class="bg-pink-50/30 p-5 rounded-3xl border border-pink-100 shadow-sm relative pt-10">
-            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-${tagColor}-500 text-white px-6 py-1.5 rounded-full font-cute font-bold text-xs shadow-md tracking-wider uppercase">
-                ${title} Card
-            </div>
-            <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-                <div class="w-28 flex-shrink-0">
-                    <div class="w-full aspect-[2/3.3] bg-white border border-pink-100 rounded-xl flex flex-col items-center justify-center p-2 text-center shadow-md relative overflow-hidden">
-                        ${cardObj.img 
-                            ? `<img src="${cardObj.img}" alt="${cardObj.name}" class="w-full h-full object-cover rounded-xl" />`
-                            : `<div class="text-[9px] text-pink-400 font-cute font-bold mb-1 uppercase tracking-widest">Major</div>
-                               <div class="text-xs font-cute font-bold text-gray-800 leading-tight">${cardObj.name}</div>
-                               <div class="mt-2 text-pink-200 text-[10px] font-cute">${cardObj.number}</div>`
-                        }
-                    </div>
-                </div>
-                <div class="space-y-3 font-cute text-sm text-gray-600 leading-relaxed text-justify">
-                    <p>${para1}</p>
-                    <p>${para2}</p>
-                </div>
-            </div>
-        </div>
-    `;
+    if (!grid) return;
 
     grid.innerHTML = `
-        ${renderModalCard("Personality", pCardData, pMeaning.p1, pMeaning.p2, "purple")}
-        ${renderModalCard("Soul", sCardData, pMeaning.s1, pMeaning.s2, "pink")}
+        <div class="p-4 bg-pink-50 rounded-2xl font-cute">
+            <h4 class="font-bold text-purple-800">Personality Card: ${pCardData ? pCardData.name : ''}</h4>
+            <p class="text-xs text-gray-600 mt-1">${pMeaning.p1}</p>
+        </div>
+        <div class="p-4 bg-purple-50 rounded-2xl font-cute mt-4">
+            <h4 class="font-bold text-purple-800">Soul Card: ${sCardData ? sCardData.name : ''}</h4>
+            <p class="text-xs text-gray-600 mt-1">${sMeaning.s1}</p>
+        </div>
     `;
     
-    document.getElementById('btn-find-birth-cards').classList.add('hidden');
-    document.getElementById('btn-my-cards-reopen').classList.remove('hidden');
+    document.getElementById('btn-find-birth-cards')?.classList.add('hidden');
+    document.getElementById('btn-my-cards-reopen')?.classList.remove('hidden');
     showBirthCardsModal();
 }
 
 function showBirthCardsModal() {
     const modal = document.getElementById('birth-cards-modal');
-    const content = document.getElementById('birth-cards-modal-content');
-    modal.classList.remove('opacity-0', 'pointer-events-none');
-    setTimeout(() => {
-        content.classList.remove('scale-95');
-        content.classList.add('scale-100');
-    }, 10);
+    if (modal) modal.classList.remove('opacity-0', 'pointer-events-none');
 }
 
 function closeBirthCardsModal() {
     const modal = document.getElementById('birth-cards-modal');
-    const content = document.getElementById('birth-cards-modal-content');
-    content.classList.remove('scale-100');
-    content.classList.add('scale-95');
-    setTimeout(() => { modal.classList.add('opacity-0', 'pointer-events-none'); }, 300); 
+    if (modal) modal.classList.add('opacity-0', 'pointer-events-none');
 }
 
-function resetBirthCalculator() {
-    const input = document.getElementById('birthdate-input');
-    input.value = '';
-    document.getElementById('btn-find-birth-cards').classList.remove('hidden');
-    document.getElementById('btn-find-birth-cards').classList.add('opacity-50', 'pointer-events-none');
-    document.getElementById('btn-my-cards-reopen').classList.add('hidden');
-}
 // ==========================================
-// --- ORACLE SYSTEM LOGIC & UI INJECTION ---
+// --- ORACLE SYSTEM LOGIC & UI ---
 // ==========================================
-let oracleDrawCount = 3;
-let activeOracleDeck = [];
-let drawnOracleCards = [];
-
 function ensureOracleHomeSections() {
     const homeView = document.getElementById('view-home');
     if (!homeView) return;
 
-    // 1. Injeksi Section Oracle Utama (Di taruh SEBELUM Birth Card Calculator)
     let oracleMainSection = document.getElementById('home-oracle-section');
     if (!oracleMainSection) {
         oracleMainSection = document.createElement('div');
@@ -1725,7 +1559,6 @@ function ensureOracleHomeSections() {
         }
     }
 
-    // 2. Injeksi Daily Oracle Card (Lebih kecil, di bawah Tarot Daily Card)
     let dailyTarotEl = document.getElementById('inline-daily-card')?.parentElement || document.getElementById('btn-daily-card')?.parentElement;
     let dailyOracleSection = document.getElementById('home-daily-oracle-section');
     if (!dailyOracleSection && dailyTarotEl) {
@@ -1749,7 +1582,6 @@ function ensureOracleHomeSections() {
     }
 }
 
-// Daily Oracle Functionality
 function toggleDailyOracleCard() {
     const todayStr = getTodayDateString();
     let savedData = localStorage.getItem('cutarot_oracle_daily');
@@ -1767,15 +1599,17 @@ function toggleDailyOracleCard() {
     }
 
     const container = document.getElementById('inline-oracle-daily');
-    container.innerHTML = `
-        <div class="w-[80px] aspect-[2/3.3] rounded-lg border border-pink-100 overflow-hidden mb-2 shadow-sm flex items-center justify-center bg-pink-50">
-            ${dailyData.card.img ? `<img src="${dailyData.card.img}" class="w-full h-full object-contain" />` : `<span class="text-[9px] font-bold text-purple-800 p-1">${dailyData.card.name}</span>`}
-        </div>
-        <div class="font-bold text-xs text-purple-800">${dailyData.card.name}</div>
-        <p class="text-[11px] text-gray-600 italic mt-1 max-w-xs">"${dailyData.card.desc}"</p>
-    `;
-    container.classList.remove('hidden');
-    container.classList.add('flex');
+    if (container) {
+        container.innerHTML = `
+            <div class="w-[80px] aspect-[2/3.3] rounded-lg border border-pink-100 overflow-hidden mb-2 shadow-sm flex items-center justify-center bg-pink-50">
+                ${dailyData.card.img ? `<img src="${dailyData.card.img}" class="w-full h-full object-contain" />` : `<span class="text-[9px] font-bold text-purple-800 p-1 text-center">${dailyData.card.name}</span>`}
+            </div>
+            <div class="font-bold text-xs text-purple-800">${dailyData.card.name}</div>
+            <p class="text-[11px] text-gray-600 italic mt-1 max-w-xs">"${dailyData.card.desc}"</p>
+        `;
+        container.classList.remove('hidden');
+        container.classList.add('flex');
+    }
 
     const btn = document.getElementById('btn-oracle-daily');
     if (btn) {
@@ -1795,12 +1629,12 @@ function checkDailyOracleCard() {
     }
 }
 
-// Injeksi Halaman-Halaman Baru Oracle
 function initOracleViews() {
     if (document.getElementById('view-oracle-library')) return;
-    const parentContainer = document.getElementById('view-home').parentNode;
+    const homeView = document.getElementById('view-home');
+    if (!homeView) return;
+    const parentContainer = homeView.parentNode;
 
-    // 1. Oracle Library View
     const libView = document.createElement('div');
     libView.id = 'view-oracle-library';
     libView.className = 'view-section pb-24 text-center';
@@ -1813,7 +1647,6 @@ function initOracleViews() {
     `;
     parentContainer.appendChild(libView);
 
-    // 2. Oracle Draw View
     const drawView = document.createElement('div');
     drawView.id = 'view-oracle-draw';
     drawView.className = 'view-section pb-24 text-center';
@@ -1842,7 +1675,6 @@ function initOracleViews() {
     `;
     parentContainer.appendChild(drawView);
 
-    // 3. Oracle Detail View
     const detailView = document.createElement('div');
     detailView.id = 'view-oracle-detail';
     detailView.className = 'view-section pb-24 text-center';
@@ -1877,6 +1709,8 @@ function renderOracleLibrary() {
 function showOracleDetail(idx) {
     const card = ORACLE_DECK[idx];
     const content = document.getElementById('oracle-detail-content');
+    if (!content) return;
+
     content.innerHTML = `
         <div class="bg-white p-6 rounded-3xl border border-pink-100 shadow-sm space-y-4 font-cute">
             <div class="w-48 aspect-[2/3.3] mx-auto rounded-2xl border border-pink-100 overflow-hidden shadow-md flex items-center justify-center bg-pink-50">
@@ -1909,16 +1743,19 @@ function renderOracleConfigNumbers() {
 }
 
 function startOracleDrawProcess() {
-    document.getElementById('oracle-step-config').classList.add('hidden');
+    document.getElementById('oracle-step-config')?.classList.add('hidden');
     const drawStep = document.getElementById('oracle-step-draw');
-    drawStep.classList.remove('hidden');
-    drawStep.classList.add('flex');
+    if (drawStep) {
+        drawStep.classList.remove('hidden');
+        drawStep.classList.add('flex');
+    }
 
     let shuffled = [...ORACLE_DECK].sort(() => Math.random() - 0.5);
     activeOracleDeck = shuffled.slice(0, oracleDrawCount);
     drawnOracleCards = [];
 
     const container = document.getElementById('oracle-deck-cards');
+    if (!container) return;
     container.innerHTML = '';
     activeOracleDeck.forEach((card, idx) => {
         const cardEl = document.createElement('div');
@@ -1929,7 +1766,7 @@ function startOracleDrawProcess() {
             drawnOracleCards.push(card);
             cardEl.classList.add('opacity-40', 'pointer-events-none');
             if (drawnOracleCards.length === oracleDrawCount) {
-                document.getElementById('btn-oracle-reveal').classList.remove('hidden');
+                document.getElementById('btn-oracle-reveal')?.classList.remove('hidden');
             }
         };
         container.appendChild(cardEl);
@@ -1937,8 +1774,9 @@ function startOracleDrawProcess() {
 }
 
 function renderOracleResult() {
-    document.getElementById('oracle-step-draw').classList.add('hidden');
+    document.getElementById('oracle-step-draw')?.classList.add('hidden');
     const resStep = document.getElementById('oracle-step-result');
+    if (!resStep) return;
     resStep.classList.remove('hidden');
     resStep.classList.add('flex');
 
@@ -1966,7 +1804,6 @@ window.onload = function() {
     ensureBirthCalculatorHome(); 
     ensureBirthCalculatorMenu(); 
     
-    // Injeksi Sistem Oracle
     initOracleViews();
     ensureOracleHomeSections();
     checkDailyOracleCard();
