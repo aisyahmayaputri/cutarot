@@ -647,7 +647,16 @@ function navigate(viewId, anchorOrTitle = null) {
         if(typeof filterLibrary === 'function') filterLibrary('All');
     } else if (viewId === 'birth-calculator') {
         initBirthCalculatorPage();
+            // Tambahkan kondisi berikut di fungsi navigate:
+    else if (viewId === 'oracle-library') {
+        renderOracleLibrary();
+    } else if (viewId === 'oracle-draw') {
+        renderOracleConfigNumbers();
+        document.getElementById('oracle-step-config')?.classList.remove('hidden');
+        document.getElementById('oracle-step-draw')?.classList.add('hidden');
+        document.getElementById('oracle-step-result')?.classList.add('hidden');
     }
+
 }
 
 function getTodayDateString() {
@@ -1956,6 +1965,12 @@ window.onload = function() {
     ensureDashboardSearch();
     ensureBirthCalculatorHome(); 
     ensureBirthCalculatorMenu(); 
+    
+    // Injeksi Sistem Oracle
+    initOracleViews();
+    ensureOracleHomeSections();
+    checkDailyOracleCard();
+
     checkDailyCard();
     
     const spreadsGrid = document.getElementById('home-spreads-grid');
