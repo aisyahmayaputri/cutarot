@@ -562,63 +562,72 @@ const TAROT_DECK = [
 ];
 
 // ==========================================
-// --- DATA ORACLE CARDS (50 CARDS) ---
+// --- DATA ORACLE CARDS (50 CARDS WITH 5 CATEGORIES) ---
 // ==========================================
 const ORACLE_DECK = [
-    { id: 1, name: 'Inner Peace', img: '', desc: 'Take a deep breath and reconnect with your inner silence. Peace is found in a quiet mind.', guidance: 'Meditate for 5 minutes today and release any tension holding you back.' },
-    { id: 2, name: 'Self Transformation', img: '', desc: 'You are shedding old layers that no longer serve your growth. Embrace your subtle metamorphosis.', guidance: 'Do not fear changing tides; trust the new version of yourself.' },
-    { id: 3, name: 'Sacred Boundaries', img: '', desc: 'Protect your light and energy. Setting clear boundaries is a profound act of self-love.', guidance: 'Politely say no to commitments that drain your emotional vitality.' },
-    { id: 4, name: 'Intuitive Clarity', img: '', desc: 'Trust the quiet whispers of your gut instincts over loud logical chatter.', guidance: 'Listen closely to first impressions today.' },
-    { id: 5, name: 'Unconditional Love', img: '', desc: 'Open your heart to give and receive pure affection without keeping score.', guidance: 'Forgive a small past mistake and lead with compassion.' },
-    { id: 6, name: 'Divine Timing', img: '', desc: 'Everything is unfolding at the exact moment it needs to. Patience is your key.', guidance: 'Release your urge to rush outcomes.' },
-    { id: 7, name: 'Spiritual Alignment', img: '', desc: 'Your mind, body, and spirit are moving in total harmony with the universe.', guidance: 'Stay true to your core values.' },
-    { id: 8, name: 'Emotional Healing', img: '', desc: 'Allow old wounds to breathe so they can finally turn into wisdom.', guidance: 'Journal your unexpressed feelings.' },
-    { id: 9, name: 'Boundless Creativity', img: '', desc: 'Your soul is an endless reservoir of fresh artistic ideas waiting to bloom.', guidance: 'Express yourself through art or writing today.' },
-    { id: 10, name: 'Forgiveness', img: '', desc: 'Releasing resentment frees you, not the person who hurt you.', guidance: 'Let go of heavy emotional luggage.' },
-    { id: 11, name: 'Inner Strength', img: '', desc: 'You possess a quiet resilience capable of weathering any storm.', guidance: 'Stand tall in your personal truth.' },
-    { id: 12, name: 'Abundance Flow', img: '', desc: 'Shift your mindset from scarcity to gratitude and watch prosperity grow.', guidance: 'Count five blessings right now.' },
-    { id: 13, name: 'Release Control', img: '', desc: 'Surrender your worries to the universe and let life flow naturally.', guidance: 'Stop forcing things that aren\'t working.' },
-    { id: 14, name: 'Joyful Expression', img: '', desc: 'Celebrate small wins and allow spontaneous happiness into your day.', guidance: 'Do something purely for fun.' },
-    { id: 15, name: 'Higher Purpose', img: '', desc: 'Your life carries a sacred meaning that impacts the world around you.', guidance: 'Align your actions with your passions.' },
-    { id: 16, name: 'Patience & Stillness', img: '', desc: 'In moments of uncertainty, the best action is gentle stillness.', guidance: 'Pause before making big decisions.' },
-    { id: 17, name: 'Soul Connection', img: '', desc: 'A meaningful bond is drawing near to elevate your spiritual journey.', guidance: 'Nurture deep relationships.' },
-    { id: 18, name: 'Authenticity', img: '', desc: 'Strip away expectations and step boldly into your true, unedited self.', guidance: 'Stop seeking external approval.' },
-    { id: 19, name: 'Protection', img: '', desc: 'You are safe and shielded by spiritual warmth.', guidance: 'Visualize a protective bubble around you.' },
-    { id: 20, name: 'New Horizon', img: '', desc: 'A fresh chapter is opening before you filled with hope.', guidance: 'Prepare to welcome new chances.' },
-    { id: 21, name: 'Wisdom Within', img: '', desc: 'All the answers you seek are already resting inside your heart.', guidance: 'Spend quiet time in nature.' },
-    { id: 22, name: 'Grace & Gratitude', img: '', desc: 'Approach every challenge with grace and a grateful heart.', guidance: 'Thank someone who helped you.' },
-    { id: 23, name: 'Clarity of Thought', img: '', desc: 'Clear away mental clutter to see your path forward.', guidance: 'Focus on one priority at a time.' },
-    { id: 24, name: 'Nurture Yourself', img: '', desc: 'Treat your body and soul with gentle care today.', guidance: 'Take time for a relaxing bath or rest.' },
-    { id: 25, name: 'Courageous Leap', img: '', desc: 'Take a step forward even if your knees tremble slightly.', guidance: 'Fear is just excitement without breath.' },
-    { id: 26, name: 'Serenity', img: '', desc: 'Find calm in the center of life\'s busy motion.', guidance: 'Breathe slowly when stress arises.' },
-    { id: 27, name: 'Trust the Journey', img: '', desc: 'Every detour is teaching you something valuable.', guidance: 'Embrace where you are right now.' },
-    { id: 28, name: 'Light Expansion', img: '', desc: 'Shine your inner light bright enough to inspire others.', guidance: 'Share a gentle smile today.' },
-    { id: 29, name: 'Sacred Rest', img: '', desc: 'Resting is productive work for your soul.', guidance: 'Allow yourself guilt-free downtime.' },
-    { id: 30, name: 'Deep Compassion', img: '', desc: 'Extend gentle kindness to yourself and everyone around you.', guidance: 'Be soft in a hard world.' },
-    { id: 31, name: 'Manifesting Dreams', img: '', desc: 'Your thoughts are magnetic seeds planting your tomorrow.', guidance: 'Focus on what you want to build.' },
-    { id: 32, name: 'Harmony', img: '', desc: 'Balance your work, rest, play, and spiritual pursuits.', guidance: 'Adjust areas feeling out of sync.' },
-    { id: 33, name: 'Release Fear', img: '', desc: 'Fear is an illusion constructed by an anxious mind.', guidance: 'Replace worry with quiet trust.' },
-    { id: 34, name: 'Inner Child', img: '', desc: 'Connect with the playful wonder inside your soul.', guidance: 'Revisit a childhood hobby.' },
-    { id: 35, name: 'Transformation', img: '', desc: 'Welcome shifts that bring you closer to your potential.', guidance: 'Embrace change without resistance.' },
-    { id: 36, name: 'Spiritual Guidance', img: '', desc: 'Signs and synchronicities are guiding your steps.', guidance: 'Pay attention to repeating numbers or symbols.' },
-    { id: 37, name: 'Purity of Intent', img: '', desc: 'Ensure your motives are rooted in honesty and goodwill.', guidance: 'Act with clean intentions.' },
-    { id: 38, name: 'Self-Acceptance', img: '', desc: 'Embrace both your strengths and imperfections wholeheartedly.', guidance: 'Stop comparing yourself to others.' },
-    { id: 39, name: 'Golden Opportunity', img: '', desc: 'A rare door is opening for your personal expansion.', guidance: 'Say yes to new invitations.' },
-    { id: 40, name: 'Inner Sanctuary', img: '', desc: 'Build a quiet mental refuge where peace always reigns.', guidance: 'Retreat inward when overwhelmed.' },
-    { id: 41, name: 'Truth & Integrity', img: '', desc: 'Speak your truth gently yet firmly.', guidance: 'Honesty breeds lasting freedom.' },
-    { id: 42, name: 'Healing Waves', img: '', desc: 'Soothing energy is washing away past emotional strain.', guidance: 'Let yourself heal at your own pace.' },
-    { id: 43, name: 'Reclaiming Power', img: '', desc: 'Take back authority over your life choices.', guidance: 'Stop letting others decide for you.' },
-    { id: 44, name: 'Soul Expansion', img: '', desc: 'Your consciousness is broadening into higher understanding.', guidance: 'Read uplifting or spiritual books.' },
-    { id: 45, name: 'Sacred Union', img: '', desc: 'A harmonious partnership based on mutual upliftment.', guidance: 'Cultivate healthy teamwork.' },
-    { id: 46, name: 'Grounded Spirit', img: '', desc: 'Anchor your energy deep into the earth.', guidance: 'Walk barefoot on grass or earth.' },
-    { id: 47, name: 'Infinite Possibilities', img: '', desc: 'Do not limit your visions; the universe is vast.', guidance: 'Dream bigger without self-doubt.' },
-    { id: 48, name: 'Lightheartedness', img: '', desc: 'Laugh freely and lighten heavy thoughts.', guidance: 'Find humor in daily situations.' },
-    { id: 49, name: 'Renewal', img: '', desc: 'A fresh wave of energy is restoring your stamina.', guidance: 'Welcome a clean slate.' },
-    { id: 50, name: 'Wholeness', img: '', desc: 'You are complete, worthy, and enough just as you are.', guidance: 'Rest in total self-fulfillment.' }
+    // Category 1: Mindset (1-10)
+    { id: 1, category: 'Mindset', name: 'Inner Peace', img: '', desc: 'Take a deep breath and reconnect with your inner silence.', guidance: 'Meditate for 5 minutes today and release tension.' },
+    { id: 2, category: 'Mindset', name: 'Self Transformation', img: '', desc: 'Shed old layers that no longer serve your mental growth.', guidance: 'Trust the evolving version of yourself.' },
+    { id: 3, category: 'Mindset', name: 'Sacred Boundaries', img: '', desc: 'Protect your focus and mental energy with dignity.', guidance: 'Politely say no to draining commitments.' },
+    { id: 4, category: 'Mindset', name: 'Intuitive Clarity', img: '', desc: 'Quiet the noise to hear your true inner guidance.', guidance: 'Trust first impressions today.' },
+    { id: 5, category: 'Mindset', name: 'Clarity of Thought', img: '', desc: 'Clear mental clutter to reveal your true direction.', guidance: 'Focus on one priority at a time.' },
+    { id: 6, category: 'Mindset', name: 'Patience & Stillness', img: '', desc: 'In uncertainty, gentle stillness is your power.', guidance: 'Pause before major choices.' },
+    { id: 7, category: 'Mindset', name: 'Authenticity', img: '', desc: 'Step boldly into your unedited personal truth.', guidance: 'Stop seeking external approval.' },
+    { id: 8, category: 'Mindset', name: 'Wisdom Within', img: '', desc: 'All the answers you seek reside in your calm heart.', guidance: 'Spend quiet time in nature.' },
+    { id: 9, category: 'Mindset', name: 'Release Control', img: '', desc: 'Surrender worries and let life move effortlessly.', guidance: 'Stop forcing closed doors.' },
+    { id: 10, category: 'Mindset', name: 'Truth & Integrity', img: '', desc: 'Speak and live with absolute personal clarity.', guidance: 'Honesty breeds freedom.' },
+
+    // Category 2: Inner Healing (11-20)
+    { id: 11, category: 'Inner Healing', name: 'Emotional Healing', img: '', desc: 'Allow old emotional wounds space to breathe.', guidance: 'Journal unexpressed feelings.' },
+    { id: 12, category: 'Inner Healing', name: 'Forgiveness', img: '', desc: 'Releasing bitterness grants freedom to your soul.', guidance: 'Let go of heavy emotional loads.' },
+    { id: 13, category: 'Inner Healing', name: 'Inner Strength', img: '', desc: 'You carry resilience to weather any storm.', guidance: 'Stand firm in your truth.' },
+    { id: 14, category: 'Inner Healing', name: 'Nurture Yourself', img: '', desc: 'Treat your body and heart with soft gentleness.', guidance: 'Take time for restful self-care.' },
+    { id: 15, category: 'Inner Healing', name: 'Serenity', img: '', desc: 'Cultivate an unbreakable harbor of quiet calm.', guidance: 'Breathe slowly under pressure.' },
+    { id: 16, category: 'Inner Healing', name: 'Deep Compassion', img: '', desc: 'Offer soft kindness to yourself and others.', guidance: 'Be gentle in a busy world.' },
+    { id: 17, category: 'Inner Healing', name: 'Release Fear', img: '', desc: 'Fear dissolves when confronted with quiet trust.', guidance: 'Replace worry with faith.' },
+    { id: 18, category: 'Inner Healing', name: 'Inner Child', img: '', desc: 'Reconnect with joyful wonder inside your heart.', guidance: 'Revisit a fond childhood pastime.' },
+    { id: 19, category: 'Inner Healing', name: 'Healing Waves', img: '', desc: 'Gentle restorative energy is restoring your stamina.', guidance: 'Heal at your natural pace.' },
+    { id: 20, category: 'Inner Healing', name: 'Self-Acceptance', img: '', desc: 'Embrace all your light and shadow fully.', guidance: 'Stop comparing your path.' },
+
+    // Category 3: Spirituality (21-30)
+    { id: 21, category: 'Spirituality', name: 'Spiritual Alignment', img: '', desc: 'Your mind and spirit align with universe rhythm.', guidance: 'Stay true to spiritual values.' },
+    { id: 22, category: 'Spirituality', name: 'Divine Timing', img: '', desc: 'Everything unfolds at its sacred appointed hour.', guidance: 'Release your urge to rush.' },
+    { id: 23, category: 'Spirituality', name: 'Higher Purpose', img: '', desc: 'Your life carries sacred meaning for the world.', guidance: 'Align actions with purpose.' },
+    { id: 24, category: 'Spirituality', name: 'Protection', img: '', desc: 'You are safe, guided, and spiritually shielded.', guidance: 'Visualize protective warmth.' },
+    { id: 25, category: 'Spirituality', name: 'Light Expansion', img: '', desc: 'Radiate your authentic light to inspire others.', guidance: 'Share a gentle smile today.' },
+    { id: 26, category: 'Spirituality', name: 'Spiritual Guidance', img: '', desc: 'Signs and synchronicities illuminate your path.', guidance: 'Notice repeating patterns.' },
+    { id: 27, category: 'Spirituality', name: 'Inner Sanctuary', img: '', desc: 'Retreat inward to your sacred quiet refuge.', guidance: 'Find peace within.' },
+    { id: 28, category: 'Spirituality', name: 'Soul Expansion', img: '', desc: 'Your soul awareness expands into higher light.', guidance: 'Read uplifting literature.' },
+    { id: 29, category: 'Spirituality', name: 'Grounded Spirit', img: '', desc: 'Anchor your spirit deep into mother earth.', guidance: 'Walk barefoot outdoors.' },
+    { id: 30, category: 'Spirituality', name: 'Wholeness', img: '', desc: 'You are complete, worthy, and enough as you are.', guidance: 'Rest in total self-worth.' },
+
+    // Category 4: Relationships (31-40)
+    { id: 31, category: 'Relationships', name: 'Unconditional Love', img: '', desc: 'Open your heart to give and receive affection.', guidance: 'Lead with pure heart.' },
+    { id: 32, category: 'Relationships', name: 'Soul Connection', img: '', desc: 'A meaningful bond draws near to elevate you.', guidance: 'Nurture genuine bonds.' },
+    { id: 33, category: 'Relationships', name: 'Grace & Gratitude', img: '', desc: 'Approach all interactions with thankful grace.', guidance: 'Express sincere thanks.' },
+    { id: 34, category: 'Relationships', name: 'Joyful Expression', img: '', desc: 'Share spontaneous warmth with loved ones.', guidance: 'Celebrate simple moments.' },
+    { id: 35, category: 'Relationships', name: 'Harmony', img: '', desc: 'Balance giving and receiving in all bonds.', guidance: 'Cultivate peaceful teamwork.' },
+    { id: 36, category: 'Relationships', name: 'Purity of Intent', img: '', desc: 'Ensure all actions flow from clean motives.', guidance: 'Act with clean integrity.' },
+    { id: 37, category: 'Relationships', name: 'Sacred Union', img: '', desc: 'Harmonious partnership built on respect.', guidance: 'Support each other.' },
+    { id: 38, category: 'Relationships', name: 'Lightheartedness', img: '', desc: 'Bring playful laughter to your relationships.', guidance: 'Enjoy lighthearted humor.' },
+    { id: 39, category: 'Relationships', name: 'Compassionate Listening', img: '', desc: 'Hold loving space for others to share.', guidance: 'Listen without judgment.' },
+    { id: 40, category: 'Relationships', name: 'Mutual Trust', img: '', desc: 'Trust builds the strongest emotional bridges.', guidance: 'Be reliable and open.' },
+
+    // Category 5: Action & Growth (41-50)
+    { id: 41, category: 'Action & Growth', name: 'Boundless Creativity', img: '', desc: 'Your creative energy seeks artistic outlet.', guidance: 'Create art or write today.' },
+    { id: 42, category: 'Action & Growth', name: 'Abundance Flow', img: '', desc: 'Shift to gratitude and unlock rich prosperity.', guidance: 'Count five current gifts.' },
+    { id: 43, category: 'Action & Growth', name: 'New Horizon', img: '', desc: 'A promising life chapter opens before you.', guidance: 'Prepare for fresh beginnings.' },
+    { id: 44, category: 'Action & Growth', name: 'Courageous Leap', img: '', desc: 'Step forward into boldness with faith.', guidance: 'Take that bold step.' },
+    { id: 45, category: 'Action & Growth', name: 'Trust the Journey', img: '', desc: 'Every life detour carries a golden lesson.', guidance: 'Embrace where you are.' },
+    { id: 46, category: 'Action & Growth', name: 'Sacred Rest', img: '', desc: 'Rest restores your momentum for action.', guidance: 'Allow guilt-free recharge.' },
+    { id: 47, category: 'Action & Growth', name: 'Manifesting Dreams', img: '', desc: 'Focused thoughts magnetize your reality.', guidance: 'Focus on what you build.' },
+    { id: 48, category: 'Action & Growth', name: 'Golden Opportunity', img: '', desc: 'A rare door opens for your evolution.', guidance: 'Say yes to growth.' },
+    { id: 49, category: 'Action & Growth', name: 'Reclaiming Power', img: '', desc: 'Take back complete command of your life.', guidance: 'Own your choices.' },
+    { id: 50, category: 'Action & Growth', name: 'Renewal', img: '', desc: 'A fresh wave of vitality restores your drive.', guidance: 'Welcome new energy.' }
 ];
 
 // ==========================================
-// --- STATE ---
+// --- STATE & HISTORY ---
 // ==========================================
 let currentSpread = null;
 let deckCount = 3;
@@ -632,6 +641,10 @@ let tarotQuestion = '';
 let oracleDrawCount = 3;
 let activeOracleDeck = [];
 let drawnOracleCards = [];
+let selectedOracleCategory = 'All';
+
+let navigationHistory = [];
+let lastHomepageScrollY = 0;
 
 function toggleOption(opt, val) {
     if (opt === 'majorOnly') optMajorOnly = val;
@@ -645,13 +658,14 @@ function toggleOption(opt, val) {
 function toggleMenu() {
     const menu = document.getElementById('drawer-menu');
     const overlay = document.getElementById('drawer-overlay');
+    if (!menu) return;
     const isOpen = !menu.classList.contains('-translate-x-full');
     if (isOpen) {
         menu.classList.add('-translate-x-full');
-        overlay.classList.add('opacity-0', 'pointer-events-none');
+        if (overlay) overlay.classList.add('opacity-0', 'pointer-events-none');
     } else {
         menu.classList.remove('-translate-x-full');
-        overlay.classList.remove('opacity-0', 'pointer-events-none');
+        if (overlay) overlay.classList.remove('opacity-0', 'pointer-events-none');
     }
 }
 
@@ -662,97 +676,131 @@ function updateDrawerMenu() {
     let nav = drawer.querySelector('nav');
     if (!nav) {
         nav = document.createElement('nav');
-        nav.className = 'flex flex-col space-y-1 p-4 font-cute text-sm font-bold text-gray-700';
+        nav.className = 'flex flex-col space-y-1 p-4 font-cute text-sm font-bold text-pink-500';
         drawer.appendChild(nav);
     }
     
     nav.innerHTML = `
-        <a href="#" onclick="event.preventDefault(); navigate('home');" class="px-4 py-2.5 hover:bg-pink-50 text-purple-800 rounded-xl transition-colors">Home</a>
+        <a href="#" onclick="event.preventDefault(); navigate('home');" class="px-4 py-2 hover:bg-pink-50 text-pink-500 rounded-xl transition-colors">Home</a>
+        <a href="#" onclick="event.preventDefault(); navigate('home', 'home-spreads-grid');" class="px-4 py-2 hover:bg-pink-50 text-pink-500 rounded-xl transition-colors">Spreads</a>
         
-        <!-- Submenu All Cards (Tarot Library) -->
+        <!-- Submenu All Cards -->
         <div class="py-1">
-            <div class="px-4 py-1 text-[10px] uppercase tracking-wider text-pink-400 font-bold">Tarot Library</div>
-            <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('All');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">All Tarot Cards</a>
-            <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Major Arcana');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">Major Arcana</a>
-            <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Wands');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">Suit of Wands</a>
-            <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Cups');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">Suit of Cups</a>
-            <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Swords');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">Suit of Swords</a>
-            <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Pentacles');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">Suit of Pentacles</a>
+            <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('All');" class="px-4 py-2 hover:bg-pink-50 text-pink-500 rounded-xl transition-colors block">All Cards</a>
+            <div class="pl-6 space-y-1 mt-1">
+                <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Major Arcana');" class="block text-xs font-normal text-gray-600 hover:text-pink-500 py-1">Major Arcana</a>
+                <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Wands');" class="block text-xs font-normal text-gray-600 hover:text-pink-500 py-1">Suit of Wands</a>
+                <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Cups');" class="block text-xs font-normal text-gray-600 hover:text-pink-500 py-1">Suit of Cups</a>
+                <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Swords');" class="block text-xs font-normal text-gray-600 hover:text-pink-500 py-1">Suit of Swords</a>
+                <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Pentacles');" class="block text-xs font-normal text-gray-600 hover:text-pink-500 py-1">Suit of Pentacles</a>
+            </div>
         </div>
 
-        <!-- Submenu Oracle -->
+        <!-- Oracle System Main Menu -->
         <div class="py-1">
-            <div class="px-4 py-1 text-[10px] uppercase tracking-wider text-pink-400 font-bold">Oracle System</div>
-            <a href="#" onclick="event.preventDefault(); navigate('oracle-draw');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">Draw Oracle Cards</a>
-            <a href="#" onclick="event.preventDefault(); toggleDailyOracleCard(); navigate('home', 'home-daily-oracle-section');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">Today's Oracle Card</a>
-            <a href="#" onclick="event.preventDefault(); navigate('oracle-library');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">Oracle Library</a>
-            <a href="#" onclick="event.preventDefault(); navigate('generic', 'About Oracle');" class="block px-6 py-1.5 text-xs hover:bg-pink-50 rounded-lg text-gray-600">About Oracle</a>
+            <a href="#" onclick="event.preventDefault(); navigate('home', 'home-oracle-section');" class="px-4 py-2 hover:bg-pink-50 text-pink-500 rounded-xl transition-colors block">Oracle System</a>
+            <div class="pl-6 space-y-1 mt-1">
+                <a href="#" onclick="event.preventDefault(); navigate('oracle-draw');" class="block text-xs font-normal text-gray-600 hover:text-pink-500 py-1">Draw Oracle Cards</a>
+                <a href="#" onclick="event.preventDefault(); toggleDailyOracleCard(); navigate('home', 'home-daily-oracle-section');" class="block text-xs font-normal text-gray-600 hover:text-pink-500 py-1">Today's Oracle Card</a>
+                <a href="#" onclick="event.preventDefault(); navigate('oracle-library');" class="block text-xs font-normal text-gray-600 hover:text-pink-500 py-1">Oracle Library</a>
+                <a href="#" onclick="event.preventDefault(); navigate('generic', 'About Oracle');" class="block text-xs font-normal text-gray-600 hover:text-pink-500 py-1">About Oracle</a>
+            </div>
         </div>
 
-        <a href="#" onclick="event.preventDefault(); navigate('home', 'home-articles-section');" class="px-4 py-2.5 hover:bg-pink-50 text-purple-800 rounded-xl transition-colors">Articles & Insights</a>
-        <a href="#" onclick="event.preventDefault(); initBirthCalculatorPage(); navigate('birth-calculator');" class="px-4 py-2.5 hover:bg-pink-50 text-purple-800 rounded-xl transition-colors">Birth Calculator</a>
-        <a href="#" onclick="event.preventDefault(); navigate('home', 'home-zodiac-grid');" class="px-4 py-2.5 hover:bg-pink-50 text-purple-800 rounded-xl transition-colors">Zodiac Guides</a>
-        <a href="#" onclick="event.preventDefault(); navigate('generic', 'Personal Reading');" class="px-4 py-2.5 bg-pink-100 hover:bg-pink-200 text-purple-800 rounded-xl transition-colors mt-2 text-center">Buy CuTarot Deck 🛍️</a>
+        <a href="#" onclick="event.preventDefault(); navigate('home', 'home-articles-section');" class="px-4 py-2 hover:bg-pink-50 text-pink-500 rounded-xl transition-colors">Articles & Insights</a>
+        <a href="#" onclick="event.preventDefault(); navigate('home', 'home-zodiac-grid');" class="px-4 py-2 hover:bg-pink-50 text-pink-500 rounded-xl transition-colors">Zodiac Guides</a>
+        <a href="#" onclick="event.preventDefault(); navigate('generic', 'About Tarot');" class="px-4 py-2 hover:bg-pink-50 text-pink-500 rounded-xl transition-colors">About Tarot</a>
+        <a href="#" onclick="event.preventDefault(); navigate('generic', 'Personal Reading');" class="px-4 py-2 hover:bg-pink-50 text-pink-500 rounded-xl transition-colors">Personal Reading</a>
+        <a href="#" onclick="event.preventDefault(); navigate('shop');" class="px-4 py-2.5 bg-pink-100 hover:bg-pink-200 text-purple-800 rounded-xl transition-colors mt-2 text-center font-bold">Shop Now 🛍️</a>
     `;
 }
 
-function ensureHeaderBuyIcon() {
-    const header = document.querySelector('header') || document.getElementById('main-header');
-    if (!header) return;
-    if (document.getElementById('header-buy-btn')) return;
+function injectStandardNavButtons(targetViewId) {
+    const targetView = document.getElementById('view-' + targetViewId);
+    if (!targetView || targetViewId === 'home') return;
 
-    const buyBtn = document.createElement('button');
-    buyBtn.id = 'header-buy-btn';
-    buyBtn.className = 'absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-pink-100 hover:bg-pink-200 text-purple-800 transition-all shadow-sm flex items-center justify-center';
-    buyBtn.title = 'Buy CuTarot Deck';
-    buyBtn.innerHTML = `
-        <svg class="w-5 h-5 text-purple-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-        </svg>
+    let navBar = targetView.querySelector('.nav-buttons-bar');
+    if (!navBar) {
+        navBar = document.createElement('div');
+        navBar.className = 'nav-buttons-bar w-full max-w-2xl mx-auto px-4 pt-4 pb-2 flex justify-between items-center font-cute border-b border-pink-100 mb-4';
+        targetView.insertBefore(navBar, targetView.firstChild);
+    }
+
+    navBar.innerHTML = `
+        <button onclick="goBack()" class="flex items-center gap-1 text-pink-500 hover:text-pink-700 font-bold text-xs bg-pink-50 px-3 py-1.5 rounded-xl border border-pink-100 shadow-sm transition-all">
+            &larr; Back
+        </button>
+        <button onclick="goBackToHome()" class="flex items-center gap-1 text-pink-500 hover:text-pink-700 font-bold text-xs bg-pink-50 px-3 py-1.5 rounded-xl border border-pink-100 shadow-sm transition-all">
+            &larr; Back to Home
+        </button>
     `;
-    buyBtn.onclick = () => navigate('generic', 'Personal Reading');
-    
-    header.style.position = 'relative';
-    header.appendChild(buyBtn);
 }
 
-function navigate(viewId, anchorOrTitle = null) {
+function navigate(viewId, anchorOrTitle = null, isBackAction = false) {
+    const currentActive = document.querySelector('.view-section.active');
+    const currentActiveId = currentActive ? currentActive.id.replace('view-', '') : 'home';
+
+    if (currentActiveId === 'home') {
+        lastHomepageScrollY = window.scrollY;
+    }
+
+    if (!isBackAction && currentActiveId !== viewId) {
+        navigationHistory.push({ viewId: currentActiveId, scrollY: window.scrollY });
+    }
+
     document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
     
     const targetView = document.getElementById('view-' + viewId);
     if (targetView) targetView.classList.add('active');
-    
-    if (viewId !== 'home' || !anchorOrTitle) {
-        window.scrollTo(0, 0);
-    }
     
     const drawer = document.getElementById('drawer-menu');
     if (drawer && !drawer.classList.contains('-translate-x-full')) {
         toggleMenu();
     }
 
-    if (viewId === 'home' && anchorOrTitle) {
-        setTimeout(() => {
-            const el = document.getElementById(anchorOrTitle);
-            if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
-        }, 50);
-    } else if (viewId === 'draw') {
-        setDrawPhase('spread');
-    } else if (viewId === 'generic') {
-        renderGenericPage(anchorOrTitle);
-    } else if (viewId === 'all-cards') {
-        ensureLibrarySearch();
-        filterLibrary('All');
-    } else if (viewId === 'birth-calculator') {
-        initBirthCalculatorPage();
-    } else if (viewId === 'oracle-library') {
-        renderOracleLibrary();
-    } else if (viewId === 'oracle-draw') {
-        renderOracleConfigNumbers();
-        document.getElementById('oracle-step-config')?.classList.remove('hidden');
-        document.getElementById('oracle-step-draw')?.classList.add('hidden');
-        document.getElementById('oracle-step-result')?.classList.add('hidden');
+    injectStandardNavButtons(viewId);
+
+    if (viewId === 'home') {
+        if (anchorOrTitle) {
+            setTimeout(() => {
+                const el = document.getElementById(anchorOrTitle);
+                if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
+            }, 50);
+        } else {
+            window.scrollTo({ top: lastHomepageScrollY, behavior: 'smooth' });
+        }
+    } else {
+        window.scrollTo(0, 0);
+        if (viewId === 'draw') setDrawPhase('spread');
+        else if (viewId === 'generic') renderGenericPage(anchorOrTitle);
+        else if (viewId === 'all-cards') { ensureLibrarySearch(); filterLibrary('All'); }
+        else if (viewId === 'birth-calculator') initBirthCalculatorPage();
+        else if (viewId === 'oracle-library') renderOracleLibrary();
+        else if (viewId === 'shop') renderShopPage();
+        else if (viewId === 'oracle-draw') {
+            renderOracleConfigNumbers();
+            document.getElementById('oracle-step-config')?.classList.remove('hidden');
+            document.getElementById('oracle-step-draw')?.classList.add('hidden');
+            document.getElementById('oracle-step-result')?.classList.add('hidden');
+        }
     }
+}
+
+function goBack() {
+    if (navigationHistory.length > 0) {
+        const last = navigationHistory.pop();
+        navigate(last.viewId, null, true);
+        if (last.viewId === 'home') {
+            window.scrollTo({ top: last.scrollY, behavior: 'smooth' });
+        }
+    } else {
+        navigate('home', null, true);
+    }
+}
+
+function goBackToHome() {
+    navigationHistory = [];
+    navigate('home', null, true);
 }
 
 function getTodayDateString() {
@@ -761,8 +809,34 @@ function getTodayDateString() {
 }
 
 // ==========================================
-// --- HOMEPAGE ARTICLES & ANIMATIONS ---
+// --- HOMEPAGE LAYOUT RE-ORDER & ARTICLES ---
 // ==========================================
+function ensureHomeOrder() {
+    const homeView = document.getElementById('view-home');
+    if (!homeView) return;
+
+    ensureOracleHomeSections();
+    ensureBirthCalculatorHome();
+    ensureArticlesSection();
+
+    const oracleSec = document.getElementById('home-oracle-section');
+    const birthCalcSec = document.getElementById('home-birth-calculator');
+    const zodiacSec = document.getElementById('home-zodiac-grid')?.parentElement;
+    const articlesSec = document.getElementById('home-articles-section');
+
+    if (oracleSec && birthCalcSec) {
+        birthCalcSec.parentNode.insertBefore(oracleSec, birthCalcSec);
+    }
+
+    if (articlesSec && zodiacSec) {
+        if (zodiacSec.nextSibling) {
+            zodiacSec.parentNode.insertBefore(articlesSec, zodiacSec.nextSibling);
+        } else {
+            zodiacSec.parentNode.appendChild(articlesSec);
+        }
+    }
+}
+
 function ensureArticlesSection() {
     const homeView = document.getElementById('view-home');
     if (!homeView) return;
@@ -805,34 +879,27 @@ function ensureArticlesSection() {
         </div>
     `;
 
-    const birthCalcEl = document.getElementById('home-birth-calculator');
-    if (birthCalcEl) {
-        birthCalcEl.parentNode.insertBefore(articlesSection, birthCalcEl);
-    } else {
-        homeView.appendChild(articlesSection);
-    }
+    homeView.appendChild(articlesSection);
 }
 
-function setupScrollAnimations() {
-    const homeSections = document.querySelectorAll('#view-home > div');
-    homeSections.forEach(sec => {
-        sec.classList.remove('mb-10', 'mb-8');
-        sec.classList.add('mb-5');
-    });
+function ensureHeaderBuyIcon() {
+    const header = document.querySelector('header') || document.getElementById('main-header');
+    if (!header) return;
+    if (document.getElementById('header-buy-btn')) return;
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.remove('opacity-0', 'translate-y-8');
-                entry.target.classList.add('opacity-100', 'translate-y-0');
-            }
-        });
-    }, { threshold: 0.1 });
-
-    homeSections.forEach(sec => {
-        sec.classList.add('transition-all', 'duration-700', 'ease-out', 'opacity-0', 'translate-y-8');
-        observer.observe(sec);
-    });
+    const buyBtn = document.createElement('button');
+    buyBtn.id = 'header-buy-btn';
+    buyBtn.className = 'absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-pink-100 hover:bg-pink-200 text-purple-800 transition-all shadow-sm flex items-center justify-center';
+    buyBtn.title = 'Buy CuTarot Deck';
+    buyBtn.innerHTML = `
+        <svg class="w-5 h-5 text-purple-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+        </svg>
+    `;
+    buyBtn.onclick = () => navigate('shop');
+    
+    header.style.position = 'relative';
+    header.appendChild(buyBtn);
 }
 
 // ==========================================
@@ -1273,13 +1340,11 @@ function showCardDetail(index) {
         </div>
     `;
     
-    document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-    document.getElementById('view-card-detail').classList.add('active');
-    window.scrollTo(0, 0);
+    navigate('card-detail');
 }
 
 // ==========================================
-// --- ZODIAC & GENERIC PAGES ---
+// --- ZODIAC, GENERIC & SHOP PAGES ---
 // ==========================================
 function showZodiac(id) {
     const z = ZODIAC_DATA.find(item => item.id === id);
@@ -1305,9 +1370,31 @@ function showZodiac(id) {
         </div>
     `;
     
-    document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-    document.getElementById('view-zodiac').classList.add('active');
-    window.scrollTo(0, 0);
+    navigate('zodiac');
+}
+
+function renderShopPage() {
+    let shopView = document.getElementById('view-shop');
+    if (!shopView) {
+        const parentContainer = document.getElementById('view-home').parentNode;
+        shopView = document.createElement('div');
+        shopView.id = 'view-shop';
+        shopView.className = 'view-section pb-24 text-center';
+        parentContainer.appendChild(shopView);
+    }
+
+    shopView.innerHTML = `
+        <div class="w-full max-w-2xl mx-auto px-4 mt-6 font-cute text-left space-y-6">
+            <div class="bg-gradient-to-br from-pink-50 to-purple-50 p-8 rounded-3xl border border-pink-200 text-center shadow-sm">
+                <div class="w-32 aspect-[2/3] bg-pink-200 rounded-2xl mx-auto mb-4 border-2 border-pink-300 shadow-md flex items-center justify-center font-bold text-purple-800 text-xs">CuTarot Deck Box</div>
+                <h1 class="text-3xl font-bold text-purple-800 mb-2">Buy Physical CuTarot Deck</h1>
+                <p class="text-xs text-gray-600 max-w-md mx-auto mb-6 leading-relaxed">Get your own aesthetic physical deck crafted with love by Mai Collection. Complete with full 78 tarot cards & custom Oracle cards.</p>
+                <a href="https://shopee.co.id" target="_blank" class="inline-block bg-purple-700 hover:bg-purple-800 text-white font-bold px-8 py-3.5 rounded-2xl shadow-md transition-all">
+                    Order via Shopee / Marketplace &rarr;
+                </a>
+            </div>
+        </div>
+    `;
 }
 
 function renderGenericPage(title) {
@@ -1374,7 +1461,7 @@ function renderGenericPage(title) {
 }
 
 // ==========================================
-// --- DASHBOARD UNIVERSAL SEARCH SYSTEM ---
+// --- DASHBOARD SEARCH SYSTEM ---
 // ==========================================
 function ensureDashboardSearch() {
     const homeView = document.getElementById('view-home');
@@ -1429,7 +1516,7 @@ function handleDashboardSearch(query) {
 
     ORACLE_DECK.forEach((o, idx) => {
         if (o.name.toLowerCase().includes(q) || o.desc.toLowerCase().includes(q)) {
-            matches.push({ type: 'Oracle Card', title: o.name, desc: 'Oracle Deck', action: () => showOracleDetail(idx) });
+            matches.push({ type: 'Oracle Card', title: o.name, desc: o.category, action: () => showOracleDetail(idx) });
         }
     });
 
@@ -1439,8 +1526,7 @@ function handleDashboardSearch(query) {
         { name: 'Oracle Library', desc: 'Browse all 50 Oracle cards', action: () => navigate('oracle-library') },
         { name: 'About Oracle', desc: 'Learn how to use Oracle cards', action: () => navigate('generic', 'About Oracle') },
         { name: 'Articles & Guides', desc: 'Read CuTarot articles', action: () => navigate('home', 'home-articles-section') },
-        { name: 'Buy CuTarot Deck', desc: 'Get your physical deck', action: () => navigate('generic', 'Personal Reading') },
-        { name: 'About Tarot', desc: 'History and philosophy of Tarot', action: () => navigate('generic', 'About Tarot') }
+        { name: 'Buy CuTarot Deck', desc: 'Get your physical deck', action: () => navigate('shop') }
     ];
 
     sections.forEach(sec => {
@@ -1479,15 +1565,11 @@ function handleDashboardSearch(query) {
 const BIRTH_CARD_MEANINGS = {
     0: { 
         p1: "Sebagai Kartu Kepribadian, The Fool menandakan jalan hidup yang didefinisikan oleh eksplorasi tanpa henti dan jiwa muda yang tidak bisa dipatahkan.",
-        p2: "Orang-orang melihatmu sebagai sosok yang berani mengambil risiko dan selalu siap untuk memulai lembaran baru.",
-        s1: "Pada tingkat Jiwa (Soul), inti terdalammu mendambakan kebebasan mutlak dan kebenaran tanpa syarat.",
-        s2: "Tujuan sejatimu adalah menemukan kebijaksanaan yang mendalam di dalam sebuah kepolosan."
+        s1: "Pada tingkat Jiwa (Soul), inti terdalammu mendambakan kebebasan mutlak dan kebenaran tanpa syarat."
     },
     1: { 
         p1: "Sebagai Kartu Kepribadian, The Magician menandakan bahwa kamu adalah seorang manifestor sejati.",
-        p2: "Dalam interaksi sehari-hari, kamu sering kali menjadi pemecah masalah yang andal.",
-        s1: "Pada tingkat Jiwa, kamu memiliki koneksi langsung dengan percikan ilahi dari penciptaan.",
-        s2: "Evolusi batinmu terletak pada penguasaan niat."
+        s1: "Pada tingkat Jiwa, kamu memiliki koneksi langsung dengan percikan ilahi dari penciptaan."
     }
 };
 
@@ -1515,8 +1597,6 @@ function calculateTarotNumerology(mm, dd, yyyy) {
 function ensureBirthCalculatorHome() {
     const homeView = document.getElementById('view-home');
     if (!homeView) return;
-    const zodiacGrid = document.getElementById('home-zodiac-grid');
-    if (!zodiacGrid) return;
     
     let container = document.getElementById('home-birth-calculator');
     if (!container) {
@@ -1544,11 +1624,7 @@ function ensureBirthCalculatorHome() {
                 </div>
             </div>
         `;
-        
-        const zodiacSection = zodiacGrid.parentElement;
-        if (zodiacSection && zodiacSection.parentElement) {
-            zodiacSection.parentElement.insertBefore(container, zodiacSection);
-        }
+        homeView.appendChild(container);
     }
 }
 
@@ -1563,10 +1639,10 @@ function initBirthCalculatorPage() {
     viewDiv.className = 'view-section pb-24 text-center';
     
     viewDiv.innerHTML = `
-        <div class="w-full max-w-lg mx-auto px-4 mt-8">
-            <div class="w-40 aspect-[3/4] mx-auto bg-pink-50 rounded-2xl border-2 border-pink-100 flex items-center justify-center relative mb-8 shadow-sm">
+        <div class="w-full max-w-lg mx-auto px-4 mt-4">
+            <div class="w-36 aspect-[3/4] mx-auto bg-pink-50 rounded-2xl border-2 border-pink-100 flex items-center justify-center relative mb-6 shadow-sm">
                 <div class="absolute inset-2 border border-pink-200/60 rounded-xl"></div>
-                <span class="text-pink-300 font-cute font-bold text-xs text-center px-2">Birth Card Calculator Cover</span>
+                <span class="text-pink-300 font-cute font-bold text-xs text-center px-2">Birth Card Cover</span>
             </div>
             
             <div class="bg-white p-6 sm:p-8 rounded-3xl border border-pink-200 shadow-md">
@@ -1581,9 +1657,7 @@ function initBirthCalculatorPage() {
                     Find My Cards
                 </button>
 
-                <button id="btn-my-cards-reopen" onclick="showBirthCardsModal()" class="hidden w-full bg-pink-400 hover:bg-pink-500 text-white py-4 rounded-xl font-cute font-bold text-sm shadow-md transition-all transform hover:-translate-y-1">
-                    My Cards
-                </button>
+                <div id="birth-cards-result-container" class="mt-6 text-left hidden"></div>
             </div>
         </div>
     `;
@@ -1623,33 +1697,27 @@ function processBirthCards() {
     const pMeaning = getBirthCardMeaning(pNum);
     const sMeaning = getBirthCardMeaning(sNum);
     
-    const grid = document.getElementById('birth-cards-results-grid');
-    if (!grid) return;
+    let resultContainer = document.getElementById('birth-cards-result-container');
+    if (!resultContainer) {
+        resultContainer = document.createElement('div');
+        resultContainer.id = 'birth-cards-result-container';
+        resultContainer.className = 'mt-6 text-left font-cute space-y-4';
+        inputEl.parentElement.appendChild(resultContainer);
+    }
 
-    grid.innerHTML = `
-        <div class="p-4 bg-pink-50 rounded-2xl font-cute">
-            <h4 class="font-bold text-purple-800">Personality Card: ${pCardData ? pCardData.name : ''}</h4>
-            <p class="text-xs text-gray-600 mt-1">${pMeaning.p1}</p>
+    resultContainer.innerHTML = `
+        <div class="p-4 bg-pink-50/70 border border-pink-200 rounded-2xl">
+            <div class="text-[10px] uppercase font-bold text-pink-400">Personality Card</div>
+            <h4 class="font-bold text-lg text-purple-800 mb-1">${pCardData ? pCardData.name : 'The Fool'} (${pNum})</h4>
+            <p class="text-xs text-gray-600 leading-relaxed">${pMeaning.p1}</p>
         </div>
-        <div class="p-4 bg-purple-50 rounded-2xl font-cute mt-4">
-            <h4 class="font-bold text-purple-800">Soul Card: ${sCardData ? sCardData.name : ''}</h4>
-            <p class="text-xs text-gray-600 mt-1">${sMeaning.s1}</p>
+        <div class="p-4 bg-purple-50/70 border border-purple-200 rounded-2xl">
+            <div class="text-[10px] uppercase font-bold text-purple-400">Soul Card</div>
+            <h4 class="font-bold text-lg text-purple-800 mb-1">${sCardData ? sCardData.name : 'The Emperor'} (${sNum})</h4>
+            <p class="text-xs text-gray-600 leading-relaxed">${sMeaning.s1}</p>
         </div>
     `;
-    
-    document.getElementById('btn-find-birth-cards')?.classList.add('hidden');
-    document.getElementById('btn-my-cards-reopen')?.classList.remove('hidden');
-    showBirthCardsModal();
-}
-
-function showBirthCardsModal() {
-    const modal = document.getElementById('birth-cards-modal');
-    if (modal) modal.classList.remove('opacity-0', 'pointer-events-none');
-}
-
-function closeBirthCardsModal() {
-    const modal = document.getElementById('birth-cards-modal');
-    if (modal) modal.classList.add('opacity-0', 'pointer-events-none');
+    resultContainer.classList.remove('hidden');
 }
 
 // ==========================================
@@ -1672,7 +1740,7 @@ function ensureOracleHomeSections() {
                 <div class="text-[9px] uppercase tracking-widest text-pink-400 font-bold mb-1 font-cute">Companion Intuitive Deck</div>
                 <h3 class="font-cute font-bold text-2xl text-purple-800 mb-2">CuTarot Oracle Deck</h3>
                 <p class="font-cute text-xs text-gray-600 leading-relaxed mb-6">
-                    Oracle cards provide fluid, direct spiritual affirmations and gentle guidance. Use Oracle cards to set your intention for the day or seek immediate clarity for your heart.
+                    Oracle cards provide fluid, direct spiritual affirmations and gentle guidance.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-3">
                     <button onclick="navigate('oracle-draw')" class="flex-1 bg-purple-700 hover:bg-purple-800 text-white py-3.5 rounded-2xl font-cute font-bold text-xs shadow-md transition-all text-center">
@@ -1684,12 +1752,7 @@ function ensureOracleHomeSections() {
                 </div>
             </div>
         `;
-        const birthCalcEl = document.getElementById('home-birth-calculator');
-        if (birthCalcEl) {
-            birthCalcEl.parentNode.insertBefore(oracleMainSection, birthCalcEl);
-        } else {
-            homeView.appendChild(oracleMainSection);
-        }
+        homeView.appendChild(oracleMainSection);
     }
 
     let dailyTarotEl = document.getElementById('inline-daily-card')?.parentElement || document.getElementById('btn-daily-card')?.parentElement;
@@ -1772,9 +1835,9 @@ function initOracleViews() {
     libView.id = 'view-oracle-library';
     libView.className = 'view-section pb-24 text-center';
     libView.innerHTML = `
-        <div class="w-full max-w-4xl mx-auto px-4 mt-6">
-            <span onclick="navigate('home')" class="cursor-pointer text-xs font-cute text-pink-400 hover:text-pink-600">&larr; Back to Home</span>
-            <h1 class="font-cute font-bold text-3xl text-purple-800 mt-2 mb-6">Oracle Library</h1>
+        <div class="w-full max-w-4xl mx-auto px-4 mt-2">
+            <h1 class="font-cute font-bold text-3xl text-purple-800 mt-2 mb-4">Oracle Library</h1>
+            <div id="oracle-category-filters" class="flex flex-wrap justify-center gap-2 mb-6 font-cute"></div>
             <div id="oracle-library-grid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4"></div>
         </div>
     `;
@@ -1784,10 +1847,8 @@ function initOracleViews() {
     drawView.id = 'view-oracle-draw';
     drawView.className = 'view-section pb-24 text-center';
     drawView.innerHTML = `
-        <div class="w-full max-w-lg mx-auto px-4 mt-6">
-            <span onclick="navigate('home')" class="cursor-pointer text-xs font-cute text-pink-400 hover:text-pink-600">&larr; Back to Home</span>
+        <div class="w-full max-w-lg mx-auto px-4 mt-2">
             <h1 class="font-cute font-bold text-3xl text-purple-800 mt-2 mb-4">Draw Oracle Cards</h1>
-            
             <div id="oracle-step-config" class="bg-white p-6 rounded-3xl border border-pink-100 shadow-sm mb-6">
                 <div class="text-xs font-bold text-purple-800 font-cute mb-3">Select How Many Cards (1-10)</div>
                 <div id="oracle-num-selector" class="flex flex-wrap justify-center gap-2 mb-6"></div>
@@ -1795,14 +1856,12 @@ function initOracleViews() {
                     Start Drawing
                 </button>
             </div>
-
             <div id="oracle-step-draw" class="hidden flex-col items-center">
                 <div id="oracle-deck-cards" class="flex justify-center gap-2 my-8 flex-wrap"></div>
                 <button id="btn-oracle-reveal" onclick="renderOracleResult()" class="hidden bg-pink-400 text-white px-8 py-3 rounded-xl font-cute font-bold text-sm shadow-md">
                     Reveal Oracle Reading
                 </button>
             </div>
-
             <div id="oracle-step-result" class="hidden flex-col items-center space-y-6"></div>
         </div>
     `;
@@ -1812,29 +1871,44 @@ function initOracleViews() {
     detailView.id = 'view-oracle-detail';
     detailView.className = 'view-section pb-24 text-center';
     detailView.innerHTML = `
-        <div class="w-full max-w-xl mx-auto px-4 mt-6">
-            <span onclick="navigate('oracle-library')" class="cursor-pointer text-xs font-cute text-pink-400 hover:text-pink-600">&larr; Back to Oracle Library</span>
+        <div class="w-full max-w-xl mx-auto px-4 mt-2">
             <div id="oracle-detail-content" class="mt-6 text-left"></div>
         </div>
     `;
     parentContainer.appendChild(detailView);
 }
 
-function renderOracleLibrary() {
+function renderOracleLibrary(category = 'All') {
+    selectedOracleCategory = category;
+    const filterContainer = document.getElementById('oracle-category-filters');
+    const categories = ['All', 'Mindset', 'Inner Healing', 'Spirituality', 'Relationships', 'Action & Growth'];
+    
+    if (filterContainer) {
+        let catHtml = '';
+        categories.forEach(cat => {
+            const active = selectedOracleCategory === cat ? 'bg-pink-400 text-white shadow-sm' : 'bg-white text-gray-600 border border-pink-100 hover:bg-pink-50';
+            catHtml += `<button onclick="renderOracleLibrary('${cat}')" class="px-3 py-1.5 rounded-full text-xs font-bold transition-all ${active}">${cat}</button>`;
+        });
+        filterContainer.innerHTML = catHtml;
+    }
+
     const grid = document.getElementById('oracle-library-grid');
     if (!grid) return;
     let html = '';
     ORACLE_DECK.forEach((card, idx) => {
-        html += `
-            <div onclick="showOracleDetail(${idx})" class="cursor-pointer transform transition-transform hover:-translate-y-1">
-                <div class="w-full aspect-[2/3.3] rounded-xl border border-pink-100 bg-white flex flex-col items-center justify-center p-2 text-center shadow-sm overflow-hidden relative">
-                    ${card.img 
-                        ? `<img src="${card.img}" class="w-full h-full object-contain" />` 
-                        : `<div class="text-xs font-cute font-bold text-purple-800">${card.name}</div>`
-                    }
+        if (selectedOracleCategory === 'All' || card.category === selectedOracleCategory) {
+            html += `
+                <div onclick="showOracleDetail(${idx})" class="cursor-pointer transform transition-transform hover:-translate-y-1">
+                    <div class="w-full aspect-[2/3.3] rounded-xl border border-pink-100 bg-white flex flex-col items-center justify-center p-2 text-center shadow-sm overflow-hidden relative">
+                        ${card.img 
+                            ? `<img src="${card.img}" class="w-full h-full object-contain" />` 
+                            : `<div class="text-[9px] uppercase text-pink-400 font-bold mb-1">${card.category}</div>
+                               <div class="text-xs font-cute font-bold text-purple-800">${card.name}</div>`
+                        }
+                    </div>
                 </div>
-            </div>
-        `;
+            `;
+        }
     });
     grid.innerHTML = html;
 }
@@ -1849,7 +1923,10 @@ function showOracleDetail(idx) {
             <div class="w-48 aspect-[2/3.3] mx-auto rounded-2xl border border-pink-100 overflow-hidden shadow-md flex items-center justify-center bg-pink-50">
                 ${card.img ? `<img src="${card.img}" class="w-full h-full object-contain" />` : `<span class="font-bold text-purple-800">${card.name}</span>`}
             </div>
-            <h2 class="text-2xl font-bold text-purple-800 text-center">${card.name}</h2>
+            <div class="text-center">
+                <span class="text-[10px] uppercase font-bold text-pink-400 tracking-wider">${card.category}</span>
+                <h2 class="text-2xl font-bold text-purple-800">${card.name}</h2>
+            </div>
             <div class="p-4 bg-pink-50/50 rounded-2xl border border-pink-100">
                 <h4 class="text-xs font-bold text-pink-500 uppercase tracking-wider mb-1">Oracle Affirmation</h4>
                 <p class="text-sm text-gray-700 leading-relaxed">${card.desc}</p>
@@ -1929,6 +2006,14 @@ function renderOracleResult() {
     resStep.innerHTML = html;
 }
 
+function fixFooterPosition() {
+    const footer = document.querySelector('footer');
+    if (footer) {
+        document.body.appendChild(footer);
+        footer.classList.add('w-full', 'mt-auto', 'pt-8', 'pb-12');
+    }
+}
+
 // ==========================================
 // --- INITIALIZATION ---
 // ==========================================
@@ -1937,9 +2022,7 @@ window.onload = function() {
     ensureHeaderBuyIcon();
     
     initOracleViews();
-    ensureOracleHomeSections();
-    ensureArticlesSection();
-    ensureBirthCalculatorHome(); 
+    ensureHomeOrder();
     
     updateDrawerMenu();
     checkDailyOracleCard();
@@ -1974,5 +2057,5 @@ window.onload = function() {
         zodiacGrid.innerHTML = zodiacHtml;
     }
 
-    setTimeout(setupScrollAnimations, 100);
+    fixFooterPosition();
 };
