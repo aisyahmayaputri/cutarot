@@ -566,28 +566,28 @@ const TAROT_DECK = [
 // ==========================================
 const ORACLE_DECK = [
     // Category 1: Themes (1-10)
-    { id: 1, category: 'Themes', name: 'Beginnings', img: '', desc: 'Take a deep breath and reconnect with your inner silence.', guidance: 'Meditate for 5 minutes today and release tension.' },
-    { id: 2, category: 'Themes', name: 'Ending', img: '', desc: 'Shed old layers that no longer serve your mental growth.', guidance: 'Trust the evolving version of yourself.' },
-    { id: 3, category: 'Themes', name: 'Change', img: '', desc: 'Protect your focus and mental energy with dignity.', guidance: 'Politely say no to draining commitments.' },
-    { id: 4, category: 'Themes', name: 'Growth', img: '', desc: 'Quiet the noise to hear your true inner guidance.', guidance: 'Trust first impressions today.' },
-    { id: 5, category: 'Themes', name: 'Pause', img: '', desc: 'Clear mental clutter to reveal your true direction.', guidance: 'Focus on one priority at a time.' },
-    { id: 6, category: 'Themes', name: 'Movement', img: '', desc: 'In uncertainty, gentle stillness is your power.', guidance: 'Pause before major choices.' },
-    { id: 7, category: 'Themes', name: 'Revelation', img: '', desc: 'Step boldly into your unedited personal truth.', guidance: 'Stop seeking external approval.' },
-    { id: 8, category: 'Themes', name: 'Uncertainty', img: '', desc: 'All the answers you seek reside in your calm heart.', guidance: 'Spend quiet time in nature.' },
-    { id: 9, category: 'Themes', name: 'Alignment', img: '', desc: 'Surrender worries and let life move effortlessly.', guidance: 'Stop forcing closed doors.' },
-    { id: 10, category: 'Themes', name: 'Cycle', img: '', desc: 'Speak and live with absolute personal clarity.', guidance: 'Honesty breeds freedom.' },
+    { id: 1, category: 'Themes', name: 'Beginnings', img: '', desc: 'Something is entering its first stage. Focus on what is beginning to take shape rather than what it may actually becomes.', guidance: '.' },
+    { id: 2, category: 'Themes', name: 'Ending', img: '', desc: 'A phase may be reaching completion. Consider what is ready to be conduded, acknowledged, or left behind.', guidance: '.' },
+    { id: 3, category: 'Themes', name: 'Change', img: '', desc: 'The current situation may not remain as it is. Stay flexible and notice what is shifting, even if the full direction is not yet clear.', guidance: '.' },
+    { id: 4, category: 'Themes', name: 'Growth', img: '', desc: 'Something is developing through experience and effort. Look for gradual progress rather than demanding immediate results.', guidance: '.' },
+    { id: 5, category: 'Themes', name: 'Pause', img: '', desc: 'Progress may benefit from a moment of stillness. Give yourself room to reflect before deciding what comes next.', guidance: '.' },
+    { id: 6, category: 'Themes', name: 'Movement', img: '', desc: 'The situation is beginning to move or requires forward motion. Notice where action may be needed.', guidance: '.' },
+    { id: 7, category: 'Themes', name: 'Revelation', img: '', desc: 'A realization or new piece of understanding may change how the situation is viewed. Be willing to revise your first impression.', guidance: '.' },
+    { id: 8, category: 'Themes', name: 'Uncertainty', img: '', desc: 'Not everything is clear enough for a firm conclusion. Allow unanswered questions to remain open instead of forcing certainty.', guidance: '.' },
+    { id: 9, category: 'Themes', name: 'Alignment', img: '', desc: 'Different parts of the situation may be moving into greater harmony. Notice whether values, intentions, and actions are beginning to match.', guidance: '.' },
+    { id: 10, category: 'Themes', name: 'Cycle', img: '', desc: 'A familiar phase of recurring pattern may be returning. Ask what has repeated and what could be approached differently this time.', guidance: '.' },
 
     // Category 2: Inner State (11-20)
-    { id: 11, category: 'Inner State', name: 'Desire', img: '', desc: 'Allow old emotional wounds space to breathe.', guidance: 'Journal unexpressed feelings.' },
-    { id: 12, category: 'Inner State', name: 'Fear', img: '', desc: 'Releasing bitterness grants freedom to your soul.', guidance: 'Let go of heavy emotional loads.' },
-    { id: 13, category: 'Inner State', name: 'Hope', img: '', desc: 'You carry resilience to weather any storm.', guidance: 'Stand firm in your truth.' },
-    { id: 14, category: 'Inner State', name: 'Doubt', img: '', desc: 'Treat your body and heart with soft gentleness.', guidance: 'Take time for restful self-care.' },
-    { id: 15, category: 'Inner State', name: 'Attachment', img: '', desc: 'Cultivate an unbreakable harbor of quiet calm.', guidance: 'Breathe slowly under pressure.' },
-    { id: 16, category: 'Inner State', name: 'Avoidance', img: '', desc: 'Offer soft kindness to yourself and others.', guidance: 'Be gentle in a busy world.' },
-    { id: 17, category: 'Inner State', name: 'Acceptance', img: '', desc: 'Fear dissolves when confronted with quiet trust.', guidance: 'Replace worry with faith.' },
-    { id: 18, category: 'Inner State', name: 'Longing', img: '', desc: 'Reconnect with joyful wonder inside your heart.', guidance: 'Revisit a fond childhood pastime.' },
-    { id: 19, category: 'Inner State', name: 'Confidence', img: '', desc: 'Gentle restorative energy is restoring your stamina.', guidance: 'Heal at your natural pace.' },
-    { id: 20, category: 'Inner State', name: 'Overwhelm', img: '', desc: 'Embrace all your light and shadow fully.', guidance: 'Stop comparing your path.' },
+    { id: 11, category: 'Inner State', name: 'Desire', img: '', desc: 'A want, wish, or personal priority is influencing the situation. Identify what is genuinely wanted and how strongly it is shaping choices.', guidance: 'Journal unexpressed feelings.' },
+    { id: 12, category: 'Inner State', name: 'Fear', img: '', desc: 'Concern about a possible outcome may be shaping reactions. Separate what is known from what is feared or anticipated.', guidance: 'Let go of heavy emotional loads.' },
+    { id: 13, category: 'Inner State', name: 'Hope', img: '', desc: 'A sense of possibility is still present. Let hope offer perspective while staying attentive to the reality of the situation.', guidance: 'Stand firm in your truth.' },
+    { id: 14, category: 'Inner State', name: 'Doubt', img: '', desc: 'Confidence in an idea, choice, or interpretation may be unsettled. Revisit the evidence and give yourself time to think clearly.', guidance: 'Take time for restful self-care.' },
+    { id: 15, category: 'Inner State', name: 'Attachment', img: '', desc: 'A strong emotional tie or investment may be influencing judgement. Notice whether care is being confused with control or fear of loss.', guidance: 'Breathe slowly under pressure.' },
+    { id: 16, category: 'Inner State', name: 'Avoidance', img: '', desc: 'Something uncomfortable may be getting postponed or left unadressed. Consider what is difficult to face and what a manageable first step could be.', guidance: 'Be gentle in a busy world.' },
+    { id: 17, category: 'Inner State', name: 'Acceptance', img: '', desc: 'There may be value in acknowledging the situation as it is. Acceptance does not mean approval; it means beginning from what is real.', guidance: 'Replace worry with faith.' },
+    { id: 18, category: 'Inner State', name: 'Longing', img: '', desc: 'A person, experience, or possibility is being deeply missed or desired. Recognize the feeling without assuming it dictates what must happen.', guidance: 'Revisit a fond childhood pastime.' },
+    { id: 19, category: 'Inner State', name: 'Confidence', img: '', desc: 'Trust in ones ability or judgement is becoming important. Stand by what is well-considered while remaining open to useful feedback.', guidance: 'Heal at your natural pace.' },
+    { id: 20, category: 'Inner State', name: 'Overwhelm', img: '', desc: 'Too many feelings, tasks, or uncertainties may be competing for attention. Simplify the situation and adress one manageable thing at a time.', guidance: 'Stop comparing your path.' },
 
     // Category 3: Dynamics (21-30)
     { id: 21, category: 'Dynamics', name: 'Attraction', img: '', desc: 'Your mind and spirit align with universe rhythm.', guidance: 'Stay true to spiritual values.' },
@@ -1881,7 +1881,7 @@ function initOracleViews() {
 function renderOracleLibrary(category = 'All') {
     selectedOracleCategory = category;
     const filterContainer = document.getElementById('oracle-category-filters');
-    const categories = ['All', 'Mindset', 'Inner Healing', 'Spirituality', 'Relationships', 'Action & Growth'];
+    const categories = ['All', 'Themes', 'Inner State', 'Dynamics', 'Guidance', 'Signals'];
     
     if (filterContainer) {
         let catHtml = '';
