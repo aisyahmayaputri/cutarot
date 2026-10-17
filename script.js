@@ -84,133 +84,154 @@ const SPREADS = [
 const TAROT_DECK = [
     {
         name: 'The Fool', arcana: 'Major Arcana', number: 0, yesNo: 'Yes', astrology: 'Uranus',
-        img: 'https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg',
+        img: 'assets/major/the-fool.png',
         upright: 'New beginnings, innocence, spontaneity, a leap of faith into the unknown, and taking a bold first step on a grand adventure.',
         reversed: 'Recklessness, risk-taking without foresight, hesitation, folly, or holding back out of unwarranted fear.',
         love: 'A fresh, exciting romance filled with spontaneity. For singles, expect unexpected new romantic potentials.'
     },
     {
         name: 'The Magician', arcana: 'Major Arcana', number: 1, yesNo: 'Yes', astrology: 'Mercury',
+        img: 'assets/major/the-magician.png',
         upright: 'Manifestation, willpower, skill, razor-sharp focus, and the ability to turn resources into reality.',
         reversed: 'Manipulation, trickery, squandered potential, lack of focus, or hidden ill intentions.',
         love: 'Magnetic communication in relationships. Time to take concrete actions to draw your crush closer.'
     },
     {
         name: 'The High Priestess', arcana: 'Major Arcana', number: 2, yesNo: 'Yes (Intuitive)', astrology: 'Moon',
+        img: 'assets/major/the-high-priestess.png',
         upright: 'Deep intuition, mystery, the subconscious mind, hidden wisdom, and honoring your inner voice.',
         reversed: 'Secrets exposed, ignoring gut feelings, gossip, inner anxiety, or emotional detachment.',
         love: 'A potent, mysterious spiritual bond. A relationship rooted in silent mutual understanding.'
     },
     {
         name: 'The Empress', arcana: 'Major Arcana', number: 3, yesNo: 'Yes', astrology: 'Venus',
+        img: 'assets/major/the-empress.png',
         upright: 'Abundance, fertility, aesthetic beauty, nurturing care, boundless creativity, and life comfort.',
         reversed: 'Codependency, creative blocks, neglecting self-care, or over-protective tendencies.',
         love: 'An exceptionally harmonious, caring, and warm relationship leaning toward long-term commitment.'
     },
     {
         name: 'The Emperor', arcana: 'Major Arcana', number: 4, yesNo: 'Yes', astrology: 'Aries',
+        img: 'assets/major/the-emperor.png',
         upright: 'Authority, structure, firm leadership, stability, self-control, and building solid foundations.',
         reversed: 'Abuse of power, tyranny, rigid thinking, stubbornness, or lack of discipline.',
         love: 'A dependable, protective partner. Avoid letting controlling or overly dominant behaviors seep in.'
     },
     {
         name: 'The Hierophant', arcana: 'Major Arcana', number: 5, yesNo: 'Yes', astrology: 'Taurus',
+        img: 'assets/major/the-hierophant.png',
         upright: 'Tradition, spiritual guidance, established value systems, formal learning, and adherence to rules.',
         reversed: 'Rebellion against traditions, rigid dogmatism, breaking moral codes, or taking shortcuts.',
         love: 'A conventional relationship approved by social circles. Strong commitments like engagement or marriage.'
     },
     {
         name: 'The Lovers', arcana: 'Major Arcana', number: 6, yesNo: 'Yes', astrology: 'Gemini',
+        img: 'assets/major/the-lovers.png',
         upright: 'Crucial life choices, aligned values, true love, deep soul connection, and harmonious commitment.',
         reversed: 'Misaligned values, relationship friction, poor major decisions, or internal conflict.',
         love: 'The quintessential card of true love and emotional purity. A major choice regarding romantic futures.'
     },
     {
         name: 'The Chariot', arcana: 'Major Arcana', number: 7, yesNo: 'Yes', astrology: 'Cancer',
+        img: 'assets/major/the-chariot.png',
         upright: 'Victory through discipline, iron will, absolute steering of life direction, and overcoming hurdles.',
         reversed: 'Loss of control, excessive aggression, chaotic direction, or surrender halfway.',
         love: 'Battling through relationship obstacles together. Uniting two differing egos for mutual goals.'
     },
     {
         name: 'Strength', arcana: 'Major Arcana', number: 8, yesNo: 'Yes', astrology: 'Leo',
+        img: 'assets/major/strength.png',
         upright: 'Inner strength, gentle courage, immense patience, compassion, and mastering negative emotions.',
         reversed: 'Self-doubt, mental weakness, emotional volatility, or feeling helpless against trials.',
-        love: 'Patience and gentleness are key to melting your partner’s heart. Supporting each other through hard times.'
+        love: 'Patience and gentleness are key to melting your partner\'s heart. Supporting each other through hard times.'
     },
     {
         name: 'The Hermit', arcana: 'Major Arcana', number: 9, yesNo: 'No', astrology: 'Virgo',
+        img: 'assets/major/the-hermit.png',
         upright: 'Soul-searching, deep introspection, mindful retreat, inner wisdom, and spiritual enlightenment.',
         reversed: 'Acute loneliness, social isolation, rejecting wise counsel, or getting lost in rumination.',
         love: 'Time to pause and evaluate yourself before entering deeper commitments. Singles should relish solitude.'
     },
     {
         name: 'Wheel of Fortune', arcana: 'Major Arcana', number: 10, yesNo: 'Yes', astrology: 'Jupiter',
+        img: 'assets/major/wheel-of-fortune.png',
         upright: 'Good luck, turning life cycles, favorable destiny, golden opportunities, and positive shifts.',
         reversed: 'Temporary bad luck, external hurdles, resisting change, or looping in past cycles.',
         love: 'Fateful shifts in romance. An unexpected meeting with someone changing your life trajectory.'
     },
     {
         name: 'Justice', arcana: 'Major Arcana', number: 11, yesNo: 'Neutral / Yes', astrology: 'Libra',
+        img: 'assets/major/justice.png',
         upright: 'Fairness, objective truth, cause and effect, balanced decisions, and moral integrity.',
         reversed: 'Injustice, dishonesty, evading accountability for mistakes, or skewed perspectives.',
         love: 'Equilibrium in giving and receiving. A fair, honest bond free from exploitation.'
     },
     {
         name: 'The Hanged Man', arcana: 'Major Arcana', number: 12, yesNo: 'No', astrology: 'Neptune',
+        img: 'assets/major/hanged-man.png',
         upright: 'New perspectives via surrender, temporary sacrifice, letting go of control, and seeing things anew.',
         reversed: 'Futile sacrifice, feeling stuck in limbo, refusing to see truth, or playing the victim.',
-        love: 'Extra patience and shifting viewpoints are required to understand your partner’s mindset.'
+        love: 'Extra patience and shifting viewpoints are required to understand your partner\'s mindset.'
     },
     {
         name: 'Death', arcana: 'Major Arcana', number: 13, yesNo: 'No', astrology: 'Scorpio',
+        img: 'assets/major/death.png',
         upright: 'Total transformation, closing a life chapter, releasing the past, and a rebirth into better beginnings.',
         reversed: 'Fear of change, clinging to worn-out pasts, stagnation, or resisting necessary endings.',
         love: 'The end of a toxic chapter to make space for a far healthier, more meaningful romance.'
     },
     {
         name: 'Temperance', arcana: 'Major Arcana', number: 14, yesNo: 'Yes', astrology: 'Sagittarius',
+        img: 'assets/major/temperance.png',
         upright: 'Balance, moderation, inner harmony, patience, and peaceful synthesis of life elements.',
         reversed: 'Life imbalance, extremes, internal conflicts, or rushing actions recklessly.',
         love: 'A peaceful, understanding relationship marked by graceful mutual compromise.'
     },
     {
         name: 'The Devil', arcana: 'Major Arcana', number: 15, yesNo: 'No', astrology: 'Capricorn',
+        img: 'assets/major/the-devil.png',
         upright: 'Materialistic attachments, toxic bonds, addictions, feeling trapped by ego or fears.',
         reversed: 'Breaking toxic chains, newfound freedom, self-awareness, and escaping manipulation.',
         love: 'Unhealthy relationship dynamics, excessive obsession, or possessiveness restricting freedom.'
     },
     {
         name: 'The Tower', arcana: 'Major Arcana', number: 16, yesNo: 'No', astrology: 'Mars',
+        img: 'assets/major/the-tower.png',
         upright: 'Sudden shocking upheaval, collapse of false illusions or foundations, lightning-fast awakening.',
         reversed: 'Narrowly avoiding disaster, denial of harsh truths, or delayed trauma.',
         love: 'Major romantic earthquakes. Secrets exposed or fierce arguments changing everything instantly.'
     },
     {
         name: 'The Star', arcana: 'Major Arcana', number: 17, yesNo: 'Yes', astrology: 'Aquarius',
+        img: 'assets/major/the-star.png',
         upright: 'Renewed hope, pure inspiration, inner peace, emotional healing, and faith in the future.',
         reversed: 'Loss of hope, despair, self-doubt, or feeling disconnected from dreams.',
         love: 'An emotional healing phase in romance. High optimism and inner serenity with your partner.'
     },
     {
         name: 'The Moon', arcana: 'Major Arcana', number: 18, yesNo: 'No', astrology: 'Pisces',
+        img: 'assets/major/the-moon.png',
         upright: 'Illusions, subconscious anxieties, intuition battling fear, confusion, and hidden matters.',
         reversed: 'Truths emerging from deception, fading anxieties, and clearing confusion.',
         love: 'Doubts, misunderstandings, or unexpressed secrets lurking beneath the surface.'
     },
     {
         name: 'The Sun', arcana: 'Major Arcana', number: 19, yesNo: 'Yes', astrology: 'Sun',
+        img: 'assets/major/the-sun.png',
         upright: 'Pure happiness, brilliant success, high vitality, absolute clarity, and joyful living.',
         reversed: 'Delayed happiness, dimming self-confidence, or overly idealized expectations.',
         love: 'Warm, bright, sincere love bringing immense joy to everyday life.'
     },
     {
         name: 'Judgement', arcana: 'Major Arcana', number: 20, yesNo: 'Yes', astrology: 'Pluto',
+        img: 'assets/major/judgement.png',
         upright: 'Life calling, honest self-evaluation, forgiveness, spiritual awakening, and final verdicts.',
         reversed: 'Acute self-doubt, avoiding self-reflection, excessive guilt, or harsh judgment of others.',
         love: 'Re-evaluating past choices in romance. Time for forgiveness and starting clean.'
     },
     {
         name: 'The World', arcana: 'Major Arcana', number: 21, yesNo: 'Yes', astrology: 'Saturn',
+        img: 'assets/major/the-world.png',
         upright: 'Completion of a life cycle, ultimate achievement, perfect fulfillment, and wholeness.',
         reversed: 'Close to the finish line but delayed, lack of fulfillment, or loose ends remaining.',
         love: 'A relationship reaching peak happiness and complete emotional wholeness.'
@@ -565,18 +586,68 @@ const TAROT_DECK = [
 // --- DATA ORACLE CARDS (50 CARDS WITH 5 CATEGORIES) ---
 // ==========================================
 const ORACLE_DECK = [
-    // Category 1: Themes (1-10)
-    { id: 1, category: 'Themes', name: 'Beginnings', img: '', desc: 'Something is entering its first stage. Focus on what is beginning to take shape rather than what it may actually becomes.', guidance: 'You do not need to have everything figured out before you take your first step; sometimes, clarity arrives only after you begin.' },
-    { id: 2, category: 'Themes', name: 'Ending', img: '', desc: 'A phase may be reaching completion. Consider what is ready to be conduded, acknowledged, or left behind.', guidance: 'Honor what has reached its natural conclusion. Not everything is meant to accompany you into every season of your life, and releasing what has served its purpose can create space for a deeper sense of peace.' },
-    { id: 3, category: 'Themes', name: 'Change', img: '', desc: 'The current situation may not remain as it is. Stay flexible and notice what is shifting, even if the full direction is not yet clear.', guidance: 'Let yourself evolve without feeling obligated to remain who you once were. Change may challenge your sense of security, but it can also reveal possibilities that your former perspective could not recognize.' },
-    { id: 4, category: 'Themes', name: 'Growth', img: '', desc: 'Something is developing through experience and effort. Look for gradual progress rather than demanding immediate results.', guidance: 'Be patient with the person you are becoming. Growth is not always visible, and some of your most meaningful preogress may happen quietly through the lessons you choose to understand rather than repeat.' },
-    { id: 5, category: 'Themes', name: 'Pause', img: '', desc: 'Progress may benefit from a moment of stillness. Give yourself room to reflect before deciding what comes next.', guidance: 'Stillness is not a failure to progress; it can be the sacred space in which your mind settles, your heart speaks, and your next direction becomes clearer.' },
-    { id: 6, category: 'Themes', name: 'Movement', img: '', desc: 'The situation is beginning to move or requires forward motion. Notice where action may be needed.', guidance: 'Do not remain where you have already outgrown your purpose simply because familiarity feels comfortable. Take the next step with intention, trusting that progress can be meaningful even when the entire path remains unseen.' },
-    { id: 7, category: 'Themes', name: 'Revelation', img: '', desc: 'A realization or new piece of understanding may change how the situation is viewed. Be willing to revise your first impression.', guidance: 'Be willing to see what is being revealed, even when it challenges your existing beliefs. Truth can be uncomfortable at first, but honest awareness gives you the freedom to make choices rooted in reality rather than illusion.' },
-    { id: 8, category: 'Themes', name: 'Uncertainty', img: '', desc: 'Not everything is clear enough for a firm conclusion. Allow unanswered questions to remain open instead of forcing certainty.', guidance: 'You are allowed to walk through a season without knowing how everything will unfold. Release the need to control every possible outcome and focus on the wisdom, integrity, and courage you can bring to the present moment.' },
-    { id: 9, category: 'Themes', name: 'Alignment', img: '', desc: 'Different parts of the situation may be moving into greater harmony. Notice whether values, intentions, and actions are beginning to match.', guidance: 'Examine whether your choices reflect the values you claim to hold. Inner peace often grows when your thoughts, intentions, words, and actions begin moving in the same direction.' },
-    { id: 10, category: 'Themes', name: 'Cycle', img: '', desc: 'A familiar phase of recurring pattern may be returning. Ask what has repeated and what could be approached differently this time.', guidance: 'Recognize the patterns that continues to return to your life. Some cycles invite you to deepen your understanding, while others ask you to make a different choice so that an old lesson no longer needs to repeat itself.' },
+    {
+        id: 1, category: 'Themes', name: 'Beginnings',
+        img: 'assets/oracle-themes/01_Beginnings.png',
+        desc: 'Something is entering its first stage. Focus on what is beginning to take shape rather than what it may actually becomes.',
+        guidance: 'You do not need to have everything figured out before you take your first step; sometimes, clarity arrives only after you begin.'
+    },
+    {
+        id: 2, category: 'Themes', name: 'Ending',
+        img: 'assets/oracle-themes/02_Ending.png',
+        desc: 'A phase may be reaching completion. Consider what is ready to be conduded, acknowledged, or left behind.',
+        guidance: 'Honor what has reached its natural conclusion. Not everything is meant to accompany you into every season of your life, and releasing what has served its purpose can create space for a deeper sense of peace.'
+    },
+    {
+        id: 3, category: 'Themes', name: 'Change',
+        img: 'assets/oracle-themes/03_Change.png',
+        desc: 'The current situation may not remain as it is. Stay flexible and notice what is shifting, even if the full direction is not yet clear.',
+        guidance: 'Let yourself evolve without feeling obligated to remain who you once were. Change may challenge your sense of security, but it can also reveal possibilities that your former perspective could not recognize.'
+    },
+    {
+        id: 4, category: 'Themes', name: 'Growth',
+        img: 'assets/oracle-themes/04_Growth.png',
+        desc: 'Something is developing through experience and effort. Look for gradual progress rather than demanding immediate results.',
+        guidance: 'Be patient with the person you are becoming. Growth is not always visible, and some of your most meaningful preogress may happen quietly through the lessons you choose to understand rather than repeat.'
+    },
+    {
+        id: 5, category: 'Themes', name: 'Pause',
+        img: 'assets/oracle-themes/05_Pause.png',
+        desc: 'Progress may benefit from a moment of stillness. Give yourself room to reflect before deciding what comes next.',
+        guidance: 'Stillness is not a failure to progress; it can be the sacred space in which your mind settles, your heart speaks, and your next direction becomes clearer.'
+    },
+    {
+        id: 6, category: 'Themes', name: 'Movement',
+        img: 'assets/oracle-themes/06_Movement.png',
+        desc: 'The situation is beginning to move or requires forward motion. Notice where action may be needed.',
+        guidance: 'Do not remain where you have already outgrown your purpose simply because familiarity feels comfortable. Take the next step with intention, trusting that progress can be meaningful even when the entire path remains unseen.'
+    },
+    {
+        id: 7, category: 'Themes', name: 'Revelation',
+        img: 'assets/oracle-themes/07_Revelation.png',
+        desc: 'A realization or new piece of understanding may change how the situation is viewed. Be willing to revise your first impression.',
+        guidance: 'Be willing to see what is being revealed, even when it challenges your existing beliefs. Truth can be uncomfortable at first, but honest awareness gives you the freedom to make choices rooted in reality rather than illusion.'
+    },
+    {
+        id: 8, category: 'Themes', name: 'Uncertainty',
+        img: 'assets/oracle-themes/08_Uncertainty.png',
+        desc: 'Not everything is clear enough for a firm conclusion. Allow unanswered questions to remain open instead of forcing certainty.',
+        guidance: 'You are allowed to walk through a season without knowing how everything will unfold. Release the need to control every possible outcome and focus on the wisdom, integrity, and courage you can bring to the present moment.'
+    },
+    {
+        id: 9, category: 'Themes', name: 'Alignment',
+        img: 'assets/oracle-themes/09_Alignment.png',
+        desc: 'Different parts of the situation may be moving into greater harmony. Notice whether values, intentions, and actions are beginning to match.',
+        guidance: 'Examine whether your choices reflect the values you claim to hold. Inner peace often grows when your thoughts, intentions, words, and actions begin moving in the same direction.'
+    },
+    {
+        id: 10, category: 'Themes', name: 'Cycle',
+        img: 'assets/oracle-themes/10_Cycle.png',
+        desc: 'A familiar phase of recurring pattern may be returning. Ask what has repeated and what could be approached differently this time.',
+        guidance: 'Recognize the patterns that continues to return to your life. Some cycles invite you to deepen your understanding, while others ask you to make a different choice so that an old lesson no longer needs to repeat itself.'
+    },
 
+// export default oracleThemes;
     // Category 2: Inner State (11-20)
     { id: 11, category: 'Inner State', name: 'Desire', img: '', desc: 'A want, wish, or personal priority is influencing the situation. Identify what is genuinely wanted and how strongly it is shaping choices.', guidance: 'Look beyond what you want and explore what that desire represents to you. Your longing may reveal an unmet need, a meaningful aspiration, or a part of yourself that is ready to be acknowledged with honesty and compassion.' },
     { id: 12, category: 'Inner State', name: 'Fear', img: '', desc: 'Concern about a possible outcome may be shaping reactions. Separate what is known from what is feared or anticipated.', guidance: 'Let fear inform your awareness, not dictate your direction. Identify the actual risk, distinguish it form imagined consequence, and respond according to evidence rather than panic.' },
@@ -655,15 +726,23 @@ function toggleOption(opt, val) {
 // ==========================================
 // --- UI & NAVIGATION FUNCTIONS ---
 // ==========================================
+/* ============================================================
+   DRAWER MENU
+   ============================================================ */
+
 function toggleMenu() {
     const menu = document.getElementById('drawer-menu');
     const overlay = document.getElementById('drawer-overlay');
     if (!menu) return;
+
     const isOpen = !menu.classList.contains('-translate-x-full');
+
     if (isOpen) {
         menu.classList.add('-translate-x-full');
         if (overlay) overlay.classList.add('opacity-0', 'pointer-events-none');
     } else {
+        // ✅ Rebuild menu SETIAP kali dibuka → HTML statis lama otomatis hilang
+        updateDrawerMenu();
         menu.classList.remove('-translate-x-full');
         if (overlay) overlay.classList.remove('opacity-0', 'pointer-events-none');
     }
@@ -672,48 +751,109 @@ function toggleMenu() {
 function updateDrawerMenu() {
     const drawer = document.getElementById('drawer-menu');
     if (!drawer) return;
-    
+
+    // Pastikan drawer bisa scroll
+    drawer.classList.add('flex', 'flex-col', 'h-full');
+
+    // Hapus semua child non-nav (header tetap dipertahankan)
+    Array.from(drawer.children).forEach(child => {
+        if (child.tagName !== 'NAV' && child.id !== 'drawer-header') child.remove();
+    });
+
+    // Buat / reset nav
     let nav = drawer.querySelector('nav');
     if (!nav) {
         nav = document.createElement('nav');
-        nav.className = 'flex flex-col space-y-1 p-4 font-cute text-sm font-bold text-pink-500';
         drawer.appendChild(nav);
     }
-    
+
+    nav.className =
+        'flex-1 min-h-0 overflow-y-auto flex flex-col px-3 pb-4 pt-3 ' +
+        'font-cute text-sm text-pink-500 space-y-0.5';
+
+    // Helper: section label
+    const sectionLabel = (text) => `
+        <div class="px-3 pt-4 pb-1.5 text-[9px] uppercase tracking-[0.15em] font-bold text-pink-300 select-none">
+            ${text}
+        </div>`;
+
+    // Helper: item biasa
+    const item = (icon, label, onclick, opts = {}) => `
+        <a href="#" onclick="event.preventDefault(); ${onclick}"
+           class="group flex items-center gap-3 px-3 py-2.5 rounded-xl
+                  text-pink-500 hover:text-pink-600 hover:bg-pink-50
+                  transition-colors font-bold ${opts.extra || ''}">
+            <i data-lucide="${icon}" class="w-[18px] h-[18px] text-pink-400 group-hover:text-pink-500 transition-colors shrink-0"></i>
+            <span class="truncate">${label}</span>
+            ${opts.badge ? `<span class="ml-auto text-[9px] font-bold bg-pink-100 text-purple-700 px-2 py-0.5 rounded-full">${opts.badge}</span>` : ''}
+        </a>`;
+
+    // Helper: sub-item (lebih kecil, indent)
+    const subItem = (icon, label, onclick) => `
+        <a href="#" onclick="event.preventDefault(); ${onclick}"
+           class="group flex items-center gap-2.5 pl-9 pr-3 py-1.5 rounded-lg
+                  text-xs font-normal text-gray-500 hover:text-pink-500 hover:bg-pink-50/60
+                  transition-colors">
+            <i data-lucide="${icon}" class="w-3 h-3 text-gray-300 group-hover:text-pink-400 transition-colors shrink-0"></i>
+            <span class="truncate">${label}</span>
+        </a>`;
+
     nav.innerHTML = `
-        <a href="#" onclick="event.preventDefault(); navigate('home');" class="px-4 py-2 hover:bg-pink-50 text-pink-500 rounded-xl transition-colors">Home</a>
-        <a href="#" onclick="event.preventDefault(); navigate('home', 'home-spreads-grid');" class="px-4 py-2 hover:bg-pink-50 text-pink-500 rounded-xl transition-colors">Spreads</a>
-        
-        <!-- Submenu All Cards -->
-        <div class="py-1">
-            <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('All');" class="px-4 py-2 hover:bg-pink-50 text-pink-500 rounded-xl transition-colors block">All Cards</a>
-            <div class="pl-6 space-y-1 mt-1">
-                <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Major Arcana');" class="block text-xs font-normal text-gray-600 hover:text-pink-500 py-1">Major Arcana</a>
-                <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Wands');" class="block text-xs font-normal text-gray-600 hover:text-pink-500 py-1">Suit of Wands</a>
-                <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Cups');" class="block text-xs font-normal text-gray-600 hover:text-pink-500 py-1">Suit of Cups</a>
-                <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Swords');" class="block text-xs font-normal text-gray-600 hover:text-pink-500 py-1">Suit of Swords</a>
-                <a href="#" onclick="event.preventDefault(); navigate('all-cards'); filterLibrary('Pentacles');" class="block text-xs font-normal text-gray-600 hover:text-pink-500 py-1">Suit of Pentacles</a>
-            </div>
-        </div>
+        ${sectionLabel('Main')}
+        ${item('home', 'Home', "navigate('home')")}
+        ${item('layout-grid', 'Spreads', "navigate('home', 'home-spreads-grid')")}
 
-        <!-- Oracle System Main Menu -->
-        <div class="py-1">
-            <a href="#" onclick="event.preventDefault(); navigate('home', 'home-oracle-section');" class="px-4 py-2 hover:bg-pink-50 text-pink-500 rounded-xl transition-colors block">Oracle System</a>
-            <div class="pl-6 space-y-1 mt-1">
-                <a href="#" onclick="event.preventDefault(); navigate('oracle-draw');" class="block text-xs font-normal text-gray-600 hover:text-pink-500 py-1">Draw Oracle Cards</a>
-                <a href="#" onclick="event.preventDefault(); toggleDailyOracleCard(); navigate('home', 'home-daily-oracle-section');" class="block text-xs font-normal text-gray-600 hover:text-pink-500 py-1">Today's Oracle Card</a>
-                <a href="#" onclick="event.preventDefault(); navigate('oracle-library');" class="block text-xs font-normal text-gray-600 hover:text-pink-500 py-1">Oracle Library</a>
-                <a href="#" onclick="event.preventDefault(); navigate('generic', 'About Oracle');" class="block text-xs font-normal text-gray-600 hover:text-pink-500 py-1">About Oracle</a>
-            </div>
-        </div>
+        ${sectionLabel('Explore')}
+        ${item('layers', 'All Cards', "navigate('all-cards'); filterLibrary('All');")}
+        ${subItem('star', 'Major Arcana', "navigate('all-cards'); filterLibrary('Major Arcana');")}
+        ${subItem('flame', 'Suit of Wands', "navigate('all-cards'); filterLibrary('Wands');")}
+        ${subItem('cup-soda', 'Suit of Cups', "navigate('all-cards'); filterLibrary('Cups');")}
+        ${subItem('sword', 'Suit of Swords', "navigate('all-cards'); filterLibrary('Swords');")}
+        ${subItem('circle-dollar-sign', 'Suit of Pentacles', "navigate('all-cards'); filterLibrary('Pentacles');")}
 
-        <a href="#" onclick="event.preventDefault(); navigate('home', 'home-articles-section');" class="px-4 py-2 hover:bg-pink-50 text-pink-500 rounded-xl transition-colors">Articles & Insights</a>
-        <a href="#" onclick="event.preventDefault(); navigate('home', 'home-zodiac-grid');" class="px-4 py-2 hover:bg-pink-50 text-pink-500 rounded-xl transition-colors">Zodiac Guides</a>
-        <a href="#" onclick="event.preventDefault(); navigate('generic', 'About Tarot');" class="px-4 py-2 hover:bg-pink-50 text-pink-500 rounded-xl transition-colors">About Tarot</a>
-        <a href="#" onclick="event.preventDefault(); navigate('generic', 'Personal Reading');" class="px-4 py-2 hover:bg-pink-50 text-pink-500 rounded-xl transition-colors">Personal Reading</a>
-        <a href="#" onclick="event.preventDefault(); navigate('shop');" class="px-4 py-2.5 bg-pink-100 hover:bg-pink-200 text-purple-800 rounded-xl transition-colors mt-2 text-center font-bold">Shop Now 🛍️</a>
+        <div class="h-1"></div>
+        ${item('sparkles', 'Oracle System', "navigate('home', 'home-oracle-section')", { badge: 'New' })}
+        ${subItem('shuffle', 'Draw Oracle Cards', "navigate('oracle-draw')")}
+        ${subItem('calendar-heart', "Today's Oracle Card", "toggleDailyOracleCard(); navigate('home', 'home-daily-oracle-section')")}
+        ${subItem('book-open', 'Oracle Library', "navigate('oracle-library')")}
+        ${subItem('info', 'About Oracle', "navigate('generic', 'About Oracle')")}
+
+        <div class="h-1"></div>
+        ${item('newspaper', 'Articles & Insights', "navigate('home', 'home-articles-section')")}
+        ${item('orbit', 'Zodiac Guides', "navigate('home', 'home-zodiac-grid')")}
+
+        ${sectionLabel('Info')}
+        ${item('book-marked', 'About Tarot', "navigate('generic', 'About Tarot')")}
+        ${item('user-round', 'Personal Reading', "navigate('generic', 'Personal Reading')")}
     `;
+
+    // ✅ Shop Now — sticky di bawah, terpisah dari nav
+    let shopCta = drawer.querySelector('#drawer-shop-cta');
+    if (!shopCta) {
+        shopCta = document.createElement('div');
+        shopCta.id = 'drawer-shop-cta';
+        shopCta.className = 'shrink-0 px-4 py-4 border-t border-pink-100 bg-pink-50/40';
+        drawer.appendChild(shopCta);
+    }
+
+    shopCta.innerHTML = `
+        <a href="#" onclick="event.preventDefault(); navigate('shop');"
+           class="flex items-center justify-center gap-2 w-full px-4 py-3
+                  bg-purple-700 hover:bg-purple-800 text-white rounded-xl
+                  font-cute font-bold text-sm shadow-md transition-all
+                  transform hover:-translate-y-0.5">
+            <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+            <span>Shop Now</span>
+        </a>
+    `;
+
+    // Render ulang icon Lucide
+    if (window.lucide) window.lucide.createIcons();
 }
+
+/* ============================================================
+   STANDARD NAV BUTTONS (Back / Back to Home)
+   ============================================================ */
 
 function injectStandardNavButtons(targetViewId) {
     const targetView = document.getElementById('view-' + targetViewId);
@@ -722,21 +862,47 @@ function injectStandardNavButtons(targetViewId) {
     let navBar = targetView.querySelector('.nav-buttons-bar');
     if (!navBar) {
         navBar = document.createElement('div');
-        navBar.className = 'nav-buttons-bar w-full max-w-2xl mx-auto px-4 pt-4 pb-2 flex justify-between items-center font-cute border-b border-pink-100 mb-4';
+        navBar.className =
+            'nav-buttons-bar w-full max-w-2xl mx-auto px-4 pt-4 pb-2 flex justify-between items-center ' +
+            'font-cute border-b border-pink-100 mb-4';
         targetView.insertBefore(navBar, targetView.firstChild);
     }
 
     navBar.innerHTML = `
-        <button onclick="goBack()" class="flex items-center gap-1 text-pink-500 hover:text-pink-700 font-bold text-xs bg-pink-50 px-3 py-1.5 rounded-xl border border-pink-100 shadow-sm transition-all">
-            &larr; Back
+        <button onclick="goBack()"
+                class="flex items-center gap-1 text-pink-500 hover:text-pink-700 font-bold text-xs bg-pink-50 px-3 py-1.5 rounded-xl border border-pink-100 shadow-sm transition-all">
+            <i data-lucide="arrow-left" class="w-3 h-3"></i>
+            <span>Back</span>
         </button>
-        <button onclick="goBackToHome()" class="flex items-center gap-1 text-pink-500 hover:text-pink-700 font-bold text-xs bg-pink-50 px-3 py-1.5 rounded-xl border border-pink-100 shadow-sm transition-all">
-            &larr; Back to Home
+        <button onclick="goBackToHome()"
+                class="flex items-center gap-1 text-pink-500 hover:text-pink-700 font-bold text-xs bg-pink-50 px-3 py-1.5 rounded-xl border border-pink-100 shadow-sm transition-all">
+            <i data-lucide="home" class="w-3 h-3"></i>
+            <span>Back to Home</span>
         </button>
     `;
+
+    if (window.lucide) window.lucide.createIcons();
 }
 
+/* ============================================================
+   NAVIGATION CORE
+   ============================================================ */
+
 function navigate(viewId, anchorOrTitle = null, isBackAction = false) {
+    // ✅ FIX: Buat #view-shop DULU sebelum guard
+    if (viewId === 'shop') {
+        let shopView = document.getElementById('view-shop');
+        if (!shopView) {
+            const homeView = document.getElementById('view-home');
+            if (homeView) {
+                shopView = document.createElement('div');
+                shopView.id = 'view-shop';
+                shopView.className = 'view-section pb-24 text-center';
+                homeView.parentNode.appendChild(shopView);
+            }
+        }
+    }
+
     const currentActive = document.querySelector('.view-section.active');
     const currentActiveId = currentActive ? currentActive.id.replace('view-', '') : 'home';
 
@@ -748,11 +914,15 @@ function navigate(viewId, anchorOrTitle = null, isBackAction = false) {
         navigationHistory.push({ viewId: currentActiveId, scrollY: window.scrollY });
     }
 
-    document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-    
     const targetView = document.getElementById('view-' + viewId);
-    if (targetView) targetView.classList.add('active');
-    
+    if (!targetView) {
+        console.warn(`[navigate] View "view-${viewId}" tidak ditemukan. Navigasi dibatalkan.`);
+        return;
+    }
+
+    document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+    targetView.classList.add('active');
+
     const drawer = document.getElementById('drawer-menu');
     if (drawer && !drawer.classList.contains('-translate-x-full')) {
         toggleMenu();
@@ -776,7 +946,7 @@ function navigate(viewId, anchorOrTitle = null, isBackAction = false) {
         else if (viewId === 'all-cards') { ensureLibrarySearch(); filterLibrary('All'); }
         else if (viewId === 'birth-calculator') initBirthCalculatorPage();
         else if (viewId === 'oracle-library') renderOracleLibrary();
-        else if (viewId === 'shop') renderShopPage();
+        else if (viewId === 'shop') renderShopPage();   // sekarang aman
         else if (viewId === 'oracle-draw') {
             renderOracleConfigNumbers();
             document.getElementById('oracle-step-config')?.classList.remove('hidden');
@@ -790,7 +960,7 @@ function goBack() {
     if (navigationHistory.length > 0) {
         const last = navigationHistory.pop();
         navigate(last.viewId, null, true);
-        if (last.viewId === 'home') {
+        if (last.viewId !== 'home') {
             window.scrollTo({ top: last.scrollY, behavior: 'smooth' });
         }
     } else {
@@ -803,10 +973,22 @@ function goBackToHome() {
     navigate('home', null, true);
 }
 
+/* ============================================================
+   UTIL
+   ============================================================ */
+
 function getTodayDateString() {
     const now = new Date();
-    return now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
+    const y = now.getFullYear();
+    const m = String(now.getMonth() + 1).padStart(2, '0');
+    const d = String(now.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
 }
+
+/* ============================================================
+   INIT — panggil saat halaman siap
+   ============================================================ */
+
 
 // ==========================================
 // --- HOMEPAGE LAYOUT RE-ORDER & ARTICLES ---
@@ -1376,11 +1558,12 @@ function showZodiac(id) {
 function renderShopPage() {
     let shopView = document.getElementById('view-shop');
     if (!shopView) {
-        const parentContainer = document.getElementById('view-home').parentNode;
+        const homeView = document.getElementById('view-home');
+        if (!homeView) return;
         shopView = document.createElement('div');
         shopView.id = 'view-shop';
         shopView.className = 'view-section pb-24 text-center';
-        parentContainer.appendChild(shopView);
+        homeView.parentNode.appendChild(shopView);
     }
 
     shopView.innerHTML = `
